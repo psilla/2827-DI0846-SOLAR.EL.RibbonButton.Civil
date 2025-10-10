@@ -2,11 +2,11 @@
 using Autodesk.AutoCAD.ApplicationServices;
 using Autodesk.AutoCAD.DatabaseServices;
 using Autodesk.AutoCAD.Runtime;
-using TYPSA.SharedLib.Civil.Buttons;
-using TYPSA.SharedLib.Civil.GetDocument;
-using TYPSA.SharedLib.Civil.ObjectsByTypeByLayer;
+using TYPSA.SharedLib.Autocad.Buttons;
+using TYPSA.SharedLib.Autocad.GetDocument;
+using TYPSA.SharedLib.Autocad.ObjectsByTypeByLayer;
 
-namespace SOLAR.EL.RibbonButton.Civil.Buttons
+namespace SOLAR.EL.RibbonButton.Autocad.Buttons
 {
     internal class cls_13_ButtonExportLabelsToExcel
     {
@@ -22,7 +22,7 @@ namespace SOLAR.EL.RibbonButton.Civil.Buttons
             Document doc = cls_00_DocumentInfo.GetActiveDocument();
 
             // Obtenemos las etiquetas
-            List<DBObject> mTextOjects = 
+            List<DBObject> mTextOjects =
                 cls_00_MTextObjectsByLayer.get_MTextObjectsByLayer_FromDicc(doc, true);
             // Validamos
             if (mTextOjects == null) return;
@@ -33,7 +33,7 @@ namespace SOLAR.EL.RibbonButton.Civil.Buttons
             // Validamos
             if (mTextOjectsValues == null) return;
 
-            // Separamos valores por condicion
+            // Split de campos por caracter
             List<List<string>> mTextOjectsValuesSplit =
                 cls_00_MTextObjectsByLayer.SplitLabelValuesByCond(mTextOjectsValues);
             // Validamos
@@ -46,12 +46,12 @@ namespace SOLAR.EL.RibbonButton.Civil.Buttons
             };
 
             // Exportar a Excel
-            cls_00_MTextObjectsByLayer.ExportLabelsToExcel_EPPlus(
-                mTextOjectsValuesSplit, headers
+            cls_00_ExportLabelsToExcel_EPPlus.ExportLabelsToExcel_EPPlus(
+                mTextOjectsValuesSplit
             );
-
-
-
         }
+
+
+
     }
 }

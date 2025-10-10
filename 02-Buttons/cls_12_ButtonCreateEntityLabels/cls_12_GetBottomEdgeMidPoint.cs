@@ -1,7 +1,7 @@
 ﻿using Autodesk.AutoCAD.DatabaseServices;
 using Autodesk.AutoCAD.Geometry;
 
-namespace SOLAR.EL.RibbonButton.Civil.Buttons
+namespace SOLAR.EL.RibbonButton.Autocad.Buttons
 {
     internal class cls_12_GetBottomEdgeMidPoint
     {
@@ -29,9 +29,43 @@ namespace SOLAR.EL.RibbonButton.Civil.Buttons
                     );
                 }
             }
-
+            // return
             return midPoint;
         }
+
+        public static Point3d GetBottomEdgeLeftPoint(Polyline poly, BlockReference tracker)
+        {
+            double minY = double.MaxValue;
+            int n = poly.NumberOfVertices;
+            LineSegment3d bottomEdge = null;
+
+            // 1️⃣ Encontrar la arista inferior (la de menor Y promedio)
+            for (int i = 0; i < n; i++)
+            {
+                Point3d p1 = poly.GetPoint3dAt(i).TransformBy(tracker.BlockTransform);
+                Point3d p2 = poly.GetPoint3dAt((i + 1) % n).TransformBy(tracker.BlockTransform);
+
+                double avgY = (p1.Y + p2.Y) / 2.0;
+                if (avgY < minY)
+                {
+                    minY = avgY;
+                    bottomEdge = new LineSegment3d(p1, p2);
+                }
+            }
+
+            // 2️⃣ Determinar el punto más a la izquierda (menor X) de esa arista
+            if (bottomEdge != null)
+            {
+                Point3d p1 = bottomEdge.StartPoint;
+                Point3d p2 = bottomEdge.EndPoint;
+
+                return (p1.X <= p2.X) ? p1 : p2;
+            }
+
+            // 3️⃣ Si algo falla, devolver el origen
+            return Point3d.Origin;
+        }
+
 
         public static Point3d GetBottomMidPoint(Polyline poly, BlockReference tracker)
         {

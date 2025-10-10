@@ -4,32 +4,34 @@ using System.Text;
 using System.Windows.Forms;
 using Autodesk.AutoCAD.DatabaseServices;
 using Autodesk.AutoCAD.EditorInput;
-using SOLAR.EL.RibbonButton.Civil.Buttons;
-using SOLAR.EL.RibbonButton.Revit.UserForms;
-using static TYPSA.SharedLib.Civil.ProcessPoly.cls_00_ProcessOffsetPolyResult;
-using static TYPSA.SharedLib.Civil.ProcessPoly.cls_00_ProcessPolyResult;
-using static TYPSA.SharedLib.Civil.ProcessRegion.cls_00_ProcessRegionResult;
-using TYPSA.SharedLib.Civil.DeleteEntities;
-using TYPSA.SharedLib.Civil.DrawEntities;
-using TYPSA.SharedLib.Civil.GetDocument;
-using TYPSA.SharedLib.Civil.GetEntities;
-using TYPSA.SharedLib.Civil.GetEntityCoordinates;
-using TYPSA.SharedLib.Civil.GetLayersInfo;
-using TYPSA.SharedLib.Civil.IsolateEntities;
-using TYPSA.SharedLib.Civil.ProcessPoly;
-using TYPSA.SharedLib.Civil.ProcessRegion;
-using TYPSA.SharedLib.Civil.ProjectUnits;
-using TYPSA.SharedLib.Civil.ShowInfoBox;
-using TYPSA.SharedLib.Civil.UserForms;
+using static TYPSA.SharedLib.Autocad.ProcessPoly.cls_00_ProcessOffsetPolyResult;
+using static TYPSA.SharedLib.Autocad.ProcessPoly.cls_00_ProcessPolyResult;
+using static TYPSA.SharedLib.Autocad.ProcessRegion.cls_00_ProcessRegionResult;
+using TYPSA.SharedLib.Autocad.DeleteEntities;
+using TYPSA.SharedLib.Autocad.DrawEntities;
+using TYPSA.SharedLib.Autocad.GetDocument;
+using TYPSA.SharedLib.Autocad.GetEntities;
+using TYPSA.SharedLib.Autocad.GetEntityCoordinates;
+using TYPSA.SharedLib.Autocad.GetLayersInfo;
+using TYPSA.SharedLib.Autocad.IsolateEntities;
+using TYPSA.SharedLib.Autocad.ProcessPoly;
+using TYPSA.SharedLib.Autocad.ProcessRegion;
+using TYPSA.SharedLib.Autocad.ProjectUnits;
+using TYPSA.SharedLib.Autocad.ShowInfoBox;
+using TYPSA.SharedLib.Autocad.UserForms;
+using TYPSA.SharedLib.Autocad.EntitiesInsertionPoint;
+using SOLAR.EL.RibbonButton.Autocad.UserForms;
+using System.Linq;
+using System.Text.RegularExpressions;
 
-namespace SOLAR.EL.RibbonButton.Civil.Buttons
+namespace SOLAR.EL.RibbonButton.Autocad.Buttons
 {
     internal class cls_12_ProcessEntityLabels
     {
-        public static int MainCreateEntityLabels(
+        public static int ProcessEntityLabels(
             Editor ed, Database db, Transaction tr, BlockTableRecord btr,
-            string contGenLayer, string contInvLayer, string trackLayer, string stringLayer, string labelsLayer,
-            string contGenTag, string contInvTag, string trackTag,
+            string contGenLayer, string contInvLayer, string trackLayer, string stringLayer, string labelsTrackLayer, string labelsInvLayer,
+            string contGenTag, string contInvTag, string trackTag, string contInvLabelTag,
             string contGenProp, string contInvProp, string trackProp, string stringProp,
             SolarSettings solarSet, string tipTrack, string tipEstFija
         )
@@ -47,7 +49,8 @@ namespace SOLAR.EL.RibbonButton.Civil.Buttons
                 cls_00_CreateLayerIfNotExists.CreateLayerIfNotExists(contInvLayer);
                 cls_00_CreateLayerIfNotExists.CreateLayerIfNotExists(trackLayer);
                 cls_00_CreateLayerIfNotExists.CreateLayerIfNotExists(stringLayer);
-                cls_00_CreateLayerIfNotExists.CreateLayerIfNotExists(labelsLayer);
+                cls_00_CreateLayerIfNotExists.CreateLayerIfNotExists(labelsTrackLayer);
+                cls_00_CreateLayerIfNotExists.CreateLayerIfNotExists(labelsInvLayer);
 
                 // Form
                 string trackSel = InstanciarFormularios.DropDownFormListOut(
@@ -57,28 +60,46 @@ namespace SOLAR.EL.RibbonButton.Civil.Buttons
                 );
                 // Validamos
                 if (trackSel == null) return 0;
+                // Definimos orientacion label
+                bool isHorizontal = (trackSel == tipEstFija);
 
-                string dolarConfigMess =
+                string MPPtConfigMess =
                     "True: Label configuration with MPPT ($).\n" +
                     "False: Label configuration without MPPT ($).";
                 // Form
-                object dolarSel = InstanciarFormularios.DropDownFormOut(
-                    dolarConfigMess, false
+                object MPPtSel = InstanciarFormularios.DropDownFormOut(
+                    MPPtConfigMess, false
                 );
                 // Validamos
-                if (dolarSel == null) return 0;
-
+                if (MPPtSel == null) return 0;
                 // Convertimos a boolean
-                bool dolarSelBool = Convert.ToBoolean(dolarSel);
+                bool MPPtSelBool = Convert.ToBoolean(MPPtSel);
+
+                string trackLabelConfigMess =
+                    "True: Label configuration with Tracker info.\n" +
+                    "False: Label configuration without Tracker info.";
+                // Form
+                object trackLabelSel = InstanciarFormularios.DropDownFormOut(
+                    trackLabelConfigMess, true
+                );
+                // Validamos
+                if (trackLabelSel == null) return 0;
+                // Convertimos a boolean
+                bool trackLabelSelBool = Convert.ToBoolean(trackLabelSel);
+
+                // Form
+                string charSepSel = InstanciarFormularios.DropDownFormListOut(
+                    "Select the separator character for the label:",
+                    new List<string> { ".", "-", "_", ",", ";" },
+                    "Label Separator Selection", "-"
+                );
+                // Validamos la selección
+                if (string.IsNullOrEmpty(charSepSel)) return 0;
 
                 // Obtenemos el listado de capas del documento
                 List<string> docLayers = cls_00_GetLayerNamesFromActiveDoc.
                     GetLayerNamesFromActiveDocument();
 
-                // Definimos orientacion label
-                bool isHorizontal = (trackSel == tipEstFija);
-
-                //bool boolDocbool = true;
                 string boolDocMess =
                     $"True: Analyze all {contGenTag} in the document.\n" +
                     $"False: Manually select {contGenTag} to analyze.";
@@ -88,39 +109,35 @@ namespace SOLAR.EL.RibbonButton.Civil.Buttons
                 );
                 // Validamos
                 if (boolDoc == null) return 0;
-
                 // Convertimos a boolean
                 bool boolDocbool = Convert.ToBoolean(boolDoc);
 
-                // Seleccionamos Contornos Genericos
+                // Seleccionamos Centros Transformacion
                 PromptSelectionResult psrContGen = cls_00_GetPolylinesByLayer.GetPolylinesByLayer(
                     ed, docLayers, contGenTag, contGenLayer
                 );
                 // Validamos
                 if (psrContGen == null) return 0;
-
-                // Seleccionamos contornos a analizar en funcion del bool
+                // Seleccionamos en funcion del bool
                 SelectionSet analyzePoly = cls_00_GetPolylinesByUser.GetPolylinesByUser(
                     ed, boolDocbool, psrContGen, contGenTag
                 );
                 // Validamos
                 if (analyzePoly == null) return 0;
-
-                double elevGen;
-                // Validamos elevation
+                // Validamos elevacion
+                double elevCenTrans;
                 if (!cls_12_GetEntityElev.AllEntHaveSameElev(
-                    tr, psrContGen, contGenTag, out elevGen
+                    tr, psrContGen, contGenTag, out elevCenTrans
                 )) return 0;
 
-                // Seleccionamos Contornos Inversores
+                // Seleccionamos Inversores
                 PromptSelectionResult psrContInv = cls_00_GetPolylinesByLayer.GetPolylinesByLayer(
                     ed, docLayers, contInvTag, contInvLayer
                 );
                 // Validamos
                 if (psrContInv == null) return 0;
-
+                // Validamos elevacion
                 double elevInv;
-                // Validamos elevation
                 if (!cls_12_GetEntityElev.AllEntHaveSameElev(
                     tr, psrContInv, contInvTag, out elevInv
                 )) return 0;
@@ -131,22 +148,36 @@ namespace SOLAR.EL.RibbonButton.Civil.Buttons
                 );
                 // Validamos
                 if (psrTrackers == null) return 0;
-
+                // Validamos elevacion
                 double elevTrack;
-                // Validamos elevation
                 if (!cls_12_GetEntityElev.AllEntHaveSameElev(
                     tr, psrTrackers, trackTag, out elevTrack
                 )) return 0;
 
-                // Validamos elevaciones entre Contornos Generales, Inversores y Trackers
-                if (Math.Abs(elevGen - elevInv) > 1e-6 || Math.Abs(elevGen - elevTrack) > 1e-6)
+                // Seleccionamos etiquetas Inversores
+                PromptSelectionResult psrInvLabels = cls_00_GetMTextByLayer.GetMTextByLayer(
+                    ed, docLayers, contInvLabelTag, labelsInvLayer
+                );
+                // Validamos
+                if (psrInvLabels == null) return 0;
+                // Validamos elevacion
+                double elevInvLabel;
+                if (!cls_12_GetEntityElev.AllEntHaveSameElev(
+                    tr, psrInvLabels, contInvLabelTag, out elevInvLabel
+                )) return 0;
+
+                // Validamos elevaciones entre Centros, Inversores, Trackers y Etiquetas Inv
+                if (Math.Abs(elevCenTrans - elevInv) > 1e-6 ||
+                    Math.Abs(elevCenTrans - elevTrack) > 1e-6 ||
+                    Math.Abs(elevCenTrans - elevInvLabel) > 1e-6)
                 {
                     // Mensaje
                     MessageBox.Show(
                         $"⚠ Elevations are inconsistent across entities.\n\n" +
-                        $"{contGenTag} Z: {elevGen:F3}\n" +
+                        $"{contGenTag} Z: {elevCenTrans:F3}\n" +
                         $"{contInvTag} Z: {elevInv:F3}\n" +
-                        $"{trackTag} Z: {elevTrack:F3}",
+                        $"{trackTag} Z: {elevTrack:F3}\n" +
+                        $"{contInvLabelTag} Z: {elevInvLabel:F3}",
                         "Elevation Mismatch",
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Warning
@@ -203,6 +234,7 @@ namespace SOLAR.EL.RibbonButton.Civil.Buttons
                 // Obtenemos los Ids
                 HashSet<ObjectId> contInvIds = new HashSet<ObjectId>(psrContInv.Value.GetObjectIds());
                 HashSet<ObjectId> trackersIds = new HashSet<ObjectId>(psrTrackers.Value.GetObjectIds());
+                HashSet<ObjectId> invLabelIds = new HashSet<ObjectId>(psrInvLabels.Value.GetObjectIds());
 
                 // Validamos los Contornos Generales
                 ProcessPolyResult dataContGen = cls_00_ProcessAllPoly.ProcessAllPoly(
@@ -250,8 +282,8 @@ namespace SOLAR.EL.RibbonButton.Civil.Buttons
                     return 0;
                 }
 
-                double offsetDistance = 1;
-                // Obtenemos info de los Contornos Generales desfasados
+                double offsetDistance = 0.15;
+                // Obtenemos info de los Centros de Transformacion desfasados
                 ProcessOffsetPolyResult dataOffsetPolyContGen =
                     cls_00_ProcessAllOffsetPoly.ProcessAllOffsetPoly(
                         validPolyContGen, tr, btr, contGenTag, offsetDistance
@@ -373,14 +405,31 @@ namespace SOLAR.EL.RibbonButton.Civil.Buttons
                     return 0;
                 }
 
+                // Almacenamos regiones para borrarlas antes de un return
+                List<Region> allTempRegions = new List<Region>();
+                allTempRegions.AddRange(validRegionContGen);
+                allTempRegions.AddRange(validRegionContInv);
+
                 // Form prefijos Label
                 Dictionary<string, string> propPreDict =
                     InstanciarFormulariosSOLAR.TextBoxFormOut_Solar(
                         "Enter a prefix for each entity contained in the label"
                     );
                 // Validamos
-                if (propPreDict == null) return 0;
-
+                if (propPreDict == null)
+                {
+                    // Iteramos
+                    foreach (Region region in allTempRegions)
+                    {
+                        // Validamos
+                        if (region != null && !region.IsErased)
+                            // Borramos region
+                            cls_00_DeleteEntity.DeleteEntity(region);
+                    }
+                    // Finalizamos
+                    return 0;
+                }
+                
                 List<string> availableTextStyles =
                     cls_00_DocumentInfo.GetAllTextStylesFromDrawing(db);
                 // Form para definir text style
@@ -388,11 +437,34 @@ namespace SOLAR.EL.RibbonButton.Civil.Buttons
                     availableTextStyles, solarSet.LabelStyle
                 );
                 // Validamos
-                if (chosenStyle == null) return 0;
+                if (chosenStyle == null)
+                {
+                    // Iteramos
+                    foreach (Region region in allTempRegions)
+                    {
+                        // Validamos
+                        if (region != null && !region.IsErased)
+                            // Borramos region
+                            cls_00_DeleteEntity.DeleteEntity(region);
+                    }
+                    // Finalizamos
+                    return 0;
+                }
 
+                AttachmentPoint chosenJustification;
                 // Form para definir text justification
-                AttachmentPoint chosenJustification =
-                    cls_00_DrawEntities.AskMTextJustificationFromUser(AttachmentPoint.TopLeft);
+                if (isHorizontal)
+                {
+                    // BottomLeft
+                    chosenJustification = cls_00_DrawEntities
+                        .AskMTextJustificationFromUser(AttachmentPoint.BottomLeft);
+                }
+                else
+                {
+                    // TopLeft
+                    chosenJustification = cls_00_DrawEntities
+                        .AskMTextJustificationFromUser(AttachmentPoint.TopLeft);
+                }
 
                 StringBuilder infoRegiones = new StringBuilder();
                 // Diccionario para almacenar los elementos por region
@@ -403,51 +475,132 @@ namespace SOLAR.EL.RibbonButton.Civil.Buttons
                 validRegionContGen.Sort((a, b) =>
                     cls_00_GetEntityCentroid.CompareEntitiesByPosition(a, b, 10.0));
 
-                // Contador de Contornos Generales
-                int contGenIndex;
+                // Contador de CT
+                int ctStartIndex;
+                int trackStartIndex;
                 // Si no analizamos todo el documento
                 if (!boolDocbool)
                 {
-                    string msg = $"Enter the starting number for {contGenTag}:";
-                    string input = InstanciarFormularios.TextBoxFormOut(msg, "1");
-                    // Validamos
-                    if (string.IsNullOrWhiteSpace(input)) return 0;
-                    // Validamos
-                    if (!int.TryParse(input, out contGenIndex))
+                    // CT
+                    string msgCT = $"Enter the starting number for {contGenTag}:";
+                    string inputCT = InstanciarFormularios.TextBoxFormOut(msgCT, "1");
+                    if (string.IsNullOrWhiteSpace(inputCT) || !int.TryParse(inputCT, out ctStartIndex))
                     {
-                        // Mensaje
-                        MessageBox.Show(
-                            "Invalid number entered. Operation will be canceled.",
-                            "Input Error"
-                        );
-                        // Finalizamos
+                        MessageBox.Show("Invalid CT number. Operation will be canceled.", "Input Error");
+                        foreach (Region region in allTempRegions)
+                            if (region != null && !region.IsErased)
+                                cls_00_DeleteEntity.DeleteEntity(region);
+                        return 0;
+                    }
+                    // Tracker
+                    string msgTrack = "Enter the starting number for Tracker:";
+                    string inputTrack = InstanciarFormularios.TextBoxFormOut(msgTrack, "1");
+                    if (string.IsNullOrWhiteSpace(inputTrack) || !int.TryParse(inputTrack, out trackStartIndex))
+                    {
+                        MessageBox.Show("Invalid Tracker number. Operation will be canceled.", "Input Error");
+                        foreach (Region region in allTempRegions)
+                            if (region != null && !region.IsErased)
+                                cls_00_DeleteEntity.DeleteEntity(region);
                         return 0;
                     }
                 }
                 // En caso de analizarlo
                 else
                 {
-                    contGenIndex = 1;
+                    ctStartIndex = 1;
+                    trackStartIndex = 1;
                 }
 
+                // Lista para almacenar todos los pares (CT, INV) detectados
+                List<(int ctNumber, int invNumber, Region ctRegion, Region invRegion)> regionOrderList =
+                    new List<(int, int, Region, Region)>();
+                // Iteramos por los CT
+                foreach (Region regionCT in validRegionContGen)
+                {
+                    // Obtenemos los Inversores contenidos en este CT
+                    List<Entity> contInvEntities = cls_12_GetInvInRegGen.GetInvInRegGen(
+                        tr, regionCT, contInvIds, infoRegiones
+                    );
+                    // Validamos
+                    if (contInvEntities == null || contInvEntities.Count == 0) continue;
+
+                    // Obtenemos regiones de inversores
+                    List<Region> invRegions = cls_12_GetInvRegions.GetInvRegions(
+                        contInvEntities, dictPolyToRegionContInv, validRegionContInv, infoRegiones
+                    );
+
+                    // Iteramos por las regiones de los Inversores
+                    foreach (Region invRegion in invRegions)
+                    {
+                        // Obtener etiqueta del Inversor
+                        List<Entity> invLabelEntities = cls_12_GetTrackInRegInv.
+                            GetEntInRegByPoint(tr, invRegion, invLabelIds);
+                        // Validamos
+                        if (invLabelEntities == null || invLabelEntities.Count != 1) continue;
+                        // Obtenemos la etiqueta del inversor
+                        Entity invLabelEnt = invLabelEntities.First();
+                        // Validamos
+                        if (invLabelEnt is MText mtext)
+                        {
+                            // Obtenemos el valor
+                            string text = mtext.Contents.Trim();
+                            // Separadores válidos posibles
+                            char[] validSeparators = { '.', '-', '_', ',', ';' };
+                            // Detectamos el separador 
+                            char? sep = validSeparators.FirstOrDefault(s => text.Contains(s));
+
+                            int ctNum = 0;
+                            int invNum = 0;
+                            // Validamos
+                            if (sep != null && sep != '\0')
+                            {
+                                // Dividimos por el separador detectado
+                                string[] parts = text.Split(new[] { sep.Value }, StringSplitOptions.None);
+                                // Validamos
+                                if (parts.Length == 2)
+                                {
+                                    // Extraemos campos numericos
+                                    int.TryParse(new string(parts[0].Where(char.IsDigit).ToArray()), out ctNum);
+                                    int.TryParse(new string(parts[1].Where(char.IsDigit).ToArray()), out invNum);
+                                }
+                            }
+                            // Almacenamos
+                            regionOrderList.Add((ctNum, invNum, regionCT, invRegion));
+                        }
+                    }
+                }
+
+                // Ordenar por CT y por Inversor
+                var orderedRegions = regionOrderList
+                    .OrderBy(x => x.ctNumber)
+                    .ThenBy(x => x.invNumber)
+                    .GroupBy(x => x.ctNumber)
+                    .ToList();
+
+                HashSet<ObjectId> createdLabelIds = new HashSet<ObjectId>();
                 // Contador global de etiquetas
                 int totalLabelsCreated = 0;
-                // Iteramos por los Contornos Generales
-                foreach (Region regionContGen in validRegionContGen)
+                // Procesamos en el orden correcto
+                foreach (var ctGroup in orderedRegions)
                 {
-                    // Procesamos CCentro Transformacion
-                    int labelsCreated = cls_12_ProcessCentroTrans.ProcessCentroTrans(
-                        regionContGen, tr, btr, contInvIds,
-                        dictPolyToRegionContInv, validRegionContInv,
-                        trackersIds, trackTag, stringLayer,
-                        propPreDict, contGenProp, contGenIndex,
+                    // Obtenemos la region del CT
+                    Region regionCT = ctGroup.First().ctRegion;
+                    // Lista de inversores ordenados dentro de este CT
+                    List<(int invNumber, Region invRegion)> invRegionsOrdered =
+                        ctGroup.Select(x => (x.invNumber, x.invRegion)).ToList();
+                    // Procesamos CT
+                    int labelsCreated = cls_12_ProcessCentroTrans.ProcessCentroTransByInvLabel(
+                        regionCT, tr, btr,
+                        trackersIds, stringLayer,
+                        propPreDict, contGenProp, ctStartIndex, trackStartIndex,
                         contInvProp, trackProp, stringProp,
-                        isHorizontal, labelsLayer,
+                        isHorizontal, labelsTrackLayer,
                         chosenStyle, chosenJustification, infoRegiones,
-                        dolarSelBool
+                        MPPtSelBool, charSepSel,
+                        invRegionsOrdered, ref createdLabelIds
                     );
                     // Actualizamos contador
-                    contGenIndex++;
+                    ctStartIndex++;
                     // Acumulamos etiquetas
                     totalLabelsCreated += labelsCreated;
                 }
@@ -456,6 +609,149 @@ namespace SOLAR.EL.RibbonButton.Civil.Buttons
                 cls_00_ShowInfoBox.ShowStringBuilder(
                     $"📌 Entities by Document Summary:", infoRegiones.ToString()
                 );
+
+                // Actualizamos etiquetas creadas por Inversor
+                foreach (var ctGroup in orderedRegions)
+                {
+                    // Obtenemos la region del CT
+                    Region regionCT = ctGroup.First().ctRegion;
+                    // Accedemos a sus Inversores
+                    List<(int invNumber, Region invRegion)> invRegionsOrdered =
+                        ctGroup.Select(x => (x.invNumber, x.invRegion)).ToList();
+                    // Iteramos Inversores
+                    foreach (var (invNumber, invRegion) in invRegionsOrdered)
+                    {
+                        // Validamos
+                        if (invRegion == null) continue;
+
+                        // Obtenemos etiquetas por Inversor
+                        List<Entity> invLabelEntities = cls_12_GetTrackInRegInv.
+                            GetEntInRegByPoint(tr, invRegion, createdLabelIds);
+                        // Validamos
+                        if (invLabelEntities == null || invLabelEntities.Count == 0) continue;
+
+                        // Iteramos etiquetas
+                        foreach (Entity ent in invLabelEntities)
+                        {
+                            // Validamos
+                            if (!(ent is MText mText)) continue;
+
+                            // Obtenemos los campos
+                            string[] fields = mText.Contents.Split(new[] { charSepSel }, StringSplitOptions.None);
+                            // Accedemos al campo del Inversor (segundo)
+                            string secondField = fields[1];
+                            // Validamos
+                            if (secondField.Contains("X"))
+                            {
+                                // Formateamos
+                                string formattedInvNum = invNumber.ToString("D2");
+                                secondField = Regex.Replace(secondField, "X+", formattedInvNum);
+                                fields[1] = secondField;
+
+                                // Recomponemos el texto
+                                string newText = string.Join(charSepSel, fields);
+
+                                // Actualizamos valor
+                                cls_12_RemoveTrackFieldFromLabel.UpdateMTextContents(
+                                    mText, newText, infoRegiones,
+                                    "Label updated",
+                                    "Error updating label"
+                                );
+                            }
+                        }
+
+                        // Numeracion de strings global por inversor
+                        int stringIndex = 1;
+                        // Agrupamos por Tracker (primero limpiamos todo antes del espacio)
+                        var groupedByTracker = invLabelEntities
+                            .OfType<MText>()
+                            .GroupBy(m =>
+                            {
+                                // Obtenemos contenido
+                                string fullText = m.Contents ?? string.Empty;
+                                // Split por el espacio y cogemos primera parte
+                                int spaceIndex = fullText.IndexOf(' ');
+                                string cleanLabel = spaceIndex > -1
+                                    ? fullText.Substring(0, spaceIndex)
+                                    : fullText;
+
+                                // Obtenemos los campos
+                                string[] fields = cleanLabel.Split(new[] { charSepSel }, StringSplitOptions.None);
+
+                                // Obtenemos el campo del Tracker (penultimo)
+                                string trackerField = fields[fields.Length - 2].Trim();
+                                // return
+                                return trackerField;
+                            })
+                            .ToList();
+                        // Iteramos
+                        foreach (var group in groupedByTracker)
+                        {
+                            // Ordenamos por String
+                            var orderedGroup = group
+                                .OrderBy(m => m, Comparer<MText>.Create((m1, m2) =>
+                                {
+                                    return isHorizontal
+                                        ? cls_00_GetEntityCentroid.CompareEntitiesByPositionHorizontal(m1, m2, 0.01)
+                                        : cls_00_GetEntityCentroid.CompareEntitiesByPosition(m1, m2, 0.01);
+                                }))
+                                .ToList();
+                            // Iteramos
+                            foreach (MText mText in orderedGroup)
+                            {
+                                // Obtenemos contenido
+                                string fullText = mText.Contents ?? string.Empty;
+                                // Split por el espacio y cogemos primera parte
+                                int spaceIndex = fullText.IndexOf(' ');
+                                string cleanLabel = spaceIndex > -1
+                                    ? fullText.Substring(0, spaceIndex)
+                                    : fullText;
+
+                                // Obtenemos los campos
+                                string[] fields = cleanLabel.Split(new[] { charSepSel }, StringSplitOptions.None);
+
+                                // Nos quedamos con el campo del String (ultimo)
+                                int lastIndex = fields.Length - 1;
+                                string lastField = fields[lastIndex].Trim();
+
+                                // Validamos que tenga X
+                                if (lastField.Contains("X"))
+                                {
+                                    // Formateamos
+                                    string formattedStringNum = stringIndex.ToString("D2");
+                                    lastField = Regex.Replace(lastField, "X+", formattedStringNum);
+
+                                    // Reconstruir etiqueta completa con " +/-" otra vez
+                                    fields[lastIndex] = lastField;
+                                    string newText = string.Join(charSepSel, fields) + " +/-";
+
+                                    // Actualizamos contador
+                                    stringIndex++;
+
+                                    // Actualizamos valor
+                                    cls_12_RemoveTrackFieldFromLabel.UpdateMTextContents(
+                                        mText, newText, infoRegiones,
+                                        "String label updated",
+                                        "Error updating string label"
+                                    );
+                                }
+                            }
+                        }
+                    }
+                }
+
+                // Si el usuario no quiere mostrar el campo Tracker en la etiqueta
+                if (!trackLabelSelBool)
+                {
+                    // Iteramos
+                    foreach (ObjectId lblId in createdLabelIds)
+                    {
+                        // Actualizamos etiqueta
+                        cls_12_RemoveTrackFieldFromLabel.RemoveTrackerFieldFromLabel(
+                            tr, lblId, charSepSel, infoRegiones
+                        );
+                    }
+                }
 
                 // Borrar regiones de contornos generales
                 foreach (Region region in validRegionContGen)
@@ -488,6 +784,8 @@ namespace SOLAR.EL.RibbonButton.Civil.Buttons
                 return 0;
             }
         }
+
+
 
 
 

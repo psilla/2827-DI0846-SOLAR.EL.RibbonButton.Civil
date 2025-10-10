@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Autodesk.AutoCAD.DatabaseServices;
 
-namespace SOLAR.EL.RibbonButton.Civil.Buttons
+namespace SOLAR.EL.RibbonButton.Autocad.Buttons
 {
     internal class cls_12_GetStringsInTrack
     {

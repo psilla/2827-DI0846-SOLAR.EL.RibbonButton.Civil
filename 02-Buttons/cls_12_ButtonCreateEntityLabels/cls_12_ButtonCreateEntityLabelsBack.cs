@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using Autodesk.AutoCAD.Runtime;
 using System.Windows.Forms;
-using TYPSA.SharedLib.Civil.Buttons;
-using TYPSA.SharedLib.Civil.Main;
-using SOLAR.EL.RibbonButton.Civil.Main;
+using TYPSA.SharedLib.Autocad.Buttons;
+using TYPSA.SharedLib.Autocad.Main;
+using SOLAR.EL.RibbonButton.Autocad.Main;
 
-namespace SOLAR.EL.RibbonButton.Civil.Buttons
+namespace SOLAR.EL.RibbonButton.Autocad.Buttons
 {
     internal class cls_12_ButtonCreateEntityLabelsBack
     {

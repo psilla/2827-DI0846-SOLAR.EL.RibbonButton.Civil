@@ -5,7 +5,7 @@ using Autodesk.AutoCAD.DatabaseServices;
 using Autodesk.AutoCAD.EditorInput;
 using System.Linq;
 
-namespace SOLAR.EL.RibbonButton.Civil.Buttons
+namespace SOLAR.EL.RibbonButton.Autocad.Buttons
 {
     internal class cls_12_GetEntityElev
     {
@@ -33,20 +33,24 @@ namespace SOLAR.EL.RibbonButton.Civil.Buttons
                 if (dbObj == null) continue;
 
                 double elev;
-
+                // Polyline
                 if (dbObj is Polyline pl)
                 {
-                    // Elevación de polilínea
                     elev = pl.Elevation;
                 }
+                // BlockReference
                 else if (dbObj is BlockReference br)
                 {
-                    // Elevación de bloque (posición Z)
                     elev = br.Position.Z;
+                }
+                // MText
+                else if (dbObj is MText mt)
+                {
+                    elev = mt.Location.Z;
                 }
                 else
                 {
-                    // Si no es ninguno de los tipos que nos interesan, seguimos
+                    // Obviamos
                     continue;
                 }
 

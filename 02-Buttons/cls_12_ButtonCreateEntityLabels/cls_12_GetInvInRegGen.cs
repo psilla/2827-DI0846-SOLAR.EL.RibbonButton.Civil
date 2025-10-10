@@ -2,9 +2,9 @@
 using System.Linq;
 using System.Text;
 using Autodesk.AutoCAD.DatabaseServices;
-using TYPSA.SharedLib.Civil.GetEntities;
+using TYPSA.SharedLib.Autocad.GetEntities;
 
-namespace SOLAR.EL.RibbonButton.Civil.Buttons
+namespace SOLAR.EL.RibbonButton.Autocad.Buttons
 {
     internal class cls_12_GetInvInRegGen
     {
@@ -22,8 +22,8 @@ namespace SOLAR.EL.RibbonButton.Civil.Buttons
 
             // Diccionario de Inversores por region
             Dictionary<string, List<DBObject>> dictContInvByRegion =
-                cls_00_GetBlockRefOrPolyByRegion.GetBlockRefOrPolyByRegion(
-                    tr, regionContGen, contInvIds, false
+                cls_00_GetEntityByRegion.GetEntityByRegionByPoint(
+                    tr, regionContGen, contInvIds
                 );
             // Validamos
             if (dictContInvByRegion == null || dictContInvByRegion.Count == 0)

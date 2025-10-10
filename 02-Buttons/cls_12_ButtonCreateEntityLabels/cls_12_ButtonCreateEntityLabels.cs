@@ -1,12 +1,11 @@
 ﻿using Autodesk.AutoCAD.Runtime;
-using TYPSA.SharedLib.Civil.Buttons;
-using SOLAR.EL.RibbonButton.Civil.Main;
-using TYPSA.SharedLib.Civil.Main;
+using TYPSA.SharedLib.Autocad.Buttons;
+using SOLAR.EL.RibbonButton.Autocad.Main;
+using TYPSA.SharedLib.Autocad.Main;
 using System;
 using System.Windows.Forms;
 
-
-namespace SOLAR.EL.RibbonButton.Civil.Buttons
+namespace SOLAR.EL.RibbonButton.Autocad.Buttons
 {
     internal class cls_12_ButtonCreateEntityLabels
     {

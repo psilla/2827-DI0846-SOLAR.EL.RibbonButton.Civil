@@ -1,4 +1,4 @@
-﻿namespace SOLAR.EL.RibbonButton.Civil.Buttons
+﻿namespace SOLAR.EL.RibbonButton.Autocad.Buttons
 {
     public class SolarSettings
     {
@@ -6,13 +6,15 @@
         public string ContGenTag { get; set; } = "Centros de Transformacion";
         public string ContInvTag { get; set; } = "Inversores";
         public string TrackTag { get; set; } = "Trackers";
+        public string ContInvLabelTag { get; set; } = "Etiquetas Inversores";
 
         // Capas
         public string ContGenLayer { get; set; } = "_SP-E-CONTORNO-CT";
         public string ContInvLayer { get; set; } = "_SP-E-CONTORNO-INVERSOR";
         public string TrackLayer { get; set; } = "_SP-S-TRACKER";
         public string StringLayer { get; set; } = "_SP-S-STRING";
-        public string LabelsLayer { get; set; } = "_SP-E-STRINGS-TXT";
+        public string LabelsTrackLayer { get; set; } = "_SP-E-STRINGS-TXT";
+        public string LabelsInvLayer { get; set; } = "_SP-E-INVERSOR-TXT";
 
         // Tipologías Tracker
         public string TipTrack { get; set; } = "Tracker";

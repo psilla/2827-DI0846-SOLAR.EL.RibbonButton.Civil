@@ -2,42 +2,52 @@
 using System.Linq;
 using System.Text;
 using Autodesk.AutoCAD.DatabaseServices;
-using TYPSA.SharedLib.Civil.GetEntities;
+using TYPSA.SharedLib.Autocad.GetEntities;
 
-namespace SOLAR.EL.RibbonButton.Civil.Buttons
+namespace SOLAR.EL.RibbonButton.Autocad.Buttons
 {
     internal class cls_12_GetTrackInRegInv
     {
-        public static List<Entity> GetTrackInRegInv(
+        public static List<Entity> GetEntInRegByPoint(
             Transaction tr,
-            Region invRegion,
-            HashSet<ObjectId> trackersIds,
-            string trackTag,
-            StringBuilder infoRegiones
+            Region entityRegion,
+            HashSet<ObjectId> entitiesIds
         )
         {
-            // Mostramos
-            infoRegiones.AppendLine($"\t- Inverter Region Handle: {invRegion.Handle}");
-
-            // Diccionario de Trackers por region
-            Dictionary<string, List<DBObject>> dictTrackersByRegion =
-                cls_00_GetBlockRefOrPolyByRegion.GetBlockRefOrPolyByRegion(
-                    tr, invRegion, trackersIds, true
+            // Diccionario de Entidades por region
+            Dictionary<string, List<DBObject>> dictEntByRegion =
+                cls_00_GetEntityByRegion.GetEntityByRegionByPoint(
+                    tr, entityRegion, entitiesIds
                 );
-
-            // Obtenemos lista de Trackers por region 
-            List<DBObject> trackerList =
-                dictTrackersByRegion.SelectMany(kv => kv.Value).ToList();
-
+            // Obtenemos lista de Objetos por region 
+            List<DBObject> objList =
+                dictEntByRegion.SelectMany(kv => kv.Value).ToList();
             // Convertimos a entidades
-            List<Entity> trackerEntities = trackerList.OfType<Entity>().ToList();
-
-            // Mostramos
-            infoRegiones.AppendLine($"\t\t• Total {trackTag}: {trackerEntities.Count}");
-
+            List<Entity> entList = objList.OfType<Entity>().ToList();
             // return
-            return trackerEntities;
+            return entList;
         }
+
+        public static List<Entity> GetEntInRegByPoints(
+            Transaction tr,
+            Region entityRegion,
+            HashSet<ObjectId> entitiesIds
+        )
+        {
+            // Diccionario de Entidades por región
+            Dictionary<string, List<DBObject>> dictEntByRegion =
+                cls_00_GetEntityByRegion.GetEntityByRegionByPoints(
+                    tr, entityRegion, entitiesIds
+                );
+            // Obtenemos lista de Objetos por region 
+            List<DBObject> objList =
+                dictEntByRegion.SelectMany(kv => kv.Value).ToList();
+            // Convertimos a entidades
+            List<Entity> entList = objList.OfType<Entity>().ToList();
+            // Return
+            return entList;
+        }
+
 
 
 

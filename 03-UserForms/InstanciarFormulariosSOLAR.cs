@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Windows.Forms;
 
-namespace SOLAR.EL.RibbonButton.Revit.UserForms
+namespace SOLAR.EL.RibbonButton.Autocad.UserForms
 {
     internal class InstanciarFormulariosSOLAR
     {

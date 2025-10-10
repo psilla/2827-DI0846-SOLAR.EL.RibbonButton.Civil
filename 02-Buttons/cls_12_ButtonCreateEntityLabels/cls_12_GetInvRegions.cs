@@ -3,11 +3,11 @@ using System.Linq;
 using System.Text;
 using Autodesk.AutoCAD.DatabaseServices;
 
-namespace SOLAR.EL.RibbonButton.Civil.Buttons
+namespace SOLAR.EL.RibbonButton.Autocad.Buttons
 {
-    internal static class cls_12_GetOrderedInvReg
+    internal static class cls_12_GetInvRegions
     {
-        public static List<Region> GetOrderedInverterRegions(
+        public static List<Region> GetInvRegions(
             List<Entity> contInvEntities,
             Dictionary<Handle, Handle> dictPolyToRegionContInv,
             List<Region> validRegionContInv,

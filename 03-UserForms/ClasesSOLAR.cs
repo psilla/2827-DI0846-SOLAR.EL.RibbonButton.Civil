@@ -1,7 +1,7 @@
 ﻿using System.Drawing;
 using System.Windows.Forms;
 
-namespace SOLAR.EL.RibbonButton.Revit.UserForms
+namespace SOLAR.EL.RibbonButton.Autocad.UserForms
 {
     internal class ClasesSOLAR : Form
     {
@@ -36,7 +36,22 @@ namespace SOLAR.EL.RibbonButton.Revit.UserForms
             return new Point(x, y);
         }
 
+        private void InitializeComponent()
+        {
+            this.SuspendLayout();
+            // 
+            // ClasesSOLAR
+            // 
+            this.ClientSize = new System.Drawing.Size(292, 212);
+            this.Name = "ClasesSOLAR";
+            this.Load += new System.EventHandler(this.ClasesSOLAR_Load);
+            this.ResumeLayout(false);
 
+        }
 
+        private void ClasesSOLAR_Load(object sender, System.EventArgs e)
+        {
+
+        }
     }
 }

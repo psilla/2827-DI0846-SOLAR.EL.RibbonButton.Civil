@@ -1,17 +1,16 @@
-﻿using Autodesk.AutoCAD.Runtime;
-using Autodesk.AutoCAD.DatabaseServices;
+﻿using Autodesk.AutoCAD.DatabaseServices;
 using Autodesk.AutoCAD.ApplicationServices;
 using Application = Autodesk.AutoCAD.ApplicationServices.Application;
 using System.Windows.Forms;
 using System;
 using Autodesk.AutoCAD.EditorInput;
-using TYPSA.SharedLib.Civil.GetDocument;
-using TYPSA.SharedLib.Civil.Metrics;
-using TYPSA.SharedLib.Civil.Main;
-using TYPSA.SharedLib.Civil.UserForms;
-using SOLAR.EL.RibbonButton.Civil.Buttons;
+using TYPSA.SharedLib.Autocad.GetDocument;
+using TYPSA.SharedLib.Autocad.Metrics;
+using TYPSA.SharedLib.Autocad.Main;
+using TYPSA.SharedLib.Autocad.UserForms;
+using SOLAR.EL.RibbonButton.Autocad.Buttons;
 
-namespace SOLAR.EL.RibbonButton.Civil.Main
+namespace SOLAR.EL.RibbonButton.Autocad.Main
 {
     internal class cls_12_MainCreateEntityLabelsBack
     {
@@ -82,11 +81,11 @@ namespace SOLAR.EL.RibbonButton.Civil.Main
                                         BlockTableRecord btr = cls_00_DocumentInfo.GetBlockTableRecordForWrite(tr, bt);
 
                                         // Llamamos al Main
-                                        int totalLabelsCreated = cls_12_ProcessEntityLabels.MainCreateEntityLabels(
+                                        int totalLabelsCreated = cls_12_ProcessEntityLabels.ProcessEntityLabels(
                                             ed, db, tr, btr,
                                             solarSet.ContGenLayer, solarSet.ContInvLayer, solarSet.TrackLayer,
-                                            solarSet.StringLayer, solarSet.LabelsLayer,
-                                            solarSet.ContGenTag, solarSet.ContInvTag, solarSet.TrackTag,
+                                            solarSet.StringLayer, solarSet.LabelsTrackLayer, solarSet.LabelsInvLayer,
+                                            solarSet.ContGenTag, solarSet.ContInvTag, solarSet.TrackTag, solarSet.ContInvLabelTag,
                                             solarSet.ContGenProp, solarSet.ContInvProp, solarSet.TrackProp, solarSet.StringProp,
                                             solarSet, solarSet.TipTrack, solarSet.TipEstFija
                                         );

@@ -6,9 +6,9 @@ using System.Windows.Media;
 using System;
 using System.Windows.Forms;
 using SOLAR.EL.RibbonButton.Civil.Properties;
-using SOLAR.EL.RibbonButton.Civil.Buttons;
+using SOLAR.EL.RibbonButton.Autocad.Buttons;
 
-namespace SOLAR.EL.RibbonButton.Civil
+namespace SOLAR.EL.RibbonButton.Autocad
 {
     public class App : IExtensionApplication
     {

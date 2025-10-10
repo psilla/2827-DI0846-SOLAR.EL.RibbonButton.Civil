@@ -72,12 +72,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="01-Ribbon\App.cs" />
+    <Compile Include="02-Buttons\cls_12_ButtonCreateEntityLabels\cls_12_RemoveTrackFieldFromLabel.cs" />
     <Compile Include="02-Buttons\cls_12_ButtonCreateEntityLabels\cls_12_MainCreateEntityLabels.cs" />
     <Compile Include="02-Buttons\cls_12_ButtonCreateEntityLabels\cls_12_ButtonCreateEntityLabelsBack.cs" />
     <Compile Include="02-Buttons\cls_12_ButtonCreateEntityLabels\cls_12_MainCreateEntityLabelsBack.cs" />
     <Compile Include="02-Buttons\cls_12_ButtonCreateEntityLabels\cls_12_ProcessEntityLabels.cs" />
     <Compile Include="02-Buttons\cls_12_ButtonCreateEntityLabels\cls_12_ProcessCentroTrans.cs" />
-    <Compile Include="02-Buttons\cls_12_ButtonCreateEntityLabels\cls_12_GetOrderedInvReg.cs" />
+    <Compile Include="02-Buttons\cls_12_ButtonCreateEntityLabels\cls_12_GetInvRegions.cs" />
     <Compile Include="02-Buttons\cls_12_ButtonCreateEntityLabels\cls_12_ProcessInverter.cs" />
     <Compile Include="02-Buttons\cls_12_ButtonCreateEntityLabels\cls_12_ProcessTrack.cs" />
     <Compile Include="02-Buttons\cls_12_ButtonCreateEntityLabels\cls_12_GetEntityElev.cs" />
@@ -109,15 +110,18 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="03-UserForms\ClasesSOLAR.resx">
+      <DependentUpon>ClasesSOLAR.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\0000-TYPSA.SharedLibCivil\TYPSA.SharedLibCivil\TYPSA.SharedLibCivil.csproj">
-      <Project>{755847ff-9f9b-4ef0-85f7-534d02e128a2}</Project>
-      <Name>TYPSA.SharedLibCivil</Name>
+    <ProjectReference Include="..\0000-TYPSA.SharedLibAutocad\TYPSA.SharedLibAutocad\TYPSA.SharedLibAutocad.csproj">
+      <Project>{631b9318-a021-4b24-87f0-3fec637eae77}</Project>
+      <Name>TYPSA.SharedLibAutocad</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
