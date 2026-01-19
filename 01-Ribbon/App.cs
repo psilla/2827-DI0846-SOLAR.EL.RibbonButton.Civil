@@ -1,12 +1,14 @@
-﻿using Autodesk.AutoCAD.Runtime;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
-using System.Windows.Media.Imaging;
-using System.Windows.Media;
-using System;
 using System.Windows.Forms;
-using SOLAR.EL.RibbonButton.Civil.Properties;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using Autodesk.AutoCAD.Runtime;
+using Autodesk.Windows;
 using SOLAR.EL.RibbonButton.Autocad.Buttons;
+using _0000_XX0000_SOLAR.EL.RibbonButton.Civil.Properties;
 
 namespace SOLAR.EL.RibbonButton.Autocad
 {
@@ -43,53 +45,123 @@ namespace SOLAR.EL.RibbonButton.Autocad
 
                 /////////////// ADDING BUTTONS //////////////////////
 
-                // CREATE ENTITY LABELS 
-
+                // CREATE STRING LABELS 
+                // Document
                 Autodesk.Windows.RibbonButton button1 = CreateRibbonButton(
-                    name: "Create Entity Labels",
-                    text: "Create Entity Labels",
+                    name: "Create String Labels Doc",
+                    text: "Create String Labels",
                     image: Resources.trackLabels,
-                    commandParameter: "CreateEntityLabels",
-                    tooltipTitle: "Create Entity Labels",
-                    tooltipContent: "Creates labels for Trackers inside detected regions in active document."
+                    commandParameter: "CreateStringLabels",
+                    tooltipTitle: "Create String Labels Doc",
+                    tooltipContent: "Creates String labels in active document."
                 );
-
-                // Añadimos button
-                rps1.Items.Add(button1);
-
-                // Separador visual
-                rps1.Items.Add(new Autodesk.Windows.RibbonSeparator());
-
-                // CREATE ENTITY LABELS BACK
-
+                // Background
                 Autodesk.Windows.RibbonButton button2 = CreateRibbonButton(
-                    name: "Create Entity Labels Back",
-                    text: "Create Entity Labels Back",
+                    name: "Create String Labels Back",
+                    text: "Create String Labels",
                     image: Resources.trackLabels,
-                    commandParameter: "CreateEntityLabelsBack",
-                    tooltipTitle: "Create Entity Labels Back",
-                    tooltipContent: "Creates labels for Trackers inside detected regions in selected files."
+                    commandParameter: "CreateStringLabelsBack",
+                    tooltipTitle: "Create String Labels Back",
+                    tooltipContent: "Creates String labels in selected files."
+                );
+
+                // Crear dropdown
+                RibbonSplitButton entLabelsDropdown = CreateRibbonSplitButton(
+                    "stringLabelsDropdown",
+                    "String Labels",
+                    Resources.trackLabels,
+                    new List<Autodesk.Windows.RibbonButton> { button1, button2 }
                 );
 
                 // Añadimos button
-                rps1.Items.Add(button2);
+                rps1.Items.Add(entLabelsDropdown);
 
                 // Separador visual
                 rps1.Items.Add(new Autodesk.Windows.RibbonSeparator());
 
-                // EXPORT LABELS TO EXCEL 
+                //// EXPORT STRING LABELS TO EXCEL 
+                //// Document
+                //Autodesk.Windows.RibbonButton button3 = CreateRibbonButton(
+                //    name: "Export String Labels To Excel Doc",
+                //    text: "Export String Labels To Excel",
+                //    image: Resources.labExport,
+                //    commandParameter: "ExportStringLabelsToExcel",
+                //    tooltipTitle: "Export String Labels To Excel",
+                //    tooltipContent: "Export to Excel String labels in active document."
+                //);
+                //// Background
+                //Autodesk.Windows.RibbonButton button4 = CreateRibbonButton(
+                //    name: "Export String Labels To Excel Back",
+                //    text: "Export String Labels To Excel",
+                //    image: Resources.labExport,
+                //    commandParameter: "ExportStringLabelsToExcelBack",
+                //    tooltipTitle: "Export String Labels To Excel Back",
+                //    tooltipContent: "Export to Excel String labels in selected files."
+                //);
 
-                Autodesk.Windows.RibbonButton button3 = CreateRibbonButton(
-                    name: "Export Labels To Excel",
-                    text: "Export Labels To Excel",
-                    image: Resources.excelFile,
-                    commandParameter: "ExportLabelsToExcel",
-                    tooltipTitle: "Export Labels To Excel",
-                    tooltipContent: "Exports labels of Trackers to Excel."
+                //// Crear dropdown
+                //RibbonSplitButton entLabelsExcelDropdown = CreateRibbonSplitButton(
+                //    "stringLabelsExcelDropdown",
+                //    "String Labels Excel",
+                //    Resources.labExport,
+                //    new List<Autodesk.Windows.RibbonButton> { button3, button4 }
+                //);
+
+                //// Añadimos button
+                //rps1.Items.Add(entLabelsExcelDropdown);
+
+                //// Separador visual
+                //rps1.Items.Add(new Autodesk.Windows.RibbonSeparator());
+
+                //// CREATE STRING LABELS FROM EXCEL
+                //// Document
+                //Autodesk.Windows.RibbonButton button5 = CreateRibbonButton(
+                //    name: "Create String Labels from Excel Doc",
+                //    text: "Create String Labels from Excel",
+                //    image: Resources.labImport,
+                //    commandParameter: "CreateStringLabelsFromExcelDoc",
+                //    tooltipTitle: "Create String Labels from Excel Doc",
+                //    tooltipContent: "Creates from Excel String labels in active document."
+                //);
+
+                //// Añadimos button
+                //rps1.Items.Add(button5);
+
+                //// Separador visual
+                //rps1.Items.Add(new Autodesk.Windows.RibbonSeparator());
+
+                //// CREATE FLAGS FROM INTER
+                //// Document
+                //Autodesk.Windows.RibbonButton button6 = CreateRibbonButton(
+                //    name: "Create Flags From Inter",
+                //    text: "Create Flags From Inter",
+                //    image: Resources.flagInter,
+                //    commandParameter: "CreateFlagsFromInter",
+                //    tooltipTitle: "Create Flags From Inter",
+                //    tooltipContent: "Create Flags From Intersections between Cable Trenches."
+                //);
+
+                //// Añadimos button
+                //rps1.Items.Add(button6);
+
+                //// Separador visual
+                //rps1.Items.Add(new Autodesk.Windows.RibbonSeparator());
+
+                // CABLES FROM ENTITIES 
+                Autodesk.Windows.RibbonButton button7 = CreateRibbonButton(
+                    name: "Cables From Entity",
+                    text: "Cables From Entity",
+                    image: Resources.cableLength,
+                    commandParameter: "CablesFromEntity",
+                    tooltipTitle: "Cables From Entity",
+                    tooltipContent: "Cables From Entity."
                 );
 
                 // Añadimos button
-                rps1.Items.Add(button3);
+                rps1.Items.Add(button7);
+
+                // Separador visual
+                rps1.Items.Add(new Autodesk.Windows.RibbonSeparator());
 
                 // Definimos el tab activo
                 rtab.IsActive = true;
@@ -119,19 +191,39 @@ namespace SOLAR.EL.RibbonButton.Autocad
                     string command = ribbonButton.CommandParameter as string;
                     switch (command)
                     {
-                        case "CreateEntityLabels":
+                        case "CreateStringLabels":
                             // Instanciamos la clase
-                            cls_12_ButtonCreateEntityLabels.CreateEntityLabels();
+                            cls_12_ButtonCreateEntityLabels.ButtonCreateEntityLabels();
                             break;
 
-                        case "CreateEntityLabelsBack":
+                        case "CreateStringLabelsBack":
                             // Instanciamos la clase
-                            cls_12_ButtonCreateEntityLabelsBack.CreateEntityLabelsBack();
+                            cls_12_ButtonCreateEntityLabelsBack.ButtonCreateEntityLabelsBack();
                             break;
 
-                        case "ExportLabelsToExcel":
+                        case "ExportStringLabelsToExcel":
                             // Instanciamos la clase
-                            cls_13_ButtonExportLabelsToExcel.ExportLabelsToExcel();
+                            cls_13_ButtonExportLabelsToExcel.ButtonExportLabelsToExcel();
+                            break;
+
+                        case "ExportStringLabelsToExcelBack":
+                            // Instanciamos la clase
+                            cls_13_ButtonExportLabelsToExcelBack.ButtonExportLabelsToExcelBack();
+                            break;
+
+                        case "CreateLabelsFromExcel":
+                            // Instanciamos la clase
+                            cls_14_ButtonCreateLabelsFromExcel.ButtonCreateLabelsFromExcel();
+                            break;
+
+                        case "CreateFlagsFromInter":
+                            // Instanciamos la clase
+                            cls_15_ButtonCreateFlagsFromInter.ButtonCreateFlagsFromInter();
+                            break;
+
+                        case "CablesFromEntity":
+                            // Instanciamos la clase
+                            cls_16_ButtonCablesFromEnt.ButtonCablesFromEntity();
                             break;
 
                         // Default case for unhandled commands. No action is taken.
@@ -207,6 +299,36 @@ namespace SOLAR.EL.RibbonButton.Autocad
             };
 
             return button;
+        }
+
+        private Autodesk.Windows.RibbonSplitButton CreateRibbonSplitButton(
+            string name,
+            string text,
+            Image image,
+            List<Autodesk.Windows.RibbonButton> buttons
+        )
+        {
+            ImageSource imageSource = GetImageSource(image);
+
+            Autodesk.Windows.RibbonSplitButton splitButton =
+                new Autodesk.Windows.RibbonSplitButton
+                {
+                    Name = name,
+                    Text = text,
+                    ShowImage = true,
+                    ShowText = true,
+                    Size = Autodesk.Windows.RibbonItemSize.Large,
+                    LargeImage = imageSource
+                };
+
+            // Iteramos
+            foreach (var button in buttons)
+            {
+                splitButton.Items.Add(button);
+            }
+
+            // return
+            return splitButton;
         }
 
 

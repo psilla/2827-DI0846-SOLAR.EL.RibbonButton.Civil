@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SOLAR.EL.RibbonButton.Civil.Properties {
+namespace _0000_XX0000_SOLAR.EL.RibbonButton.Civil.Properties {
     using System;
     
     
@@ -63,9 +63,49 @@ namespace SOLAR.EL.RibbonButton.Civil.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap cableLength {
+            get {
+                object obj = ResourceManager.GetObject("cableLength", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap excelFile {
             get {
                 object obj = ResourceManager.GetObject("excelFile", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap flagInter {
+            get {
+                object obj = ResourceManager.GetObject("flagInter", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap labExport {
+            get {
+                object obj = ResourceManager.GetObject("labExport", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap labImport {
+            get {
+                object obj = ResourceManager.GetObject("labImport", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

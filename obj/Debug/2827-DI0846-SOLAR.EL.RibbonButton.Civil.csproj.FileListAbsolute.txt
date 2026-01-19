@@ -48,7 +48,6 @@ C:\2827-DI0846-SOLAR.EL.RibbonButton.Civil\obj\Debug\2827-DI0846-SOLAR.EL.Ribbon
 C:\2827-DI0846-SOLAR.EL.RibbonButton.Civil\bin\Debug\TYPSA.SharedLibAutocad.dll
 C:\2827-DI0846-SOLAR.EL.RibbonButton.Civil\bin\Debug\TYPSA.SharedLibAutocad.pdb
 C:\2827-DI0846-SOLAR.EL.RibbonButton.Civil\bin\Debug\TYPSA.SharedLibAutocad.dll.config
-C:\2827-DI0846-SOLAR.EL.RibbonButton.Civil\obj\Debug\SOLAR.EL.RibbonButton.Autocad.UserForms.ClasesSOLAR.resources
 C:\2827-DI0846-SOLAR.EL.RibbonButton.Civil\bin\Debug\EPPlus.dll
 C:\2827-DI0846-SOLAR.EL.RibbonButton.Civil\bin\Debug\System.Text.Encoding.CodePages.dll
 C:\2827-DI0846-SOLAR.EL.RibbonButton.Civil\bin\Debug\EPPlus.Interfaces.dll
@@ -65,3 +64,11 @@ C:\2827-DI0846-SOLAR.EL.RibbonButton.Civil\bin\Debug\System.Memory.xml
 C:\2827-DI0846-SOLAR.EL.RibbonButton.Civil\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
 C:\2827-DI0846-SOLAR.EL.RibbonButton.Civil\bin\Debug\System.Numerics.Vectors.xml
 C:\2827-DI0846-SOLAR.EL.RibbonButton.Civil\bin\Debug\System.Buffers.xml
+C:\2827-DI0846-SOLAR.EL.RibbonButton.Civil\bin\Debug\TYPSA.SharedLibForms.pdb
+C:\2827-DI0846-SOLAR.EL.RibbonButton.Civil\bin\Debug\TYPSA.SharedLibForms.dll
+C:\2827-DI0846-SOLAR.EL.RibbonButton.Civil\bin\Debug\TYPSA.SharedLibForms.dll.config
+C:\2827-DI0846-SOLAR.EL.RibbonButton.Civil\bin\Debug\TYPSA.SharedLibExcel.dll
+C:\2827-DI0846-SOLAR.EL.RibbonButton.Civil\bin\Debug\TYPSA.SharedLibExcel.pdb
+C:\2827-DI0846-SOLAR.EL.RibbonButton.Civil\bin\Debug\TYPSA.SharedLibExcel.dll.config
+C:\2827-DI0846-SOLAR.EL.RibbonButton.Civil\bin\Debug\00-UserForms\SelectFilesDialog.resx
+C:\2827-DI0846-SOLAR.EL.RibbonButton.Civil\bin\Debug\00-UserForms\SelectFilesDialog.cs

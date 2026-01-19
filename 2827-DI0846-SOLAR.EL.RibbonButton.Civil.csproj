@@ -72,32 +72,63 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="01-Ribbon\App.cs" />
-    <Compile Include="02-Buttons\cls_12_ButtonCreateEntityLabels\cls_12_RemoveTrackFieldFromLabel.cs" />
-    <Compile Include="02-Buttons\cls_12_ButtonCreateEntityLabels\cls_12_MainCreateEntityLabels.cs" />
-    <Compile Include="02-Buttons\cls_12_ButtonCreateEntityLabels\cls_12_ButtonCreateEntityLabelsBack.cs" />
-    <Compile Include="02-Buttons\cls_12_ButtonCreateEntityLabels\cls_12_MainCreateEntityLabelsBack.cs" />
-    <Compile Include="02-Buttons\cls_12_ButtonCreateEntityLabels\cls_12_ProcessEntityLabels.cs" />
-    <Compile Include="02-Buttons\cls_12_ButtonCreateEntityLabels\cls_12_ProcessCentroTrans.cs" />
-    <Compile Include="02-Buttons\cls_12_ButtonCreateEntityLabels\cls_12_GetInvRegions.cs" />
-    <Compile Include="02-Buttons\cls_12_ButtonCreateEntityLabels\cls_12_ProcessInverter.cs" />
-    <Compile Include="02-Buttons\cls_12_ButtonCreateEntityLabels\cls_12_ProcessTrack.cs" />
-    <Compile Include="02-Buttons\cls_12_ButtonCreateEntityLabels\cls_12_GetEntityElev.cs" />
-    <Compile Include="02-Buttons\cls_12_ButtonCreateEntityLabels\cls_12_ButtonCreateEntityLabels.cs" />
-    <Compile Include="02-Buttons\cls_12_ButtonCreateEntityLabels\cls_12_DrawStringLabel.cs" />
-    <Compile Include="02-Buttons\cls_12_ButtonCreateEntityLabels\cls_12_GetBottomEdgeMidPoint.cs" />
-    <Compile Include="02-Buttons\cls_12_ButtonCreateEntityLabels\cls_12_GetInvInRegGen.cs" />
-    <Compile Include="02-Buttons\cls_12_ButtonCreateEntityLabels\cls_12_GetTrackInRegInv.cs" />
-    <Compile Include="02-Buttons\cls_12_ButtonCreateEntityLabels\cls_12_GetStringsInTrack.cs" />
-    <Compile Include="02-Buttons\cls_12_ButtonCreateEntityLabels\cls_12_SolarSettings.cs" />
-    <Compile Include="02-Buttons\cls_12_ButtonCreateEntityLabels\cls_12_ValidateTracker.cs" />
-    <Compile Include="02-Buttons\cls_13_ButtonExportLabelsToExcel\cls_13_ButtonExportLabelsToExcel.cs" />
-    <Compile Include="03-UserForms\ClasesSOLAR.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="03-UserForms\TextBoxForm_SOLAR_Inputs.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="03-UserForms\InstanciarFormulariosSOLAR.cs" />
+    <Compile Include="02-Buttons\cls_13_ButtonExportLabelsToExcel\cls_13_Button\cls_13_ButtonExportLabelsToExcelBack.cs" />
+    <Compile Include="02-Buttons\cls_13_ButtonExportLabelsToExcel\cls_13_Main\cls_13_MainExportLabelsToExcelBack.cs" />
+    <Compile Include="02-Buttons\cls_13_ButtonExportLabelsToExcel\cls_13_Main\cls_13_MainExportLabelsToExcel.cs" />
+    <Compile Include="02-Buttons\cls_13_ButtonExportLabelsToExcel\cls_13_Process\cls_13_ProcessExportLabelsToExcel.cs" />
+    <Compile Include="02-Buttons\cls_14_ButtonCreateLabelsFromExcel\cls_14_Main\cls_14_TryGetCoordFromExcel.cs" />
+    <Compile Include="02-Buttons\cls_14_ButtonCreateLabelsFromExcel\cls_14_ProcessAux\cls_14_CreateLabelsFromExcelConfig.cs" />
+    <Compile Include="02-Buttons\cls_14_ButtonCreateLabelsFromExcel\cls_14_Process\cls_14_ProcessCreateLabelsFromExcel.cs" />
+    <Compile Include="02-Buttons\cls_15_ButtonCreateFlagsFromInter\cls_15_Main\cls_15_MainCreateFlagsFromInter.cs" />
+    <Compile Include="02-Buttons\cls_14_ButtonCreateLabelsFromExcel\cls_14_Main\cls_14_MainCreateLabelsFromExcel.cs" />
+    <Compile Include="02-Buttons\cls_12_ButtonCreateEntityLabels\cls_12_ProcessAux\cls_12_GetRequiredElev.cs" />
+    <Compile Include="02-Buttons\cls_12_ButtonCreateEntityLabels\cls_12_ProcessAux\cls_12_GetRequiredEntities.cs" />
+    <Compile Include="02-Buttons\cls_12_ButtonCreateEntityLabels\cls_12_ProcessAux\cls_12_IsolateInvalidTrack.cs" />
+    <Compile Include="02-Buttons\cls_12_ButtonCreateEntityLabels\cls_12_ProcessAux\cls_12_CreateEntityLabelsConfig.cs" />
+    <Compile Include="02-Buttons\cls_12_ButtonCreateEntityLabels\cls_12_ProcessAux\cls_12_RemoveFieldFromLabel.cs" />
+    <Compile Include="02-Buttons\cls_12_ButtonCreateEntityLabels\cls_12_Main\cls_12_MainCreateEntityLabels.cs" />
+    <Compile Include="02-Buttons\cls_12_ButtonCreateEntityLabels\cls_12_Button\cls_12_ButtonCreateEntityLabelsBack.cs" />
+    <Compile Include="02-Buttons\cls_12_ButtonCreateEntityLabels\cls_12_Main\cls_12_MainCreateEntityLabelsBack.cs" />
+    <Compile Include="02-Buttons\cls_12_ButtonCreateEntityLabels\cls_12_Process\cls_12_ProcessCreateEntityLabels.cs" />
+    <Compile Include="02-Buttons\cls_12_ButtonCreateEntityLabels\cls_12_ProcessAux\cls_12_ProcessCT.cs" />
+    <Compile Include="02-Buttons\cls_12_ButtonCreateEntityLabels\cls_12_ProcessAux\cls_12_GetRegionsByInvOrder.cs" />
+    <Compile Include="02-Buttons\cls_12_ButtonCreateEntityLabels\cls_12_ProcessAux\cls_12_ProcessTrack.cs" />
+    <Compile Include="02-Buttons\cls_12_ButtonCreateEntityLabels\cls_12_Button\cls_12_ButtonCreateEntityLabels.cs" />
+    <Compile Include="02-Buttons\cls_12_ButtonCreateEntityLabels\cls_12_ProcessAux\cls_12_ProcessString.cs" />
+    <Compile Include="02-Buttons\cls_16_ButtonCablesFromEnt\cls_16_Button\cls_16_ButtonCablesFromCT.cs" />
+    <Compile Include="02-Buttons\cls_16_ButtonCablesFromEnt\cls_16_Main\cls_16_MainCablesFromCT.cs" />
+    <Compile Include="02-Buttons\cls_16_ButtonCablesFromEnt\cls_16_ProcessAux\cls_16_BuildEntData\cls_16_BuildCtData.cs" />
+    <Compile Include="02-Buttons\cls_16_ButtonCablesFromEnt\cls_16_ProcessAux\cls_16_GetDictCableByEnt\cls_16_GetDictCableByCt.cs" />
+    <Compile Include="02-Buttons\cls_16_ButtonCablesFromEnt\cls_16_ProcessAux\cls_16_GetDictLabelByCt.cs" />
+    <Compile Include="02-Buttons\cls_16_ButtonCablesFromEnt\cls_16_ProcessAux\cls_16_GetRequiredElev\cls_16_GetRequiredElevCt.cs" />
+    <Compile Include="02-Buttons\cls_16_ButtonCablesFromEnt\cls_16_ProcessAux\cls_16_GetRequiredEnt\cls_16_GetRequiredEntCt.cs" />
+    <Compile Include="02-Buttons\cls_16_ButtonCablesFromEnt\cls_16_ProcessAux\cls_16_ValidateData\cls_16_ValidateDataEnt.cs" />
+    <Compile Include="02-Buttons\cls_16_ButtonCablesFromEnt\cls_16_Process\cls_16_ProcessCablesFromCT.cs" />
+    <Compile Include="02-Buttons\cls_SolarSettings.cs" />
+    <Compile Include="02-Buttons\cls_12_ButtonCreateEntityLabels\cls_12_ProcessAux\cls_12_AnalyzeTrackPolys.cs" />
+    <Compile Include="02-Buttons\cls_13_ButtonExportLabelsToExcel\cls_13_Button\cls_13_ButtonExportLabelsToExcel.cs" />
+    <Compile Include="02-Buttons\cls_14_ButtonCreateLabelsFromExcel\cls_14_Button\cls_14_ButtonCreateLabelsFromExcel.cs" />
+    <Compile Include="02-Buttons\cls_15_ButtonCreateFlagsFromInter\cls_15_Button\cls_15_ButtonCreateFlagsFromInter.cs" />
+    <Compile Include="02-Buttons\cls_15_ButtonCreateFlagsFromInter\cls_15_Process\cls_15_ProcessCreateFlagsFromInter.cs" />
+    <Compile Include="02-Buttons\cls_16_ButtonCablesFromEnt\cls_16_Button\cls_16_ButtonCablesFromString.cs" />
+    <Compile Include="02-Buttons\cls_16_ButtonCablesFromEnt\cls_16_Main\cls_16_MainCablesFromString.cs" />
+    <Compile Include="02-Buttons\cls_16_ButtonCablesFromEnt\cls_16_ProcessAux\cls_16_BuildEntData\cls_16_BuildStringData.cs" />
+    <Compile Include="02-Buttons\cls_16_ButtonCablesFromEnt\cls_16_ProcessAux\cls_16_GetDictCableByEnt\cls_16_GetDictCableByString.cs" />
+    <Compile Include="02-Buttons\cls_16_ButtonCablesFromEnt\cls_16_Process\cls_16_ProcessCablesFromStr.cs" />
+    <Compile Include="02-Buttons\cls_16_ButtonCablesFromEnt\cls_16_ProcessAux\cls_16_GetRequiredEnt\cls_16_GetRequiredEntString.cs" />
+    <Compile Include="02-Buttons\cls_16_ButtonCablesFromEnt\cls_16_ProcessAux\cls_16_GetRequiredElev\cls_16_GetRequiredElevString.cs" />
+    <Compile Include="02-Buttons\cls_16_ButtonCablesFromEnt\cls_16_Button\cls_16_ButtonCablesFromInverter.cs" />
+    <Compile Include="02-Buttons\cls_16_ButtonCablesFromEnt\cls_16_ProcessAux\cls_16_GetCabLengthSummary.cs" />
+    <Compile Include="02-Buttons\cls_16_ButtonCablesFromEnt\cls_16_ProcessAux\cls_16_BuildEntData\cls_16_BuildInvData.cs" />
+    <Compile Include="02-Buttons\cls_16_ButtonCablesFromEnt\cls_16_ProcessAux\cls_16_GetDictByInvCable.cs" />
+    <Compile Include="02-Buttons\cls_16_ButtonCablesFromEnt\cls_16_ProcessAux\cls_16_ElemByRegionByInter.cs" />
+    <Compile Include="02-Buttons\cls_16_ButtonCablesFromEnt\cls_16_ProcessAux\cls_16_GetDictLabelByEnt.cs" />
+    <Compile Include="02-Buttons\cls_16_ButtonCablesFromEnt\cls_16_ProcessAux\cls_16_GetDictCableByEnt\cls_16_GetDictCableByInv.cs" />
+    <Compile Include="02-Buttons\cls_16_ButtonCablesFromEnt\cls_16_ProcessAux\cls_16_GetRequiredElev\cls_16_GetRequiredElevInv.cs" />
+    <Compile Include="02-Buttons\cls_16_ButtonCablesFromEnt\cls_16_ProcessAux\cls_16_GetRequiredEnt\cls_16_GetRequiredEntInv.cs" />
+    <Compile Include="02-Buttons\cls_16_ButtonCablesFromEnt\cls_16_Process\cls_16_ProcessCablesFromInv.cs" />
+    <Compile Include="02-Buttons\cls_16_ButtonCablesFromEnt\cls_16_Main\cls_16_MainCablesFromInverter.cs" />
+    <Compile Include="02-Buttons\cls_16_ButtonCablesFromEnt\cls_16_Button\cls_16_ButtonCablesFromEnt.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -110,9 +141,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="03-UserForms\ClasesSOLAR.resx">
-      <DependentUpon>ClasesSOLAR.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -123,12 +151,23 @@
       <Project>{631b9318-a021-4b24-87f0-3fec637eae77}</Project>
       <Name>TYPSA.SharedLibAutocad</Name>
     </ProjectReference>
+    <ProjectReference Include="..\0000-TYPSA.SharedLibExcel\TYPSA.SharedLibExcel\TYPSA.SharedLibExcel.csproj">
+      <Project>{ff31b661-8ce6-420f-8720-f077b273e9c6}</Project>
+      <Name>TYPSA.SharedLibExcel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\0000-TYPSA.SharedLibForms\TYPSA.SharedLibForms\TYPSA.SharedLibForms.csproj">
+      <Project>{8f836313-b339-4db6-8a55-af61386871b4}</Project>
+      <Name>TYPSA.SharedLibForms</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="00-Resources\trackLabels.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="00-Resources\excelFile.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="03-UserForms\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

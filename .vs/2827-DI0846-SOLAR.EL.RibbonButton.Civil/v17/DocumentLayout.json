@@ -3,19 +3,16 @@
   "WorkspaceRootPath": "C:\\2827-DI0846-SOLAR.EL.RibbonButton.Civil\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{41E8CCF2-06F8-4A3D-8BC5-B834B45FBCB0}|2827-DI0846-SOLAR.EL.RibbonButton.Civil.csproj|c:\\2827-di0846-solar.el.ribbonbutton.civil\\02-buttons\\cls_12_buttoncreateentitylabels\\cls_12_drawstringlabel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{41E8CCF2-06F8-4A3D-8BC5-B834B45FBCB0}|2827-DI0846-SOLAR.EL.RibbonButton.Civil.csproj|solutionrelative:02-buttons\\cls_12_buttoncreateentitylabels\\cls_12_drawstringlabel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{41E8CCF2-06F8-4A3D-8BC5-B834B45FBCB0}|2827-DI0846-SOLAR.EL.RibbonButton.Civil.csproj|c:\\2827-di0846-solar.el.ribbonbutton.civil\\02-buttons\\cls_16_buttoncablesfroment\\cls_16_main\\cls_16_maincablesfromct.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{41E8CCF2-06F8-4A3D-8BC5-B834B45FBCB0}|2827-DI0846-SOLAR.EL.RibbonButton.Civil.csproj|solutionrelative:02-buttons\\cls_16_buttoncablesfroment\\cls_16_main\\cls_16_maincablesfromct.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{41E8CCF2-06F8-4A3D-8BC5-B834B45FBCB0}|2827-DI0846-SOLAR.EL.RibbonButton.Civil.csproj|c:\\2827-di0846-solar.el.ribbonbutton.civil\\02-buttons\\cls_12_buttoncreateentitylabels\\cls_12_getstringsintrack.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{41E8CCF2-06F8-4A3D-8BC5-B834B45FBCB0}|2827-DI0846-SOLAR.EL.RibbonButton.Civil.csproj|solutionrelative:02-buttons\\cls_12_buttoncreateentitylabels\\cls_12_getstringsintrack.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{41E8CCF2-06F8-4A3D-8BC5-B834B45FBCB0}|2827-DI0846-SOLAR.EL.RibbonButton.Civil.csproj|c:\\2827-di0846-solar.el.ribbonbutton.civil\\02-buttons\\cls_16_buttoncablesfroment\\cls_16_main\\cls_16_maincablesfrominverter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{41E8CCF2-06F8-4A3D-8BC5-B834B45FBCB0}|2827-DI0846-SOLAR.EL.RibbonButton.Civil.csproj|solutionrelative:02-buttons\\cls_16_buttoncablesfroment\\cls_16_main\\cls_16_maincablesfrominverter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{41E8CCF2-06F8-4A3D-8BC5-B834B45FBCB0}|2827-DI0846-SOLAR.EL.RibbonButton.Civil.csproj|c:\\2827-di0846-solar.el.ribbonbutton.civil\\02-buttons\\cls_13_buttonexportlabelstoexcel\\cls_13_buttonexportlabelstoexcel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{41E8CCF2-06F8-4A3D-8BC5-B834B45FBCB0}|2827-DI0846-SOLAR.EL.RibbonButton.Civil.csproj|solutionrelative:02-buttons\\cls_13_buttonexportlabelstoexcel\\cls_13_buttonexportlabelstoexcel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{631B9318-A021-4B24-87F0-3FEC637EAE77}|..\\0000-TYPSA.SharedLibAutocad\\TYPSA.SharedLibAutocad\\TYPSA.SharedLibAutocad.csproj|c:\\0000-typsa.sharedlibautocad\\typsa.sharedlibautocad\\00-collectorbyobjecttype\\cls_00_mtextobjectsbylayer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{41E8CCF2-06F8-4A3D-8BC5-B834B45FBCB0}|2827-DI0846-SOLAR.EL.RibbonButton.Civil.csproj|c:\\2827-di0846-solar.el.ribbonbutton.civil\\02-buttons\\cls_16_buttoncablesfroment\\cls_16_main\\cls_16_maincablesfromstring.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{41E8CCF2-06F8-4A3D-8BC5-B834B45FBCB0}|2827-DI0846-SOLAR.EL.RibbonButton.Civil.csproj|solutionrelative:02-buttons\\cls_16_buttoncablesfroment\\cls_16_main\\cls_16_maincablesfromstring.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -25,47 +22,8 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 9,
           "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "cls_12_DrawStringLabel.cs",
-              "DocumentMoniker": "C:\\2827-DI0846-SOLAR.EL.RibbonButton.Civil\\02-Buttons\\cls_12_ButtonCreateEntityLabels\\cls_12_DrawStringLabel.cs",
-              "RelativeDocumentMoniker": "02-Buttons\\cls_12_ButtonCreateEntityLabels\\cls_12_DrawStringLabel.cs",
-              "ToolTip": "C:\\2827-DI0846-SOLAR.EL.RibbonButton.Civil\\02-Buttons\\cls_12_ButtonCreateEntityLabels\\cls_12_DrawStringLabel.cs",
-              "RelativeToolTip": "02-Buttons\\cls_12_ButtonCreateEntityLabels\\cls_12_DrawStringLabel.cs",
-              "ViewState": "AQIAADcAAAAAAAAAAAAQwLgAAAASAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-10T05:17:04.592Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "cls_12_GetStringsInTrack.cs",
-              "DocumentMoniker": "C:\\2827-DI0846-SOLAR.EL.RibbonButton.Civil\\02-Buttons\\cls_12_ButtonCreateEntityLabels\\cls_12_GetStringsInTrack.cs",
-              "RelativeDocumentMoniker": "02-Buttons\\cls_12_ButtonCreateEntityLabels\\cls_12_GetStringsInTrack.cs",
-              "ToolTip": "C:\\2827-DI0846-SOLAR.EL.RibbonButton.Civil\\02-Buttons\\cls_12_ButtonCreateEntityLabels\\cls_12_GetStringsInTrack.cs",
-              "RelativeToolTip": "02-Buttons\\cls_12_ButtonCreateEntityLabels\\cls_12_GetStringsInTrack.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-10T05:17:02.238Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "cls_00_MTextObjectsByLayer.cs",
-              "DocumentMoniker": "C:\\0000-TYPSA.SharedLibAutocad\\TYPSA.SharedLibAutocad\\00-CollectorByObjectType\\cls_00_MTextObjectsByLayer.cs",
-              "RelativeDocumentMoniker": "..\\0000-TYPSA.SharedLibAutocad\\TYPSA.SharedLibAutocad\\00-CollectorByObjectType\\cls_00_MTextObjectsByLayer.cs",
-              "ToolTip": "C:\\0000-TYPSA.SharedLibAutocad\\TYPSA.SharedLibAutocad\\00-CollectorByObjectType\\cls_00_MTextObjectsByLayer.cs",
-              "RelativeToolTip": "..\\0000-TYPSA.SharedLibAutocad\\TYPSA.SharedLibAutocad\\00-CollectorByObjectType\\cls_00_MTextObjectsByLayer.cs",
-              "ViewState": "AQIAAEgAAAAAAAAAAAAlwJMAAAA3AAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-10T04:57:54.435Z",
-              "EditorCaption": ""
-            },
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
@@ -97,14 +55,40 @@
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "cls_13_ButtonExportLabelsToExcel.cs",
-              "DocumentMoniker": "C:\\2827-DI0846-SOLAR.EL.RibbonButton.Civil\\02-Buttons\\cls_13_ButtonExportLabelsToExcel\\cls_13_ButtonExportLabelsToExcel.cs",
-              "RelativeDocumentMoniker": "02-Buttons\\cls_13_ButtonExportLabelsToExcel\\cls_13_ButtonExportLabelsToExcel.cs",
-              "ToolTip": "C:\\2827-DI0846-SOLAR.EL.RibbonButton.Civil\\02-Buttons\\cls_13_ButtonExportLabelsToExcel\\cls_13_ButtonExportLabelsToExcel.cs",
-              "RelativeToolTip": "02-Buttons\\cls_13_ButtonExportLabelsToExcel\\cls_13_ButtonExportLabelsToExcel.cs",
-              "ViewState": "AQIAAAkAAAAAAAAAAAAAACUAAABBAAAA",
+              "Title": "cls_16_MainCablesFromString.cs",
+              "DocumentMoniker": "C:\\2827-DI0846-SOLAR.EL.RibbonButton.Civil\\02-Buttons\\cls_16_ButtonCablesFromEnt\\cls_16_Main\\cls_16_MainCablesFromString.cs",
+              "RelativeDocumentMoniker": "02-Buttons\\cls_16_ButtonCablesFromEnt\\cls_16_Main\\cls_16_MainCablesFromString.cs",
+              "ToolTip": "C:\\2827-DI0846-SOLAR.EL.RibbonButton.Civil\\02-Buttons\\cls_16_ButtonCablesFromEnt\\cls_16_Main\\cls_16_MainCablesFromString.cs",
+              "RelativeToolTip": "02-Buttons\\cls_16_ButtonCablesFromEnt\\cls_16_Main\\cls_16_MainCablesFromString.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAbAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-10T04:48:01.96Z",
+              "WhenOpened": "2026-01-19T10:18:44.316Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "cls_16_MainCablesFromInverter.cs",
+              "DocumentMoniker": "C:\\2827-DI0846-SOLAR.EL.RibbonButton.Civil\\02-Buttons\\cls_16_ButtonCablesFromEnt\\cls_16_Main\\cls_16_MainCablesFromInverter.cs",
+              "RelativeDocumentMoniker": "02-Buttons\\cls_16_ButtonCablesFromEnt\\cls_16_Main\\cls_16_MainCablesFromInverter.cs",
+              "ToolTip": "C:\\2827-DI0846-SOLAR.EL.RibbonButton.Civil\\02-Buttons\\cls_16_ButtonCablesFromEnt\\cls_16_Main\\cls_16_MainCablesFromInverter.cs",
+              "RelativeToolTip": "02-Buttons\\cls_16_ButtonCablesFromEnt\\cls_16_Main\\cls_16_MainCablesFromInverter.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAbAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-19T10:21:37.135Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "cls_16_MainCablesFromCT.cs",
+              "DocumentMoniker": "C:\\2827-DI0846-SOLAR.EL.RibbonButton.Civil\\02-Buttons\\cls_16_ButtonCablesFromEnt\\cls_16_Main\\cls_16_MainCablesFromCT.cs",
+              "RelativeDocumentMoniker": "02-Buttons\\cls_16_ButtonCablesFromEnt\\cls_16_Main\\cls_16_MainCablesFromCT.cs",
+              "ToolTip": "C:\\2827-DI0846-SOLAR.EL.RibbonButton.Civil\\02-Buttons\\cls_16_ButtonCablesFromEnt\\cls_16_Main\\cls_16_MainCablesFromCT.cs",
+              "RelativeToolTip": "02-Buttons\\cls_16_ButtonCablesFromEnt\\cls_16_Main\\cls_16_MainCablesFromCT.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-19T10:22:30.328Z",
               "EditorCaption": ""
             }
           ]
