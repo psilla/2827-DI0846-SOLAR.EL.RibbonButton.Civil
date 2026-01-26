@@ -1,15 +1,16 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
 using Autodesk.AutoCAD.ApplicationServices;
 using Autodesk.AutoCAD.DatabaseServices;
 using Autodesk.AutoCAD.EditorInput;
-using Application = Autodesk.AutoCAD.ApplicationServices.Application;
+using SOLAR.EL.RibbonButton.Autocad.Process;
 using TYPSA.SharedLib.Autocad.GetDocument;
 using TYPSA.SharedLib.Autocad.Main;
-using TYPSA.SharedLib.Autocad.ObjectsByTypeByLayer;
+using TYPSA.SharedLib.Autocad.Metrics;
 using TYPSA.SharedLib.Excel;
 using TYPSA.SharedLib.UserForms;
-using SOLAR.EL.RibbonButton.Autocad.Process;
+using Application = Autodesk.AutoCAD.ApplicationServices.Application;
 
 namespace SOLAR.EL.RibbonButton.Autocad.Main
 {
@@ -80,15 +81,17 @@ namespace SOLAR.EL.RibbonButton.Autocad.Main
                                         // Obtener BlockTableRecord
                                         BlockTableRecord btr = cls_00_DocumentInfo.GetBlockTableRecordForWrite(tr, bt);
 
-                                        // Obtenemos las etiquetas
-                                        List<DBObject> mTextOjects = cls_00_MTextObjectsByLayer.
-                                            get_MTextObjectsByLayer_FromDicc(openedDoc, true);
-                                        // Validamos
-                                        if (mTextOjects == null) continue;
-
                                         // Llamamos al Main
-                                        List<List<string>> dataToExcelByFile = cls_13_ProcessExportLabelsToExcel
-                                            .ProcessExportLabelsToExcel(mTextOjects);
+                                        List<List<string>> dataToExcelByFile = 
+                                            cls_13_ProcessExportLabelsToExcel.ProcessExportLabelsToExcel(ed, db, tr);
+                                        // Validamos
+                                        if (dataToExcelByFile == null)
+                                        {
+                                            // Cerramos transaccion
+                                            tr.Abort();
+                                            // Obviamos
+                                            continue;
+                                        }
 
                                         // Obtenemos numero etiquetas exportadas en archivo
                                         int totalLabelsCreated = dataToExcelByFile.Count;
@@ -163,6 +166,9 @@ namespace SOLAR.EL.RibbonButton.Autocad.Main
                     cls_00_ExportLabelsToExcel_OpenXml
                         .ExportLabelsToExcel_OpenXml(dataToExcelGlobal);
 
+                    // Enviar Metrics
+                    SendMetrics(filesSelectedProcessed, totalLabelsCreatedGlobal, projectCode);
+
                     // return
                     return new ProcessResult
                     {
@@ -186,6 +192,31 @@ namespace SOLAR.EL.RibbonButton.Autocad.Main
                     ParametersAnalyzed = 0
                 };
             }
+        }
+
+        private void SendMetrics(int totalFiles, int labelsCreated, string projectCode)
+        {
+            string accionId = "697719a4a266bb4378c55f86";
+            string processIdOpeningDWGFile = "669669da1d83111125968025";
+            string processLabelsCreation = "68dcd0a3b10174ef74121b79";
+            string emailUser = Environment.UserName;
+
+            var executed_process = new[]
+            {
+            new { proceso = processIdOpeningDWGFile, recuento = totalFiles },
+            new { proceso = processLabelsCreation, recuento = labelsCreated }
+            };
+
+            var additionalData = new
+            {
+                ScriptName = "DE2827 - Energía: Authomatic Labels",
+                FilesProcessed = totalFiles,
+                ProjectCode = projectCode,
+                ExecutionStatus = 1,
+                Version = "V.00.01"
+            };
+
+            cls_00_MetricsSender.SendMetricsAsync(emailUser, accionId, executed_process, additionalData);
         }
     }
 }

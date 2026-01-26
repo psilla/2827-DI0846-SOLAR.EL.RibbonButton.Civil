@@ -22,15 +22,15 @@ namespace SOLAR.EL.RibbonButton.Autocad.Buttons
             // Procesar los archivos seleccionados
             cls_15_MainCreateFlagsFromInter mainProcess = new cls_15_MainCreateFlagsFromInter();
             // Obtener el resultado del proceso
-            ProcessResult processResult =
-                mainProcess.MainCreateFlagsFromInter(projectCode);
+            ProcessResult processResult = mainProcess.MainCreateFlagsFromInter(projectCode);
 
             // Mostrar el resumen de los resultados al finalizar
             DateTime endTime = DateTime.Now;
             TimeSpan duration = endTime - startTime;
 
             // Mensaje
-            MessageBox.Show("CreateFlagsFromInter process has completed successfully." +
+            MessageBox.Show(
+                "CreateFlagsFromInter process has completed successfully." +
                 "\nDuration: " + duration.ToString(@"hh\:mm\:ss") +
                 "\nStarted at: " + startTime.ToString("HH:mm:ss") +
                 "\nEnded at: " + endTime.ToString("HH:mm:ss") +

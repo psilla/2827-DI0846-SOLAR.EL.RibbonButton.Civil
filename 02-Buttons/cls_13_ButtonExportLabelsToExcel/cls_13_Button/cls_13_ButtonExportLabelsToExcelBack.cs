@@ -24,8 +24,7 @@ namespace SOLAR.EL.RibbonButton.Autocad.Buttons
             if (!userData) return;
 
             // Procesar los archivos seleccionados
-            cls_13_MainExportLabelsToExcelBack mainProcess =
-                new cls_13_MainExportLabelsToExcelBack();
+            cls_13_MainExportLabelsToExcelBack mainProcess = new cls_13_MainExportLabelsToExcelBack();
 
             // Obtener el resultado del proceso
             ProcessResult processResult = mainProcess.MainExportLabelsToExcelBack(

@@ -12,11 +12,14 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
             List<Region> validRegion,
             HashSet<ObjectId> psrEntLabIds,
             string defaultEntLabel,
-            string multipleEntLabel
+            string multipleEntLabel,
+            out HashSet<ObjectId> unusedLabelIds
         )
         {
-            Dictionary<Region, string> entLabelByRegion =
-                    new Dictionary<Region, string>();
+            Dictionary<Region, string> entLabelByRegion = new Dictionary<Region, string>();
+            // Inicialmente todas las etiquetas sin usar
+            unusedLabelIds = new HashSet<ObjectId>(psrEntLabIds);
+
             // Iteramos por las regiones
             foreach (Region region in validRegion)
             {
@@ -25,8 +28,11 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
                 List<Entity> labelEntities = cls_00_GetEntityListByRegion.
                     GetEntityListByRegionByPoint(tr, region, psrEntLabIds);
                 // Validamos
-                if (labelEntities != null)
+                if (labelEntities != null && labelEntities.Count > 0)
                 {
+                    // Marcamos etiquetas como usadas
+                    foreach (Entity ent in labelEntities)
+                        unusedLabelIds.Remove(ent.ObjectId);
                     // Caso1: 1 etiqueta
                     if (labelEntities.Count == 1)
                     {
@@ -43,16 +49,14 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
                         }
                     }
                     // Caso2: X etiquetas
-                    else if (labelEntities.Count > 1)
+                    else
                     {
                         entLabelText = multipleEntLabel;
                     }
                 }
-
                 // Almacenamos
                 entLabelByRegion[region] = entLabelText;
             }
-
             // return
             return entLabelByRegion;
         }

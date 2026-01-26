@@ -181,7 +181,7 @@ namespace SOLAR.EL.RibbonButton.Autocad.Main
 
         private void SendMetrics(int totalFiles, int labelsCreated, string projectCode)
         {
-            string accionId = "68dcd05bb10174ef74121b55";
+            string accionId = "68dccf9bb10174ef74121b1c";
             string processIdOpeningDWGFile = "669669da1d83111125968025";
             string processLabelsCreation = "68dcd028b10174ef74121b34";
             string emailUser = Environment.UserName;

@@ -113,6 +113,16 @@ namespace _0000_XX0000_SOLAR.EL.RibbonButton.Civil.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap orderTags {
+            get {
+                object obj = ResourceManager.GetObject("orderTags", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap trackLabels {
             get {
                 object obj = ResourceManager.GetObject("trackLabels", resourceCulture);

@@ -1,27 +1,31 @@
-﻿using Autodesk.AutoCAD.DatabaseServices;
-using Autodesk.AutoCAD.EditorInput;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
+using Autodesk.AutoCAD.DatabaseServices;
+using Autodesk.AutoCAD.EditorInput;
+using SOLAR.EL.RibbonButton.Autocad.Settings;
 using TYPSA.SharedLib.Autocad.DeleteEntities;
 using TYPSA.SharedLib.Autocad.GetDocument;
 using TYPSA.SharedLib.Autocad.GetEntities;
 using TYPSA.SharedLib.Autocad.GetEntityCoordinates;
 using TYPSA.SharedLib.Autocad.GetLayersInfo;
+using TYPSA.SharedLib.Autocad.ObjectsByTypeByLayer;
 using TYPSA.SharedLib.Autocad.ProcessPolyAndRegion;
 using TYPSA.SharedLib.Autocad.ProjectUnits;
 using TYPSA.SharedLib.UserForms;
-using SOLAR.EL.RibbonButton.Autocad.Settings;
 
 namespace SOLAR.EL.RibbonButton.Autocad.Process
 {
     internal class cls_12_ProcessCreateEntityLabels
     {
         public static int? ProcessCreateEntityLabels(
-            Editor ed, Database db, Transaction tr, BlockTableRecord btr
+            Editor ed, 
+            Database db, 
+            Transaction tr, 
+            BlockTableRecord btr
         )
         {
             // try
@@ -29,6 +33,7 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
             {
                 // Obtenemos settings
                 SolarSettings solarSet = SolarSettings.GetDefaultSolarSettings();
+                AutocadSettings autoSettings = AutocadSettings.GetDefaultSettings();
 
                 // Obtenemos las unidades del proyecto (actuales o elegidas por user)
                 string projectUnits = cls_00_ProjectUnits.GetAndSetProjectUnits();
@@ -149,7 +154,7 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
                     new Dictionary<Region, List<DBObject>>();
 
                 // Ordenar lista de regiones por centroide
-                validRegionContGen.Sort((a, b) =>
+                validRegionContGen.Sort((a, b) => 
                     cls_00_GetEntityCentroid.CompareEntitiesByPosition(a, b, 10.0));
 
                 // Contador de CT
@@ -230,7 +235,7 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
                             // Obtenemos el valor
                             string text = mtext.Contents.Trim();
                             // Separadores válidos posibles
-                            char[] validSeparators = solarSet.ValidSeparators;
+                            char[] validSeparators = autoSettings.ValidSeparators;
                             // Detectamos el separador 
                             char? sep = validSeparators.FirstOrDefault(s => text.Contains(s));
 

@@ -20,11 +20,9 @@ namespace SOLAR.EL.RibbonButton.Autocad.Buttons
             if (projectCode == null) return;
 
             // Procesar el Main
-            cls_13_MainExportLabelsToExcel mainProcess =
-                new cls_13_MainExportLabelsToExcel();
+            cls_13_MainExportLabelsToExcel mainProcess = new cls_13_MainExportLabelsToExcel();
             // Obtener el resultado del proceso
-            ProcessResult processResult = 
-                mainProcess.MainExportLabelsToExcel(projectCode);
+            ProcessResult processResult = mainProcess.MainExportLabelsToExcel(projectCode);
 
             // Mostrar el resumen de los resultados al finalizar
             DateTime endTime = DateTime.Now;
