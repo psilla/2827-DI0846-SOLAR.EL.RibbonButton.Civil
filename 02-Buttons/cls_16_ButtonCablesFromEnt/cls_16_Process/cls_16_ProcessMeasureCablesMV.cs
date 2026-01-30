@@ -61,10 +61,9 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
                         $"{solarSet.LabelCtTag} Z: {elevCtLabel:F3}\n" +
                         $"{solarSet.BlockRefCtTag} Z: {elevCtBlock:F3}\n" +
                         $"{solarSet.BlockRefEstTag} Z: {elevEstBlock:F3}\n" +
-                        $"{solarSet.CableCtToEstTag} Z: {elevCtCab:F3}",
+                        $"{solarSet.CableMVTag} Z: {elevCtCab:F3}",
                         "Elevation Mismatch",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Warning
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning
                     );
                     // Finalizamos
                     return null;
@@ -93,11 +92,12 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
                 HashSet<ObjectId> invalidCableIds;
                 HashSet<ObjectId> connectedCtBlockIds;
                 HashSet<ObjectId> connectedEstBlockIds;
+                HashSet<ObjectId> connectedEstCableIds;
                 // Obtenemos info
                 Dictionary<ObjectId, EntityExcelRow> cableDict = cls_16_GetDictMeasureCablesMV.GetDictMeasureCablesMV(
                     tr, psrCtCabIds, psrEstBlockIds, labelByCtDict,
                     cableLengthCorrectionFactor, cableLengthFixedAllowance, cableNumberOfConductors,
-                    out invalidCableIds, out connectedCtBlockIds, out connectedEstBlockIds
+                    out invalidCableIds, out connectedCtBlockIds, out connectedEstBlockIds, out connectedEstCableIds
                 );
 
                 // CT sin cable
@@ -108,6 +108,14 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
                 List<ObjectId> estBlocksWithoutCable = psrEstBlockIds
                     .Where(id => !connectedEstBlockIds.Contains(id))
                     .ToList();
+
+                // Numero esperado de cables CT–EST segun numero circuitos
+                int expectedCableCount = psrCtCabIds
+                    .Select(id => tr.GetObject(id, OpenMode.ForRead) as Entity)
+                    .Where(ent => ent != null).Select(ent => ent.Layer)
+                    .Distinct().Count();
+                // Validamos si faltan cables por llegar a la estacion
+                bool missingEstConnections = connectedEstCableIds.Count < expectedCableCount;
 
                 // Acumulamos entidades a aislar
                 HashSet<ObjectId> entToIsolate = new HashSet<ObjectId>();
@@ -121,7 +129,11 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
                 entToIsolate.UnionWith(ctBlocksWithoutCable);
                 // Estaciones sin cable
                 entToIsolate.UnionWith(estBlocksWithoutCable);
-
+                // Estaciones con conexiones incompletas
+                if (missingEstConnections)
+                {
+                    entToIsolate.UnionWith(psrEstBlockIds);
+                }
                 // Validamos
                 if (entToIsolate.Count > 0)
                 {

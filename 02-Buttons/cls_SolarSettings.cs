@@ -42,9 +42,9 @@ namespace SOLAR.EL.RibbonButton.Autocad.Settings
         public string LabelCtTag { get; set; } = "Centros de Transformacion (Tags)";
         public string LabelInvTag { get; set; } = "Inversores (Tags)";
         public string LabelStringTag { get; set; } = "Strings (Tags)";
-        public string CableCtToEstTag { get; set; } = "Cables CT-Subestación (Polylines)";
-        public string CableInvToCtTag { get; set; } = "Cables Inversor-CT (Polylines)";
-        public string CableStringToInvTag { get; set; } = "Cables String-Inversor (Polylines)";
+        public string CableMVTag { get; set; } = "Cables CT-Subestación (Polylines)";
+        public string CableN2Tag { get; set; } = "Cables Inversor-CT (Polylines)";
+        public string CableN1Tag { get; set; } = "Cables String-Inversor (Polylines)";
         
         // Capas
         // Polys

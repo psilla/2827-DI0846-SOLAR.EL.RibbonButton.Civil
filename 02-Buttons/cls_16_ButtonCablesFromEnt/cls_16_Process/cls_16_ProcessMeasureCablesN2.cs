@@ -44,18 +44,21 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
                     ed, docLayers, solarSet,
                     out SelectionSet analyzePoly,
                     out PromptSelectionResult psrContInv, out PromptSelectionResult psrInvLab,
-                    out PromptSelectionResult psrInvBlock, out PromptSelectionResult psrInvCab
+                    out PromptSelectionResult psrInvBlock, out PromptSelectionResult psrCtBlock,
+                    out PromptSelectionResult psrInvCab
                 )) return null;
 
                 // Validamos elevaciones
                 if (!cls_16_GetElevMeasureCablesN2.GetElevMeasureCablesN2(
-                    tr, solarSet, psrContInv, psrInvLab, psrInvBlock, psrInvCab,
-                    out double elevInvCont, out double elevInvLabel, out double elevInvBlock, out double elevInvCab
+                    tr, solarSet, psrContInv, psrInvLab, psrInvBlock, psrCtBlock, psrInvCab,
+                    out double elevInvCont, out double elevInvLabel, out double elevInvBlock,
+                    out double elevCtBlock, out double elevInvCab
                 )) return null;
 
                 // Validamos elevaciones entre Entidades
                 if (Math.Abs(elevInvCont - elevInvLabel) > 1e-6 ||
                     Math.Abs(elevInvCont - elevInvBlock) > 1e-6 ||
+                    Math.Abs(elevInvCont - elevCtBlock) > 1e-6 ||
                     Math.Abs(elevInvCont - elevInvCab) > 1e-6
                 )
                 {
@@ -65,10 +68,10 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
                         $"{solarSet.PolyInvTag} Z: {elevInvCont:F3}\n" +
                         $"{solarSet.LabelInvTag} Z: {elevInvLabel:F3}\n" +
                         $"{solarSet.BlockRefInvTag} Z: {elevInvBlock:F3}\n" +
-                        $"{solarSet.CableInvToCtTag} Z: {elevInvCab:F3}",
+                        $"{solarSet.BlockRefCtTag} Z: {elevCtBlock:F3}\n" +
+                        $"{solarSet.CableN2Tag} Z: {elevInvCab:F3}",
                         "Elevation Mismatch",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Warning
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning
                     );
                     // Finalizamos
                     return null;
@@ -87,6 +90,7 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
                 // Obtenemos los Ids
                 HashSet<ObjectId> psrInvLabIds = new HashSet<ObjectId>(psrInvLab.Value.GetObjectIds());
                 HashSet<ObjectId> psrInvBlockIds = new HashSet<ObjectId>(psrInvBlock.Value.GetObjectIds());
+                HashSet<ObjectId> psrCtBlockIds = new HashSet<ObjectId>(psrCtBlock.Value.GetObjectIds());
                 HashSet<ObjectId> psrInvCabIds = new HashSet<ObjectId>(psrInvCab.Value.GetObjectIds());
 
                 // Obtenemos Label por Inversor
@@ -105,8 +109,9 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
 
                 // Obtenemos Cable por Inversor
                 Dictionary<ObjectId, object> cableByEntity = cls_16_GetDictMeasureCablesN2.GetDictMeasureCablesN2(
-                    tr, psrInvBlockIds, psrInvCabIds, solarSet.EntNoCableValue, solarSet.EntMultiCableValue, cableLengthCorrectionFactor, cableLengthFixedAllowance, cableNumberOfConductors,
-                    out HashSet<ObjectId> usedCableIds
+                    tr, psrInvBlockIds, psrCtBlockIds, psrInvCabIds, solarSet.EntNoCableValue, solarSet.EntMultiCableValue, 
+                    cableLengthCorrectionFactor, cableLengthFixedAllowance, cableNumberOfConductors,
+                    out HashSet<ObjectId> cablesConnectedToInv, out HashSet<ObjectId> cablesConnectedToCt
                 );
                 // Inversores con error de cable
                 List<ObjectId> invalidInverterIds = cableByEntity
@@ -120,12 +125,25 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
                 int invertersWithNoCable = cableByEntity.Count(kvp => kvp.Value is string s && s == solarSet.EntNoCableValue);
                 int invertersWithMultipleCables = cableByEntity.Count(kvp => kvp.Value is string s && s == solarSet.EntMultiCableValue);
 
-                // Cables no usados en ningun inversor
-                HashSet<ObjectId> unusedCableIds = new HashSet<ObjectId>(psrInvCabIds);
-                unusedCableIds.ExceptWith(usedCableIds);
+                // Cables invalidos
+                // Cables que conectan al INV pero no al CT
+                HashSet<ObjectId> cablesInvNotCt = new HashSet<ObjectId>(cablesConnectedToInv);
+                cablesInvNotCt.ExceptWith(cablesConnectedToCt);
+                // Cables que conectan al CT pero no al INV
+                HashSet<ObjectId> cablesCtNotInv = new HashSet<ObjectId>(cablesConnectedToCt);
+                cablesCtNotInv.ExceptWith(cablesConnectedToInv);
+                // Cables que no conectan ni al INV ni al CT
+                HashSet<ObjectId> cablesNeitherInvNorCt = new HashSet<ObjectId>(psrInvCabIds);
+                cablesNeitherInvNorCt.ExceptWith(cablesConnectedToInv);
+                cablesNeitherInvNorCt.ExceptWith(cablesConnectedToCt);
+                // Unión final de cables a aislar
+                HashSet<ObjectId> invalidCableIds = new HashSet<ObjectId>();
+                invalidCableIds.UnionWith(cablesInvNotCt);
+                invalidCableIds.UnionWith(cablesCtNotInv);
+                invalidCableIds.UnionWith(cablesNeitherInvNorCt);
 
                 bool hasLabelErrors = invalidRegions.Count > 0 || unusedLabelIds.Count > 0;
-                bool hasCableErrors = invalidInverterIds.Count > 0 || unusedCableIds.Count > 0;
+                bool hasCableErrors = invalidInverterIds.Count > 0 || invalidCableIds.Count > 0;
                 // Ids a aislar
                 HashSet<ObjectId> idsToIsolate = new HashSet<ObjectId>();
                 // Validamos
@@ -142,10 +160,10 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
                     // Inversores con error de cable
                     idsToIsolate.UnionWith(invalidInverterIds);
                     // Cables sin uso
-                    idsToIsolate.UnionWith(unusedCableIds);
+                    idsToIsolate.UnionWith(invalidCableIds);
                     // Mensaje
                     cls_16_ValidateDataEnt.ShowCableValidationMessageInv(
-                        invertersWithNoCable, invertersWithMultipleCables, unusedCableIds.Count
+                        invertersWithNoCable, invertersWithMultipleCables, invalidCableIds.Count
                     );
                 }
                 // Si hay cualquier error → borrar + aislar una sola vez

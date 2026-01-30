@@ -139,7 +139,7 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
             Dictionary<Handle, Handle> regionToPoly =
                 dictPolyToRegionString.ToDictionary(kvp => kvp.Value, kvp => kvp.Key);
 
-            // Cacheamos TODOS los cables una sola vez
+            // Validamos todos los cables una sola vez
             List<Polyline> cablePolys = psrStringCabIds
                 .Select(id => tr.GetObject(id, OpenMode.ForRead) as Polyline)
                 .Where(p => p != null)
@@ -148,48 +148,50 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
             // Iteramos regiones
             foreach (Region region in validRegionString)
             {
-                // Validamos poly asociada a la región
+                // Validamos poly
                 if (!regionToPoly.TryGetValue(region.Handle, out Handle polyHandle))
                 {
+                    // Valor por defecto
                     result[region] = noCableValue;
+                    // Obviamos
                     continue;
                 }
 
+                // Obtenemos poly original desde region
                 Polyline polyFromRegion =
                     tr.GetObject(db.GetObjectId(false, polyHandle, 0), OpenMode.ForRead) as Polyline;
-
+                // Validamos
                 if (polyFromRegion == null)
                 {
+                    // Valor por defecto
                     result[region] = noCableValue;
+                    // Obviamos
                     continue;
                 }
 
                 Extents3d regionExt = polyFromRegion.GeometricExtents;
-
                 Polyline foundCable = null;
                 int cableCount = 0;
-
-                // Iteramos cables (ya cacheados)
+                // Iteramos cables (ya comprobados)
                 foreach (Polyline cablePoly in cablePolys)
                 {
-                    // Filtro rápido por BoundingBox
+                    // Evitamos reutilizar cables ya validados
+                    if (usedCableIds.Contains(cablePoly.ObjectId)) continue;
+
+                    // Filtro por BoundingBox
                     if (!ExtentsIntersect(regionExt, cablePoly.GeometricExtents)) continue;
 
+                    // Obtenemos intersecciones
                     Point3dCollection inters = new Point3dCollection();
                     polyFromRegion.IntersectWith(
-                        cablePoly,
-                        Intersect.OnBothOperands,
-                        inters,
-                        IntPtr.Zero,
-                        IntPtr.Zero
+                        cablePoly, Intersect.OnBothOperands, inters, IntPtr.Zero, IntPtr.Zero
                     );
 
                     // Solo nos interesan intersecciones en 1 punto
                     if (inters.Count == 1)
                     {
                         cableCount++;
-                        usedCableIds.Add(cablePoly.ObjectId);
-
+                        // Validamos
                         if (cableCount == 1)
                         {
                             foundCable = cablePoly;
@@ -213,6 +215,9 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
                 }
                 else
                 {
+                    // Almacenamos como valido
+                    usedCableIds.Add(foundCable.ObjectId);
+
                     // Exactamente 1 cable
                     double cableLength = Math.Round(foundCable.Length, 2);
                     double cableLengthCorrected = cableLength * cableLengthCorrectionFactor;
@@ -233,7 +238,7 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
                     };
                 }
             }
-
+            // return
             return result;
         }
 

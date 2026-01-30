@@ -10,25 +10,28 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
     {
         public static Dictionary<ObjectId, object> GetDictMeasureCablesN2(
             Transaction tr,
-            HashSet<ObjectId> blockRefIds,
-            HashSet<ObjectId> polyIds,
+            HashSet<ObjectId> psrInvBlockIds,
+            HashSet<ObjectId> psrCtBlockIds,
+            HashSet<ObjectId> psrInvCabIds,
             string noCableValue,
             string multipleCableValue,
             double cableLengthCorrectionFactor,
             double cableLengthFixedAllowance,
             int cableNumberOfConductors,
-            out HashSet<ObjectId> usedCableIds,
+            out HashSet<ObjectId> cablesConnectedToInv,
+            out HashSet<ObjectId> cablesConnectedToCt,
             double tolerance = 1e-6
         )
         {
             Dictionary<ObjectId, object> result = new Dictionary<ObjectId, object>();
-            usedCableIds = new HashSet<ObjectId>();
+            cablesConnectedToInv = new HashSet<ObjectId>();
+            cablesConnectedToCt = new HashSet<ObjectId>();
 
             // Dict de datos de polylines
             Dictionary<ObjectId, (Point3d start, Point3d end, double length)> polyData =
                 new Dictionary<ObjectId, (Point3d, Point3d, double)>();
             // Iteramos polys
-            foreach (ObjectId polyId in polyIds)
+            foreach (ObjectId polyId in psrInvCabIds)
             {
                 // Obtenemos poly
                 Polyline poly = tr.GetObject(polyId, OpenMode.ForRead) as Polyline;
@@ -43,17 +46,41 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
                 );
             }
 
-            // Iteramos blockRef
-            foreach (ObjectId blockId in blockRefIds)
+            // Detectamos CT conectados
+            foreach (ObjectId ctId in psrCtBlockIds)
             {
                 // Obtenemos blockRef
-                BlockReference br =
-                    tr.GetObject(blockId, OpenMode.ForRead) as BlockReference;
+                BlockReference ctBr = tr.GetObject(ctId, OpenMode.ForRead) as BlockReference;
+                // Validamos
+                if (ctBr == null) continue;
+
+                Extents3d ctExt = ctBr.GeometricExtents;
+                // Validamos conexion
+                foreach (var kvp in polyData)
+                {
+                    ObjectId polyId = kvp.Key;
+                    Point3d pStart = kvp.Value.start;
+                    Point3d pEnd = kvp.Value.end;
+                    // Validamos pto dentro de CT
+                    if (PointInsideExtents(ctExt, pStart, tolerance) ||
+                        PointInsideExtents(ctExt, pEnd, tolerance))
+                    {
+                        // Almacenamos
+                        cablesConnectedToCt.Add(polyId);
+                    }
+                }
+            }
+
+            // Detectamos Inversores conectados
+            foreach (ObjectId invId in psrInvBlockIds)
+            {
+                // Obtenemos blockRef
+                BlockReference br = tr.GetObject(invId, OpenMode.ForRead) as BlockReference;
                 // Validamos
                 if (br == null) continue;
 
                 // Obtenemos basepoint
-                Point3d basePt = br.Position;
+                Point3d invPt = br.Position;
 
                 List<ObjectId> connectedPolys = new List<ObjectId>();
                 // Iteramos dict de polys
@@ -64,72 +91,61 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
                     Point3d pStart = kvp.Value.start;
                     Point3d pEnd = kvp.Value.end;
 
-                    bool connected = false;
                     // Comprobamos conexion por base point
-                    if (basePt.DistanceTo(pStart) <= tolerance ||
-                        basePt.DistanceTo(pEnd) <= tolerance
+                    if (invPt.DistanceTo(pStart) <= tolerance ||
+                        invPt.DistanceTo(pEnd) <= tolerance
                     )
-                    {
-                        connected = true;
-                    }
-                    //// Comprobamos conexion por GeometryExtents
-                    //else
-                    //{
-                    //    Extents3d ext = br.GeometricExtents;
-                    //    if (PointInsideExtents(ext, pStart, tolerance) ||
-                    //        PointInsideExtents(ext, pEnd, tolerance)
-                    //    )
-                    //    {
-                    //        connected = true;
-                    //    }
-                    //}
-                    // Validamos
-                    if (connected)
                     {
                         // Almacenamos
                         connectedPolys.Add(polyId);
-                        usedCableIds.Add(polyId);
+                        cablesConnectedToInv.Add(polyId);
                     }
                 }
 
-                // Validacion final
+                // Validacion por Inversor
                 if (connectedPolys.Count == 0)
                 {
-                    result[blockId] = noCableValue;
+                    result[invId] = noCableValue;
+                    continue;
                 }
-                else if (connectedPolys.Count > 1)
+                if (connectedPolys.Count > 1)
                 {
-                    result[blockId] = multipleCableValue;
+                    result[invId] = multipleCableValue;
+                    continue;
                 }
-                else
+
+                // Solo 1 cable
+                ObjectId cableId = connectedPolys[0];
+                // Validamos si el cable también conecta a CT
+                if (!cablesConnectedToCt.Contains(cableId)) continue;
+
+                // Cable Ct-Inv invalido
+                Polyline cable = tr.GetObject(cableId, OpenMode.ForRead) as Polyline;
+                if (cable == null)
                 {
-                    // Obtenemos cable
-                    ObjectId polyId = connectedPolys[0];
-                    Polyline cable = tr.GetObject(polyId, OpenMode.ForRead) as Polyline;
-                    double cableLength = Math.Round(cable.Length, 2);
-                    double cableLengthCorrected = cableLength * cableLengthCorrectionFactor;
-                    double cableLengthCorrectedTotal = cableLengthCorrected + cableLengthFixedAllowance;
-                    double totalInstalledCableLength = cableLengthCorrectedTotal * cableNumberOfConductors;
-                    // Validamos
-                    if (cable == null)
-                    {
-                        result[blockId] = noCableValue;
-                        continue;
-                    }
-                    // Almacenamos
-                    result[blockId] = new EntityExcelRow
-                    {
-                        CableHandle = cable.Handle.ToString(),
-                        CableLayer = cable.Layer,
-                        CableLength = cableLength,
-                        CableLengthCorrectionFactor = cableLengthCorrectionFactor,
-                        CableExtraLength = cableLengthCorrected,
-                        CableLengthFixedAllowance = cableLengthFixedAllowance,
-                        CableLengthCorrectedTotal = cableLengthCorrectedTotal,
-                        NumberOfConductors = cableNumberOfConductors,
-                        TotalInstalledCableLength = totalInstalledCableLength
-                    };
+                    result[invId] = noCableValue;
+                    continue;
                 }
+
+                // Obtenemos info
+                double cableLength = Math.Round(cable.Length, 2);
+                double cableLengthCorrected = cableLength * cableLengthCorrectionFactor;
+                double cableLengthCorrectedTotal = cableLengthCorrected + cableLengthFixedAllowance;
+                double totalInstalledCableLength = cableLengthCorrectedTotal * cableNumberOfConductors;
+
+                // Almacenamos
+                result[invId] = new EntityExcelRow
+                {
+                    CableHandle = cable.Handle.ToString(),
+                    CableLayer = cable.Layer,
+                    CableLength = cableLength,
+                    CableLengthCorrectionFactor = cableLengthCorrectionFactor,
+                    CableExtraLength = cableLengthCorrected,
+                    CableLengthFixedAllowance = cableLengthFixedAllowance,
+                    CableLengthCorrectedTotal = cableLengthCorrectedTotal,
+                    NumberOfConductors = cableNumberOfConductors,
+                    TotalInstalledCableLength = totalInstalledCableLength
+                };
             }
 
             // return

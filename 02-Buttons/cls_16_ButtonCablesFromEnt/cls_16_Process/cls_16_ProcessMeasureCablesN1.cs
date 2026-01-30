@@ -41,7 +41,7 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
 
                 // Seleccionamos Entidades
                 if (!cls_16_GetEntMeasureCablesN1.GetEntMeasureCablesN1(
-                    ed, docLayers, solarSet,
+                    ed, docLayers, solarSet, 
                     out SelectionSet analyzePoly, out PromptSelectionResult psrString, 
                     out PromptSelectionResult psrStringLab, out PromptSelectionResult psrStringCab
                 )) return null;
@@ -54,7 +54,7 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
 
                 // Validamos elevaciones entre Entidades
                 if (Math.Abs(elevString - elevStringLabel) > 1e-6 ||
-                    Math.Abs(elevString - elevStringCab) > 1e-6
+                    Math.Abs(elevString - elevStringCab) > 1e-6 
                 )
                 {
                     // Mensaje
@@ -62,10 +62,9 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
                         $"⚠ Elevations are inconsistent across entities.\n\n" +
                         $"{solarSet.PolyStringTag} Z: {elevString:F3}\n" +
                         $"{solarSet.LabelStringTag} Z: {elevStringLabel:F3}\n" +
-                        $"{solarSet.CableStringToInvTag} Z: {elevStringCab:F3}",
+                        $"{solarSet.CableN1Tag} Z: {elevStringCab:F3}",
                         "Elevation Mismatch",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Warning
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning
                     );
                     // Finalizamos
                     return null;
@@ -117,7 +116,7 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
                 
                 // Obtenemos Cable por String
                 Dictionary<Region, object> cableByEntity = cls_16_GetDictMeasureCablesN1.GetDictMeasureCablesN1BIS(
-                    tr, db, validRegionEntity, dictPolyToRegionString, 
+                    tr, db, validRegionEntity, dictPolyToRegionString,
                     psrStringCabIds, solarSet.EntNoCableValue, solarSet.EntMultiCableValue, 
                     cableLengthCorrectionFactor, cableLengthFixedAllowance, cableNumberOfConductors,
                     out HashSet<ObjectId> usedCableIds

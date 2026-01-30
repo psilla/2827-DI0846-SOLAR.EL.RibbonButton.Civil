@@ -18,7 +18,8 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
             int cableNumberOfConductors,
             out HashSet<ObjectId> invalidCableIds,
             out HashSet<ObjectId> connectedCtBlockIds,
-            out HashSet<ObjectId> connectedEstBlockIds
+            out HashSet<ObjectId> connectedEstBlockIds,
+            out HashSet<ObjectId> connectedEstCableIds
         )
         {
             Dictionary<ObjectId, EntityExcelRow> result = 
@@ -27,6 +28,7 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
             invalidCableIds = new HashSet<ObjectId>();
             connectedCtBlockIds = new HashSet<ObjectId>();
             connectedEstBlockIds = new HashSet<ObjectId>();
+            connectedEstCableIds = new HashSet<ObjectId>();
 
             // Invertimos el diccionario: block → labels
             Dictionary<ObjectId, List<ObjectId>> blockToLabels = 
@@ -135,6 +137,7 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
                         continue;
                     }
                     connectedEstBlockIds.Add(estId.Value);
+                    connectedEstCableIds.Add(cableId);
                 }
                 // Almacenamos
                 result[cableId] = row;

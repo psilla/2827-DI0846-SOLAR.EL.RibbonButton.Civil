@@ -3,28 +3,8 @@
   "WorkspaceRootPath": "C:\\2827-DI0846-SOLAR.EL.RibbonButton.Civil\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{41E8CCF2-06F8-4A3D-8BC5-B834B45FBCB0}|2827-DI0846-SOLAR.EL.RibbonButton.Civil.csproj|c:\\2827-di0846-solar.el.ribbonbutton.civil\\02-buttons\\cls_12_buttonmodifyentitylabels\\cls_12_main\\cls_12_mainremovefieldlabels.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{41E8CCF2-06F8-4A3D-8BC5-B834B45FBCB0}|2827-DI0846-SOLAR.EL.RibbonButton.Civil.csproj|solutionrelative:02-buttons\\cls_12_buttonmodifyentitylabels\\cls_12_main\\cls_12_mainremovefieldlabels.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{41E8CCF2-06F8-4A3D-8BC5-B834B45FBCB0}|2827-DI0846-SOLAR.EL.RibbonButton.Civil.csproj|c:\\2827-di0846-solar.el.ribbonbutton.civil\\02-buttons\\cls_12_buttonorderentitylabels\\cls_12_main\\cls_12_mainorderentitylabels.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{41E8CCF2-06F8-4A3D-8BC5-B834B45FBCB0}|2827-DI0846-SOLAR.EL.RibbonButton.Civil.csproj|solutionrelative:02-buttons\\cls_12_buttonorderentitylabels\\cls_12_main\\cls_12_mainorderentitylabels.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{41E8CCF2-06F8-4A3D-8BC5-B834B45FBCB0}|2827-DI0846-SOLAR.EL.RibbonButton.Civil.csproj|c:\\2827-di0846-solar.el.ribbonbutton.civil\\02-buttons\\cls_12_buttoncreateentitylabels\\cls_12_main\\cls_12_maincreateentitylabels.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{41E8CCF2-06F8-4A3D-8BC5-B834B45FBCB0}|2827-DI0846-SOLAR.EL.RibbonButton.Civil.csproj|solutionrelative:02-buttons\\cls_12_buttoncreateentitylabels\\cls_12_main\\cls_12_maincreateentitylabels.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{41E8CCF2-06F8-4A3D-8BC5-B834B45FBCB0}|2827-DI0846-SOLAR.EL.RibbonButton.Civil.csproj|c:\\2827-di0846-solar.el.ribbonbutton.civil\\02-buttons\\cls_13_buttonexportlabelstoexcel\\cls_13_main\\cls_13_mainexportlabelstoexcelback.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{41E8CCF2-06F8-4A3D-8BC5-B834B45FBCB0}|2827-DI0846-SOLAR.EL.RibbonButton.Civil.csproj|solutionrelative:02-buttons\\cls_13_buttonexportlabelstoexcel\\cls_13_main\\cls_13_mainexportlabelstoexcelback.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{41E8CCF2-06F8-4A3D-8BC5-B834B45FBCB0}|2827-DI0846-SOLAR.EL.RibbonButton.Civil.csproj|c:\\2827-di0846-solar.el.ribbonbutton.civil\\02-buttons\\cls_12_buttoncreateentitylabels\\cls_12_main\\cls_12_maincreateentitylabelsback.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{41E8CCF2-06F8-4A3D-8BC5-B834B45FBCB0}|2827-DI0846-SOLAR.EL.RibbonButton.Civil.csproj|solutionrelative:02-buttons\\cls_12_buttoncreateentitylabels\\cls_12_main\\cls_12_maincreateentitylabelsback.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{41E8CCF2-06F8-4A3D-8BC5-B834B45FBCB0}|2827-DI0846-SOLAR.EL.RibbonButton.Civil.csproj|c:\\2827-di0846-solar.el.ribbonbutton.civil\\02-buttons\\cls_13_buttonexportlabelstoexcel\\cls_13_main\\cls_13_mainexportlabelstoexcel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{41E8CCF2-06F8-4A3D-8BC5-B834B45FBCB0}|2827-DI0846-SOLAR.EL.RibbonButton.Civil.csproj|solutionrelative:02-buttons\\cls_13_buttonexportlabelstoexcel\\cls_13_main\\cls_13_mainexportlabelstoexcel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{41E8CCF2-06F8-4A3D-8BC5-B834B45FBCB0}|2827-DI0846-SOLAR.EL.RibbonButton.Civil.csproj|c:\\2827-di0846-solar.el.ribbonbutton.civil\\02-buttons\\cls_16_buttoncablesfroment\\cls_16_processaux\\cls_16_getdictcablebyent\\cls_16_getdictmeasurecablesn2.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{41E8CCF2-06F8-4A3D-8BC5-B834B45FBCB0}|2827-DI0846-SOLAR.EL.RibbonButton.Civil.csproj|solutionrelative:02-buttons\\cls_16_buttoncablesfroment\\cls_16_processaux\\cls_16_getdictcablebyent\\cls_16_getdictmeasurecablesn2.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -66,80 +46,15 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "cls_12_MainOrderEntityLabels.cs",
-              "DocumentMoniker": "C:\\2827-DI0846-SOLAR.EL.RibbonButton.Civil\\02-Buttons\\cls_12_ButtonOrderEntityLabels\\cls_12_Main\\cls_12_MainOrderEntityLabels.cs",
-              "RelativeDocumentMoniker": "02-Buttons\\cls_12_ButtonOrderEntityLabels\\cls_12_Main\\cls_12_MainOrderEntityLabels.cs",
-              "ToolTip": "C:\\2827-DI0846-SOLAR.EL.RibbonButton.Civil\\02-Buttons\\cls_12_ButtonOrderEntityLabels\\cls_12_Main\\cls_12_MainOrderEntityLabels.cs",
-              "RelativeToolTip": "02-Buttons\\cls_12_ButtonOrderEntityLabels\\cls_12_Main\\cls_12_MainOrderEntityLabels.cs",
-              "ViewState": "AgIAABoAAAAAAAAAAAAowDMAAAAYAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-26T07:42:15.055Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "cls_12_MainRemoveFieldLabels.cs",
-              "DocumentMoniker": "C:\\2827-DI0846-SOLAR.EL.RibbonButton.Civil\\02-Buttons\\cls_12_ButtonModifyEntityLabels\\cls_12_Main\\cls_12_MainRemoveFieldLabels.cs",
-              "RelativeDocumentMoniker": "02-Buttons\\cls_12_ButtonModifyEntityLabels\\cls_12_Main\\cls_12_MainRemoveFieldLabels.cs",
-              "ToolTip": "C:\\2827-DI0846-SOLAR.EL.RibbonButton.Civil\\02-Buttons\\cls_12_ButtonModifyEntityLabels\\cls_12_Main\\cls_12_MainRemoveFieldLabels.cs",
-              "RelativeToolTip": "02-Buttons\\cls_12_ButtonModifyEntityLabels\\cls_12_Main\\cls_12_MainRemoveFieldLabels.cs",
-              "ViewState": "AgIAACgAAAAAAAAAAAAQwDQAAABOAAAAAAAAAA==",
+              "Title": "cls_16_GetDictMeasureCablesN2.cs",
+              "DocumentMoniker": "C:\\2827-DI0846-SOLAR.EL.RibbonButton.Civil\\02-Buttons\\cls_16_ButtonCablesFromEnt\\cls_16_ProcessAux\\cls_16_GetDictCableByEnt\\cls_16_GetDictMeasureCablesN2.cs",
+              "RelativeDocumentMoniker": "02-Buttons\\cls_16_ButtonCablesFromEnt\\cls_16_ProcessAux\\cls_16_GetDictCableByEnt\\cls_16_GetDictMeasureCablesN2.cs",
+              "ToolTip": "C:\\2827-DI0846-SOLAR.EL.RibbonButton.Civil\\02-Buttons\\cls_16_ButtonCablesFromEnt\\cls_16_ProcessAux\\cls_16_GetDictCableByEnt\\cls_16_GetDictMeasureCablesN2.cs",
+              "RelativeToolTip": "02-Buttons\\cls_16_ButtonCablesFromEnt\\cls_16_ProcessAux\\cls_16_GetDictCableByEnt\\cls_16_GetDictMeasureCablesN2.cs",
+              "ViewState": "AgIAAG0AAAAAAAAAAAAgwHcAAABFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-26T07:42:12.938Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "cls_12_MainCreateEntityLabels.cs",
-              "DocumentMoniker": "C:\\2827-DI0846-SOLAR.EL.RibbonButton.Civil\\02-Buttons\\cls_12_ButtonCreateEntityLabels\\cls_12_Main\\cls_12_MainCreateEntityLabels.cs",
-              "RelativeDocumentMoniker": "02-Buttons\\cls_12_ButtonCreateEntityLabels\\cls_12_Main\\cls_12_MainCreateEntityLabels.cs",
-              "ToolTip": "C:\\2827-DI0846-SOLAR.EL.RibbonButton.Civil\\02-Buttons\\cls_12_ButtonCreateEntityLabels\\cls_12_Main\\cls_12_MainCreateEntityLabels.cs",
-              "RelativeToolTip": "02-Buttons\\cls_12_ButtonCreateEntityLabels\\cls_12_Main\\cls_12_MainCreateEntityLabels.cs",
-              "ViewState": "AgIAAC4AAAAAAAAAAAApwDgAAAAYAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-26T07:34:10.038Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "cls_12_MainCreateEntityLabelsBack.cs",
-              "DocumentMoniker": "C:\\2827-DI0846-SOLAR.EL.RibbonButton.Civil\\02-Buttons\\cls_12_ButtonCreateEntityLabels\\cls_12_Main\\cls_12_MainCreateEntityLabelsBack.cs",
-              "RelativeDocumentMoniker": "02-Buttons\\cls_12_ButtonCreateEntityLabels\\cls_12_Main\\cls_12_MainCreateEntityLabelsBack.cs",
-              "ToolTip": "C:\\2827-DI0846-SOLAR.EL.RibbonButton.Civil\\02-Buttons\\cls_12_ButtonCreateEntityLabels\\cls_12_Main\\cls_12_MainCreateEntityLabelsBack.cs",
-              "RelativeToolTip": "02-Buttons\\cls_12_ButtonCreateEntityLabels\\cls_12_Main\\cls_12_MainCreateEntityLabelsBack.cs",
-              "ViewState": "AgIAAIQAAAAAAAAAAAApwJkAAAAUAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-26T07:34:10.853Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "cls_13_MainExportLabelsToExcel.cs",
-              "DocumentMoniker": "C:\\2827-DI0846-SOLAR.EL.RibbonButton.Civil\\02-Buttons\\cls_13_ButtonExportLabelsToExcel\\cls_13_Main\\cls_13_MainExportLabelsToExcel.cs",
-              "RelativeDocumentMoniker": "02-Buttons\\cls_13_ButtonExportLabelsToExcel\\cls_13_Main\\cls_13_MainExportLabelsToExcel.cs",
-              "ToolTip": "C:\\2827-DI0846-SOLAR.EL.RibbonButton.Civil\\02-Buttons\\cls_13_ButtonExportLabelsToExcel\\cls_13_Main\\cls_13_MainExportLabelsToExcel.cs",
-              "RelativeToolTip": "02-Buttons\\cls_13_ButtonExportLabelsToExcel\\cls_13_Main\\cls_13_MainExportLabelsToExcel.cs",
-              "ViewState": "AgIAABsAAAAAAAAAAAAtwDoAAAAsAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-26T07:33:24.188Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "cls_13_MainExportLabelsToExcelBack.cs",
-              "DocumentMoniker": "C:\\2827-DI0846-SOLAR.EL.RibbonButton.Civil\\02-Buttons\\cls_13_ButtonExportLabelsToExcel\\cls_13_Main\\cls_13_MainExportLabelsToExcelBack.cs",
-              "RelativeDocumentMoniker": "02-Buttons\\cls_13_ButtonExportLabelsToExcel\\cls_13_Main\\cls_13_MainExportLabelsToExcelBack.cs",
-              "ToolTip": "C:\\2827-DI0846-SOLAR.EL.RibbonButton.Civil\\02-Buttons\\cls_13_ButtonExportLabelsToExcel\\cls_13_Main\\cls_13_MainExportLabelsToExcelBack.cs",
-              "RelativeToolTip": "02-Buttons\\cls_13_ButtonExportLabelsToExcel\\cls_13_Main\\cls_13_MainExportLabelsToExcelBack.cs",
-              "ViewState": "AgIAAKIAAAAAAAAAAAAowKkAAABQAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-26T07:37:36.933Z",
+              "WhenOpened": "2026-01-28T08:22:55.774Z",
               "EditorCaption": ""
             }
           ]

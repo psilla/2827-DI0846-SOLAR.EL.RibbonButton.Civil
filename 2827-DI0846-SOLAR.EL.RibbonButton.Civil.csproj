@@ -106,8 +106,8 @@
     <Compile Include="02-Buttons\cls_16_ButtonCablesFromEnt\cls_16_ProcessAux\cls_16_BuildEntData\cls_16_BuildDataMV.cs" />
     <Compile Include="02-Buttons\cls_16_ButtonCablesFromEnt\cls_16_ProcessAux\cls_16_GetDictCableByEnt\cls_16_GetDictMeasureCablesMV.cs" />
     <Compile Include="02-Buttons\cls_16_ButtonCablesFromEnt\cls_16_ProcessAux\cls_16_GetDictLabelByCt.cs" />
-    <Compile Include="02-Buttons\cls_16_ButtonCablesFromEnt\cls_16_ProcessAux\cls_16_GetRequiredElev\cls_16_GetElevMeasureCablesMV.cs" />
-    <Compile Include="02-Buttons\cls_16_ButtonCablesFromEnt\cls_16_ProcessAux\cls_16_GetRequiredEnt\cls_16_GetEntMeasureCablesMV.cs" />
+    <Compile Include="02-Buttons\cls_16_ButtonCablesFromEnt\cls_16_ProcessAux\cls_16_GetElevations\cls_16_GetElevMeasureCablesMV.cs" />
+    <Compile Include="02-Buttons\cls_16_ButtonCablesFromEnt\cls_16_ProcessAux\cls_16_GetEntities\cls_16_GetEntMeasureCablesMV.cs" />
     <Compile Include="02-Buttons\cls_16_ButtonCablesFromEnt\cls_16_ProcessAux\cls_16_ValidateData\cls_16_ValidateDataEnt.cs" />
     <Compile Include="02-Buttons\cls_16_ButtonCablesFromEnt\cls_16_Process\cls_16_ProcessMeasureCablesMV.cs" />
     <Compile Include="02-Buttons\cls_SolarSettings.cs" />
@@ -121,8 +121,8 @@
     <Compile Include="02-Buttons\cls_16_ButtonCablesFromEnt\cls_16_ProcessAux\cls_16_BuildEntData\cls_16_BuildDataN1.cs" />
     <Compile Include="02-Buttons\cls_16_ButtonCablesFromEnt\cls_16_ProcessAux\cls_16_GetDictCableByEnt\cls_16_GetDictMeasureCablesN1.cs" />
     <Compile Include="02-Buttons\cls_16_ButtonCablesFromEnt\cls_16_Process\cls_16_ProcessMeasureCablesN1.cs" />
-    <Compile Include="02-Buttons\cls_16_ButtonCablesFromEnt\cls_16_ProcessAux\cls_16_GetRequiredEnt\cls_16_GetEntMeasureCablesN1.cs" />
-    <Compile Include="02-Buttons\cls_16_ButtonCablesFromEnt\cls_16_ProcessAux\cls_16_GetRequiredElev\cls_16_GetElevMeasureCablesN1.cs" />
+    <Compile Include="02-Buttons\cls_16_ButtonCablesFromEnt\cls_16_ProcessAux\cls_16_GetEntities\cls_16_GetEntMeasureCablesN1.cs" />
+    <Compile Include="02-Buttons\cls_16_ButtonCablesFromEnt\cls_16_ProcessAux\cls_16_GetElevations\cls_16_GetElevMeasureCablesN1.cs" />
     <Compile Include="02-Buttons\cls_16_ButtonCablesFromEnt\cls_16_Button\cls_16_ButtonMeasureCablesN2.cs" />
     <Compile Include="02-Buttons\cls_16_ButtonCablesFromEnt\cls_16_ProcessAux\cls_16_GetCabLengthSummary.cs" />
     <Compile Include="02-Buttons\cls_16_ButtonCablesFromEnt\cls_16_ProcessAux\cls_16_BuildEntData\cls_16_BuildDataN2.cs" />
@@ -130,8 +130,8 @@
     <Compile Include="02-Buttons\cls_16_ButtonCablesFromEnt\cls_16_ProcessAux\cls_16_ElemByRegionByInter.cs" />
     <Compile Include="02-Buttons\cls_16_ButtonCablesFromEnt\cls_16_ProcessAux\cls_16_GetDictLabelByEnt.cs" />
     <Compile Include="02-Buttons\cls_16_ButtonCablesFromEnt\cls_16_ProcessAux\cls_16_GetDictCableByEnt\cls_16_GetDictMeasureCablesN2.cs" />
-    <Compile Include="02-Buttons\cls_16_ButtonCablesFromEnt\cls_16_ProcessAux\cls_16_GetRequiredElev\cls_16_GetElevMeasureCablesN2.cs" />
-    <Compile Include="02-Buttons\cls_16_ButtonCablesFromEnt\cls_16_ProcessAux\cls_16_GetRequiredEnt\cls_16_GetEntMeasureCablesN2.cs" />
+    <Compile Include="02-Buttons\cls_16_ButtonCablesFromEnt\cls_16_ProcessAux\cls_16_GetElevations\cls_16_GetElevMeasureCablesN2.cs" />
+    <Compile Include="02-Buttons\cls_16_ButtonCablesFromEnt\cls_16_ProcessAux\cls_16_GetEntities\cls_16_GetEntMeasureCablesN2.cs" />
     <Compile Include="02-Buttons\cls_16_ButtonCablesFromEnt\cls_16_Process\cls_16_ProcessMeasureCablesN2.cs" />
     <Compile Include="02-Buttons\cls_16_ButtonCablesFromEnt\cls_16_Main\cls_16_MainMeasureCablesN2.cs" />
     <Compile Include="02-Buttons\cls_16_ButtonCablesFromEnt\cls_16_Button\cls_16_ButtonMeasureCables.cs" />
