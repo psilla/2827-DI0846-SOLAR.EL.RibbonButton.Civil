@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
-using Autodesk.AutoCAD.ApplicationServices;
 using Autodesk.AutoCAD.DatabaseServices;
 using Autodesk.AutoCAD.EditorInput;
-using SOLAR.EL.RibbonButton.Autocad.Settings;
 using TYPSA.SharedLib.Autocad.GetEntities;
 using TYPSA.SharedLib.Autocad.GetLayersInfo;
 using TYPSA.SharedLib.Autocad.ObjectsByTypeByLayer;
+using SOLAR.EL.RibbonButton.Autocad.Settings;
 
 namespace SOLAR.EL.RibbonButton.Autocad.Process
 {
@@ -24,11 +23,11 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
             // Obtenemos el listado de capas del documento
             List<string> docLayers = cls_00_GetLayerNamesFromDoc.GetLayerNamesFromDoc(db);
 
-            List<string> defaultLayersStringLab =
-                new List<string> { solarSet.LabelStringLayer };
+            List<string> psrStringLabLayers = null;
+            List<string> defaultLayersStringLab = new List<string> { solarSet.LabelStringLayer };
             // Obtenemos las etiquetas
-            PromptSelectionResult psrStringLab = cls_00_GetEntityByLayer.GetEntityByLayers(
-                docLayers, ed, solarSet.LabelStringTag, "MTEXT", defaultLayersStringLab
+            PromptSelectionResult psrStringLab = cls_00_GetEntityByLayer.GetTextAndMTextByLayers(
+                docLayers, ed, solarSet.LabelStringTag, out psrStringLabLayers, defaultLayersStringLab
             );
             // Validamos
             if (psrStringLab == null) return null;
@@ -55,8 +54,9 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
                 // Obtenemos valor del texto
                 string value = mText.Contents;
                 // Extraemos campos
-                List<string> fieldValues =
-                    cls_00_MTextObjectsByLayer.SplitLabelValueByCond(autoSettings, value);
+                List<string> fieldValues =cls_00_MTextObjectsByLayer.SplitLabelValueByCond(
+                    autoSettings, value
+                );
                 // Validamos
                 if (fieldValues == null || fieldValues.Count == 0) continue;
 

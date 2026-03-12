@@ -10,7 +10,7 @@ using TYPSA.SharedLib.Autocad.GetLayersInfo;
 using TYPSA.SharedLib.Autocad.IsolateEntities;
 using TYPSA.SharedLib.Autocad.ObjectsByTypeByLayer;
 using TYPSA.SharedLib.Autocad.ProcessPolyAndRegion;
-using TYPSA.SharedLib.Excel;
+using TYPSA.SharedLib.ExcelAutocad;
 
 namespace SOLAR.EL.RibbonButton.Autocad.Process
 {
@@ -43,7 +43,9 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
                 if (!cls_16_GetEntMeasureCablesN1.GetEntMeasureCablesN1(
                     ed, docLayers, solarSet, 
                     out SelectionSet analyzePoly, out PromptSelectionResult psrString, 
-                    out PromptSelectionResult psrStringLab, out PromptSelectionResult psrStringCab
+                    out PromptSelectionResult psrStringLab, out PromptSelectionResult psrStringCab,
+                    out List<string> psrStringLayers, out List<string> psrStringLabLayers,
+                    out List<string> psrStringCabLayers
                 )) return null;
 
                 // Validamos elevaciones

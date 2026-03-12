@@ -51,18 +51,18 @@ namespace SOLAR.EL.RibbonButton.Autocad.Settings
         public string PolyCtLayer { get; set; } = "02.PV.EL_Grouping_CT";
         public string PolyInvLayer { get; set; } = "02.PV.EL_Grouping_INV";
         public string PolyStringLayer { get; set; } = "02.PV.EL_Grouping_String";
-        public string CableCtToEstLayer { get; set; } = "04.PV.EL_Cable_MT_circuit_";
+        public string CableCtToEstLayer { get; set; } = "03.PV.EL_Cable_MT_circuit_";
         public string CableInvToCtLayer { get; set; } = "02.PV.EL_Cable_N2";
         public string CableStringToInvLayer { get; set; } = "02.PV.EL_Cable_N1+";
         // BlockRef
         public string BlockRefEstLayer { get; set; } = "01.PV.EQ_Substation";
         public string BlockRefCtLayer { get; set; } = "01.PV.EQ_Transformation-centre";
-        public string BlockRefInvLayer { get; set; } = "01.PV.EQ_INV_";
+        public string BlockRefInvLayer { get; set; } = "01.PV.TX_INV_";
         public string BlockRefTrackLayer { get; set; } = "01.PV.ST_Tracker";
         // Tags
-        public string LabelCtLayer { get; set; } = "01.PV.EQ_Transformation-centre_Text";
-        public string LabelInvLayer { get; set; } = "01.PV.EQ_Power-inverter_Text";
-        public string LabelStringLayer { get; set; } = "01.PV.EQ_String_Text";
+        public string LabelCtLayer { get; set; } = "01.PV.TX_Transformation-centre_Text";
+        public string LabelInvLayer { get; set; } = "01.PV.TX_Power-inverter_Text";
+        public string LabelStringLayer { get; set; } = "02.PV.TX_String_Text";
 
         // Tipologías Tracker
         public string TipTrack { get; set; } = "Tracker";

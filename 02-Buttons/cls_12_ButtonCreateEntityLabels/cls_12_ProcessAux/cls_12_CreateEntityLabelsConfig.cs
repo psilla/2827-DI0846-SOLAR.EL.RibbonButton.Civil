@@ -92,8 +92,11 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
             };
             // DEFINIMOS PREFIJOS PARA ETIQUETA
             labelFieldsDict = InstanciarFormularios.TextBoxFormOut_NextToLabel(
-                "Enter a prefix for each entity contained in the label", props
-            );
+                "Enter a prefix for each entity included in the label.\n\n" +
+                "All fields are required and must be filled in.\n\n" +
+                "If 'Label without Tracker info' option was selected previously, this field will be automatically removed during processing.",
+            props
+        );
             // Validamos
             if (labelFieldsDict == null) return false;
 

@@ -10,33 +10,33 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
         public static bool GetElevMeasureCablesN1(
             Transaction tr,
             SolarSettings solarSet,
-            PromptSelectionResult psrString,
-            PromptSelectionResult psrStringLab,
-            PromptSelectionResult psrStringCab,
-            out double elevString,
-            out double elevStringLabel,
-            out double elevStringCab
+            PromptSelectionResult psrPolyStr,
+            PromptSelectionResult psrLabelStr,
+            PromptSelectionResult psrPolyN1Cable,
+            out double elevPolyStr,
+            out double elevLabelStr,
+            out double elevPolyN1Cable
         )
         {
             // Valores por defecto
-            elevString = 0;
-            elevStringLabel = 0;
-            elevStringCab = 0;
+            elevPolyStr = 0;
+            elevLabelStr = 0;
+            elevPolyN1Cable = 0;
 
             // Validamos elevaciones
             // CONTORNOS STRINGS
             if (!cls_00_GetEntityElev.AllEntHaveSameElev(
-                tr, psrString, solarSet.PolyStringTag, out elevString
+                tr, psrPolyStr, solarSet.PolyStringTag, out elevPolyStr
             )) return false;
 
             // LABELS STRINGS
             if (!cls_00_GetEntityElev.AllEntHaveSameElev(
-                tr, psrStringLab, solarSet.LabelStringTag, out elevStringLabel
+                tr, psrLabelStr, solarSet.LabelStringTag, out elevLabelStr
             )) return false;
 
             // CABLES STRING - INVERSOR
             if (!cls_00_GetEntityElev.AllEntHaveSameElev(
-                tr, psrStringCab, solarSet.CableN1Tag, out elevStringCab
+                tr, psrPolyN1Cable, solarSet.CableN1Tag, out elevPolyN1Cable
             )) return false;
 
             // return

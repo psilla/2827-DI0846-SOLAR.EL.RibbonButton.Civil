@@ -40,16 +40,8 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
                 // Validamos
                 if (string.IsNullOrEmpty(projectUnits)) return null;
 
-                // Creamos las capas si no existen
-                cls_00_CreateLayerIfNotExists.CreateLayerIfNotExists(solarSet.PolyCtLayer, db);
-                cls_00_CreateLayerIfNotExists.CreateLayerIfNotExists(solarSet.PolyInvLayer, db);
-                cls_00_CreateLayerIfNotExists.CreateLayerIfNotExists(solarSet.BlockRefTrackLayer, db);
-                cls_00_CreateLayerIfNotExists.CreateLayerIfNotExists(solarSet.PolyStringLayer, db);
-                cls_00_CreateLayerIfNotExists.CreateLayerIfNotExists(solarSet.LabelStringLayer, db);
-                cls_00_CreateLayerIfNotExists.CreateLayerIfNotExists(solarSet.LabelInvLayer, db);
-
                 // Obtenemos Text Styles
-                List<string> availableTextStyles =
+                List<string> availableTextStyles = 
                     cls_00_DocumentInfo.GetAllTextStylesFromDrawing(db);
 
                 // Validamos Config
@@ -63,38 +55,47 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
                 )) return null;
 
                 // Obtenemos el listado de capas del documento
-                List<string> docLayers = 
-                    cls_00_GetLayerNamesFromDoc.GetLayerNamesFromDoc(db);
+                List<string> docLayers = cls_00_GetLayerNamesFromDoc.GetLayerNamesFromDoc(db);
 
                 // Seleccionamos Entidades
                 if (!cls_12_GetRequiredEntities.GetRequiredEntities(
                     ed, solarSet, docLayers, analyzeAllDoc,
                     out SelectionSet analyzePoly,
-                    out PromptSelectionResult psrContGen, out PromptSelectionResult psrContInv,
-                    out PromptSelectionResult psrTrackers, out PromptSelectionResult psrInvLabels
+                    out PromptSelectionResult psrPolyCt, out PromptSelectionResult psrPolyInv,
+                    out PromptSelectionResult psrBlockRefTrack, out PromptSelectionResult psrLabelInv,
+                    out string psrPolyCtLayer, out string psrPolyInvLayer,
+                    out string psrBlockRefTrackLayer, out string psrLabelInvLayer
                 )) return null;
+
+                List<string> layersToCreate = new List<string>
+                {
+                    solarSet.PolyCtLayer, solarSet.PolyInvLayer, solarSet.BlockRefTrackLayer,
+                    solarSet.PolyStringLayer, solarSet.LabelStringLayer, solarSet.LabelInvLayer
+                };
+                // Creamos las capas por defecto si no existen
+                cls_00_CreateLayerIfNotExists.CreateLayersIfNotExist(layersToCreate, db);
 
                 // Validamos elevaciones
                 if (!cls_12_GetRequiredElev.GetRequiredElevations(
-                        tr, solarSet,
-                        psrContGen, psrContInv, psrTrackers, psrInvLabels, 
-                        out double elevCenTrans, out double elevInv,
-                        out double elevTrack, out double elevInvLabel
+                    tr, solarSet, 
+                    psrPolyCt, psrPolyInv, psrBlockRefTrack, psrLabelInv, 
+                    out double elevPolyCt, out double elevPolyInv,
+                    out double elevBlockRefTrack, out double elevLabelInv
                 )) return null;
 
                 // Validamos elevaciones entre Entidades
-                if (Math.Abs(elevCenTrans - elevInv) > 1e-6 ||
-                    Math.Abs(elevCenTrans - elevTrack) > 1e-6 ||
-                    Math.Abs(elevCenTrans - elevInvLabel) > 1e-6
+                if (Math.Abs(elevPolyCt - elevPolyInv) > 1e-6 ||
+                    Math.Abs(elevPolyCt - elevBlockRefTrack) > 1e-6 ||
+                    Math.Abs(elevPolyCt - elevLabelInv) > 1e-6
                 )
                 {
                     // Mensaje
                     MessageBox.Show(
                         $"⚠ Elevations are inconsistent across entities.\n\n" +
-                        $"{solarSet.PolyCtTag} Z: {elevCenTrans:F3}\n" +
-                        $"{solarSet.PolyInvTag} Z: {elevInv:F3}\n" +
-                        $"{solarSet.BlockRefTrackTag} Z: {elevTrack:F3}\n" +
-                        $"{solarSet.LabelInvTag} Z: {elevInvLabel:F3}",
+                        $"{solarSet.PolyCtTag} Z: {elevPolyCt:F3}\n" +
+                        $"{solarSet.PolyInvTag} Z: {elevPolyInv:F3}\n" +
+                        $"{solarSet.BlockRefTrackTag} Z: {elevBlockRefTrack:F3}\n" +
+                        $"{solarSet.LabelInvTag} Z: {elevLabelInv:F3}",
                         "Elevation Mismatch",
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Warning
@@ -103,28 +104,28 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
                     return null;
                 }
 
-                HashSet<ObjectId> trackersToIsolate = new HashSet<ObjectId>();
-                HashSet<ObjectId> trackersWithMultiplePoly = new HashSet<ObjectId>();
-                HashSet<ObjectId> trackersWithElevMismatch = new HashSet<ObjectId>();
+                HashSet<ObjectId> blockRefTrackToIsolate = new HashSet<ObjectId>();
+                HashSet<ObjectId> blockRefTrackMultPoly = new HashSet<ObjectId>();
+                HashSet<ObjectId> blockRefTrackElevMismatch = new HashSet<ObjectId>();
                 // Iteramos
-                foreach (ObjectId trkId in psrTrackers.Value.GetObjectIds())
+                foreach (ObjectId trkId in psrBlockRefTrack.Value.GetObjectIds())
                 {
                     // Validamos Trackers/Strings
                     cls_12_AnalyzeTrackPolys.AnalyzeTrackPolys(
                         tr, trkId, solarSet, 
-                        trackersWithMultiplePoly, trackersToIsolate, trackersWithElevMismatch
+                        blockRefTrackMultPoly, blockRefTrackToIsolate, blockRefTrackElevMismatch
                     );
                 }
                 // Validamos
                 if (!cls_12_IsolateInvalidTrack.IsolateInvalidTrack(
                     ed, solarSet,
-                    trackersWithMultiplePoly, trackersToIsolate, trackersWithElevMismatch
+                    blockRefTrackMultPoly, blockRefTrackToIsolate, blockRefTrackElevMismatch
                 )) return null;
 
-                // Obtenemos los Ids
-                HashSet<ObjectId> contInvIds = new HashSet<ObjectId>(psrContInv.Value.GetObjectIds());
-                HashSet<ObjectId> trackersIds = new HashSet<ObjectId>(psrTrackers.Value.GetObjectIds());
-                HashSet<ObjectId> invLabelIds = new HashSet<ObjectId>(psrInvLabels.Value.GetObjectIds());
+                // Obtenemos HashSet de Ids
+                HashSet<ObjectId> psrPolyInvIds = new HashSet<ObjectId>(psrPolyInv.Value.GetObjectIds());
+                HashSet<ObjectId> psrBlockRefTrackIds = new HashSet<ObjectId>(psrBlockRefTrack.Value.GetObjectIds());
+                HashSet<ObjectId> psrLabelInvIds = new HashSet<ObjectId>(psrLabelInv.Value.GetObjectIds());
 
                 // Definimos offset por defecto
                 double offsetDistance = 0.15;
@@ -132,30 +133,28 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
                 // Obtenemos Regiones de los Contornos CT
                 if (!cls_00_ProcessPolysToRegions.ProcessPolysToRegions(
                     ed, tr, btr, analyzePoly, solarSet.PolyCtTag, offsetDistance, projectUnits,
-                    out List<Region> validRegionContGen,
+                    out List<Region> validRegionCt,
                     out Dictionary<Handle, Handle> dictPolyToRegionContGen
                 )) return null;
 
                 // Obtenemos Regiones de los Contornos Inversores
                 if (!cls_00_ProcessPolysToRegions.ProcessPolysToRegions(
-                    ed, tr, btr, psrContInv.Value, solarSet.PolyInvTag, offsetDistance, projectUnits,
-                    out List<Region> validRegionContInv,
+                    ed, tr, btr, psrPolyInv.Value, solarSet.PolyInvTag, offsetDistance, projectUnits,
+                    out List<Region> validRegionInv,
                     out Dictionary<Handle, Handle> dictPolyToRegionContInv
                 )) return null;
 
                 // Almacenamos regiones para borrarlas
-                List<Region> allTempRegions = new List<Region>();
-                allTempRegions.AddRange(validRegionContGen);
-                allTempRegions.AddRange(validRegionContInv);
+                List<Region> allValidRegion = new List<Region>();
+                allValidRegion.AddRange(validRegionCt);
+                allValidRegion.AddRange(validRegionInv);
 
-                StringBuilder infoRegiones = new StringBuilder();
+                StringBuilder infoRegion = new StringBuilder();
                 // Diccionario para almacenar los elementos por region
-                Dictionary<Region, List<DBObject>> regionDataContGen =
-                    new Dictionary<Region, List<DBObject>>();
+                Dictionary<Region, List<DBObject>> dictRegionCtData = new Dictionary<Region, List<DBObject>>();
 
                 // Ordenar lista de regiones por centroide
-                validRegionContGen.Sort((a, b) => 
-                    cls_00_GetEntityCentroid.CompareEntitiesByPosition(a, b, 10.0));
+                validRegionCt.Sort((a, b) => cls_00_GetEntityCentroid.CompareEntitiesByPosition(a, b, 10.0));
 
                 // Contador de CT
                 int ctStartIndex;
@@ -172,9 +171,13 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
                         // Mensaje
                         MessageBox.Show("Invalid CT number. Operation will be canceled.", "Input Error");
                         // Borramos regiones
-                        foreach (Region region in allTempRegions)
+                        foreach (Region region in allValidRegion)
+                        {
                             if (region != null && !region.IsErased)
+                            {
                                 cls_00_DeleteEntity.DeleteEntity(region);
+                            } 
+                        }
                         // Finalizamos
                         return null;
                     }
@@ -187,9 +190,13 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
                         // Mensaje
                         MessageBox.Show("Invalid Tracker number. Operation will be canceled.", "Input Error");
                         // Borramos regiones
-                        foreach (Region region in allTempRegions)
+                        foreach (Region region in allValidRegion)
+                        {
                             if (region != null && !region.IsErased)
+                            {
                                 cls_00_DeleteEntity.DeleteEntity(region);
+                            }
+                        }
                         // Finalizamos
                         return null;
                     }
@@ -202,42 +209,56 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
                 }
 
                 // Lista para almacenar todos los pares (CT, INV) detectados
-                List<(int ctNumber, int invNumber, Region ctRegion, Region invRegion)> regionOrderList =
+                List<(int ctNumber, int invNumber, Region ctRegion, Region invRegion)> validRegionOrderList =
                     new List<(int, int, Region, Region)>();
                 // Iteramos por los CT
-                foreach (Region regionCT in validRegionContGen)
+                foreach (Region regionCt in validRegionCt)
                 {
                     // Obtenemos los Inversores contenidos en este CT
-                    List<Entity> contInvEntities = cls_00_GetEntityListByRegion.GetEntityListByRegionByPoint(
-                        tr, regionCT, contInvIds
+                    List<Entity> polyInvAsEntList = cls_00_GetEntityListByRegion.GetEntityListByRegionByPoint(
+                        tr, regionCt, psrPolyInvIds
                     );
                     // Validamos
-                    if (contInvEntities == null || contInvEntities.Count == 0) continue;
+                    if (polyInvAsEntList == null || polyInvAsEntList.Count == 0) continue;
 
                     // Obtenemos regiones de inversores
-                    List<Region> invRegions = cls_12_GetRegionsByInvOrder.GetRegionsByInvOrder(
-                        contInvEntities, dictPolyToRegionContInv, validRegionContInv, infoRegiones
+                    List<Region> regionInvList = cls_12_GetRegionsByInvOrder.GetRegionsByInvOrder(
+                        polyInvAsEntList, dictPolyToRegionContInv, validRegionInv, infoRegion
                     );
 
                     // Iteramos por las regiones de los Inversores
-                    foreach (Region invRegion in invRegions)
+                    foreach (Region regionInv in regionInvList)
                     {
                         // Obtener etiqueta del Inversor
-                        List<Entity> invLabelEntities = cls_00_GetEntityListByRegion.
-                            GetEntityListByRegionByPoint(tr, invRegion, invLabelIds);
+                        List<Entity> labelInvAsEntList = cls_00_GetEntityListByRegion.GetEntityListByRegionByPoint(
+                            tr, regionInv, psrLabelInvIds
+                        );
                         // Validamos
-                        if (invLabelEntities == null || invLabelEntities.Count != 1) continue;
+                        if (labelInvAsEntList == null || labelInvAsEntList.Count != 1) continue;
+
                         // Obtenemos la etiqueta del inversor
-                        Entity invLabelEnt = invLabelEntities.First();
+                        Entity labelInvAsEnt = labelInvAsEntList.First();
                         // Validamos
-                        if (invLabelEnt is MText mtext)
+                        string textValue = null;
+                        // mtext
+                        if (labelInvAsEnt is MText mtext)
+                        {
+                            textValue = mtext.Contents;
+                        }
+                        // dbtext
+                        else if (labelInvAsEnt is DBText dbtext)
+                        {
+                            textValue = dbtext.TextString;
+                        }
+                        // Validamos
+                        if (!string.IsNullOrWhiteSpace(textValue))
                         {
                             // Obtenemos el valor
-                            string text = mtext.Contents.Trim();
+                            string cleanedValue = textValue.Trim();
                             // Separadores válidos posibles
                             char[] validSeparators = autoSettings.ValidSeparators;
                             // Detectamos el separador 
-                            char? sep = validSeparators.FirstOrDefault(s => text.Contains(s));
+                            char? sep = validSeparators.FirstOrDefault(s => cleanedValue.Contains(s));
 
                             int ctNum = 0;
                             int invNum = 0;
@@ -245,9 +266,9 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
                             if (sep != null && sep != '\0')
                             {
                                 // Dividimos por el separador detectado
-                                string[] parts = text.Split(new[] { sep.Value }, StringSplitOptions.None);
+                                string[] parts = cleanedValue.Split(new[] { sep.Value }, StringSplitOptions.None);
                                 // Validamos
-                                if (parts.Length == 2)
+                                if (parts.Length >= 2)
                                 {
                                     // Extraemos campos numericos
                                     int.TryParse(new string(parts[0].Where(char.IsDigit).ToArray()), out ctNum);
@@ -255,13 +276,13 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
                                 }
                             }
                             // Almacenamos
-                            regionOrderList.Add((ctNum, invNum, regionCT, invRegion));
+                            validRegionOrderList.Add((ctNum, invNum, regionCt, regionInv));
                         }
                     }
                 }
 
                 // Ordenar por CT y por Inversor
-                var orderedRegions = regionOrderList
+                var validRegionOrderListByCt = validRegionOrderList
                     .OrderBy(x => x.ctNumber).ThenBy(x => x.invNumber)
                     .GroupBy(x => x.ctNumber).ToList();
 
@@ -269,20 +290,19 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
                 // Contador global de etiquetas
                 int totalLabelsCreated = 0;
                 // Procesamos en el orden correcto
-                foreach (var ctGroup in orderedRegions)
+                foreach (var ctGroup in validRegionOrderListByCt)
                 {
                     // Obtenemos la region del CT
-                    Region regionCT = ctGroup.First().ctRegion;
+                    Region regionCt = ctGroup.First().ctRegion;
                     // Lista de inversores ordenados dentro de este CT
                     List<(int invNumber, Region invRegion)> invRegionsOrdered =
                         ctGroup.Select(x => (x.invNumber, x.invRegion)).ToList();
                     // Procesamos CT
                     int labelsCreated = cls_12_ProcessCT.ProcessCtByInvLabel(
-                        solarSet, regionCT, tr, btr,
-                        trackersIds, labelFieldsDict, ctStartIndex, trackStartIndex,
-                        isHorizontal, selectedTextStyle, selectedTextJust, infoRegiones,
-                        hasMPPT, separatorChar,
-                        invRegionsOrdered, ref createdLabelIds
+                        solarSet, regionCt, tr, btr,
+                        psrBlockRefTrackIds, labelFieldsDict, ctStartIndex, trackStartIndex,
+                        isHorizontal, selectedTextStyle, selectedTextJust, infoRegion,
+                        hasMPPT, separatorChar, invRegionsOrdered, ref createdLabelIds
                     );
                     // Actualizamos contador
                     ctStartIndex++;
@@ -292,14 +312,14 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
 
                 // Mostrar información
                 ShowStringBuilder.ShowInfo(
-                    $"📌 Entities by Document Summary:", infoRegiones.ToString()
+                    $"📌 Entities by Document Summary:", infoRegion.ToString()
                 );
 
-                // Actualizamos etiquetas creadas por Inversor
-                foreach (var ctGroup in orderedRegions)
+                // Actualizamos etiquetas creadas 
+                foreach (var ctGroup in validRegionOrderListByCt)
                 {
                     // Obtenemos la region del CT
-                    Region regionCT = ctGroup.First().ctRegion;
+                    Region regionCt = ctGroup.First().ctRegion;
                     // Accedemos a sus Inversores
                     List<(int invNumber, Region invRegion)> invRegionsOrdered =
                         ctGroup.Select(x => (x.invNumber, x.invRegion)).ToList();
@@ -337,9 +357,8 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
                                 string newText = string.Join(separatorChar, fields);
                                 // Actualizamos valor
                                 cls_12_RemoveFieldFromLabel.UpdateMTextContents(
-                                    mText, newText, infoRegiones,
-                                    "Label updated",
-                                    "Error updating label"
+                                    mText, newText, infoRegion,
+                                    "Label updated", "Error updating label"
                                 );
                             }
                         }
@@ -352,8 +371,7 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
                             .GroupBy(m =>
                             {
                                 // Obtenemos contenido
-                                string cleanLabel =
-                                    cls_12_RemoveFieldFromLabel.GetCleanLabel(m.Contents);
+                                string cleanLabel = cls_12_RemoveFieldFromLabel.GetCleanLabel(m.Contents);
                                 // Obtenemos los campos
                                 string[] fields = cls_12_RemoveFieldFromLabel.
                                     SplitLabelFields(cleanLabel, separatorChar);
@@ -401,9 +419,8 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
                                     stringIndex++;
                                     // Actualizamos valor
                                     cls_12_RemoveFieldFromLabel.UpdateMTextContents(
-                                        mText, newText, infoRegiones,
-                                        "String label updated",
-                                        "Error updating string label"
+                                        mText, newText, infoRegion,
+                                        "String label updated", "Error updating string label"
                                     );
                                 }
                             }
@@ -419,13 +436,13 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
                     {
                         // Actualizamos etiqueta
                         cls_12_RemoveFieldFromLabel.RemoveFieldFromLabel(
-                            tr, lblId, separatorChar, infoRegiones
+                            tr, lblId, separatorChar, infoRegion
                         );
                     }
                 }
 
                 // Borrar regiones de contornos generales
-                foreach (Region region in validRegionContGen)
+                foreach (Region region in validRegionCt)
                 {
                     // Validamos
                     if (region != null && !region.IsErased)
@@ -435,7 +452,7 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
                 }
 
                 // Borrar regiones de contornos de inversores
-                foreach (Region region in validRegionContInv)
+                foreach (Region region in validRegionInv)
                 {
                     // Validamos
                     if (region != null && !region.IsErased)

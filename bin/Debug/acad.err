@@ -1,6 +1,11 @@
 
 
-FATAL ERROR:  Unhandled e0434352h Exception at D2D066CAh
+ERROR FATAL:  Unhandled Access Violation Reading 0x0000 Exception at C87EB489h
 
-09/30/2025 at 19:45:27.000  Drawing: C:\Users\psilla\OneDrive - TYPSA\00-PROY_OFERTAS\DEP ENERGIA\NOMENCLATURAS_TEST_BIS.dwg
+03/04/2026 at 15:10:44.000  Dibujo: Dibujo1.dwg
 -------------
+MMINHAM TERMINAL\Planos\Pruebas\260306\AR\H3428-TYP-A-BD-DG-AR-0028.dwg
+-------------
+DG-WE-0034.dwg
+-------------
+--

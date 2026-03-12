@@ -3,8 +3,16 @@
   "WorkspaceRootPath": "C:\\2827-DI0846-SOLAR.EL.RibbonButton.Civil\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{41E8CCF2-06F8-4A3D-8BC5-B834B45FBCB0}|2827-DI0846-SOLAR.EL.RibbonButton.Civil.csproj|c:\\2827-di0846-solar.el.ribbonbutton.civil\\02-buttons\\cls_16_buttoncablesfroment\\cls_16_processaux\\cls_16_getdictcablebyent\\cls_16_getdictmeasurecablesn2.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{41E8CCF2-06F8-4A3D-8BC5-B834B45FBCB0}|2827-DI0846-SOLAR.EL.RibbonButton.Civil.csproj|solutionrelative:02-buttons\\cls_16_buttoncablesfroment\\cls_16_processaux\\cls_16_getdictcablebyent\\cls_16_getdictmeasurecablesn2.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{41E8CCF2-06F8-4A3D-8BC5-B834B45FBCB0}|2827-DI0846-SOLAR.EL.RibbonButton.Civil.csproj|c:\\2827-di0846-solar.el.ribbonbutton.civil\\02-buttons\\cls_12_buttoncreateentitylabels\\cls_12_main\\cls_12_maincreateentitylabels.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{41E8CCF2-06F8-4A3D-8BC5-B834B45FBCB0}|2827-DI0846-SOLAR.EL.RibbonButton.Civil.csproj|solutionrelative:02-buttons\\cls_12_buttoncreateentitylabels\\cls_12_main\\cls_12_maincreateentitylabels.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{41E8CCF2-06F8-4A3D-8BC5-B834B45FBCB0}|2827-DI0846-SOLAR.EL.RibbonButton.Civil.csproj|c:\\2827-di0846-solar.el.ribbonbutton.civil\\02-buttons\\cls_12_buttoncreateentitylabels\\cls_12_button\\cls_12_buttoncreateentitylabels.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{41E8CCF2-06F8-4A3D-8BC5-B834B45FBCB0}|2827-DI0846-SOLAR.EL.RibbonButton.Civil.csproj|solutionrelative:02-buttons\\cls_12_buttoncreateentitylabels\\cls_12_button\\cls_12_buttoncreateentitylabels.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{41E8CCF2-06F8-4A3D-8BC5-B834B45FBCB0}|2827-DI0846-SOLAR.EL.RibbonButton.Civil.csproj|c:\\2827-di0846-solar.el.ribbonbutton.civil\\01-ribbon\\app.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{41E8CCF2-06F8-4A3D-8BC5-B834B45FBCB0}|2827-DI0846-SOLAR.EL.RibbonButton.Civil.csproj|solutionrelative:01-ribbon\\app.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -14,7 +22,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 8,
+          "SelectedChildIndex": 9,
           "Children": [
             {
               "$type": "Bookmark",
@@ -45,16 +53,46 @@
               "Name": "ST:128:0:{75188d03-9892-4ae2-abf1-207126247ce5}"
             },
             {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{004be353-6879-467c-9d1e-9ac23cdf6d49}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "cls_12_ButtonCreateEntityLabels.cs",
+              "DocumentMoniker": "C:\\2827-DI0846-SOLAR.EL.RibbonButton.Civil\\02-Buttons\\cls_12_ButtonCreateEntityLabels\\cls_12_Button\\cls_12_ButtonCreateEntityLabels.cs",
+              "RelativeDocumentMoniker": "02-Buttons\\cls_12_ButtonCreateEntityLabels\\cls_12_Button\\cls_12_ButtonCreateEntityLabels.cs",
+              "ToolTip": "C:\\2827-DI0846-SOLAR.EL.RibbonButton.Civil\\02-Buttons\\cls_12_ButtonCreateEntityLabels\\cls_12_Button\\cls_12_ButtonCreateEntityLabels.cs",
+              "RelativeToolTip": "02-Buttons\\cls_12_ButtonCreateEntityLabels\\cls_12_Button\\cls_12_ButtonCreateEntityLabels.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-11T12:39:11.193Z",
+              "EditorCaption": ""
+            },
+            {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "cls_16_GetDictMeasureCablesN2.cs",
-              "DocumentMoniker": "C:\\2827-DI0846-SOLAR.EL.RibbonButton.Civil\\02-Buttons\\cls_16_ButtonCablesFromEnt\\cls_16_ProcessAux\\cls_16_GetDictCableByEnt\\cls_16_GetDictMeasureCablesN2.cs",
-              "RelativeDocumentMoniker": "02-Buttons\\cls_16_ButtonCablesFromEnt\\cls_16_ProcessAux\\cls_16_GetDictCableByEnt\\cls_16_GetDictMeasureCablesN2.cs",
-              "ToolTip": "C:\\2827-DI0846-SOLAR.EL.RibbonButton.Civil\\02-Buttons\\cls_16_ButtonCablesFromEnt\\cls_16_ProcessAux\\cls_16_GetDictCableByEnt\\cls_16_GetDictMeasureCablesN2.cs",
-              "RelativeToolTip": "02-Buttons\\cls_16_ButtonCablesFromEnt\\cls_16_ProcessAux\\cls_16_GetDictCableByEnt\\cls_16_GetDictMeasureCablesN2.cs",
-              "ViewState": "AgIAAG0AAAAAAAAAAAAgwHcAAABFAAAAAAAAAA==",
+              "Title": "cls_12_MainCreateEntityLabels.cs",
+              "DocumentMoniker": "C:\\2827-DI0846-SOLAR.EL.RibbonButton.Civil\\02-Buttons\\cls_12_ButtonCreateEntityLabels\\cls_12_Main\\cls_12_MainCreateEntityLabels.cs",
+              "RelativeDocumentMoniker": "02-Buttons\\cls_12_ButtonCreateEntityLabels\\cls_12_Main\\cls_12_MainCreateEntityLabels.cs",
+              "ToolTip": "C:\\2827-DI0846-SOLAR.EL.RibbonButton.Civil\\02-Buttons\\cls_12_ButtonCreateEntityLabels\\cls_12_Main\\cls_12_MainCreateEntityLabels.cs",
+              "RelativeToolTip": "02-Buttons\\cls_12_ButtonCreateEntityLabels\\cls_12_Main\\cls_12_MainCreateEntityLabels.cs",
+              "ViewState": "AgIAABMAAAAAAAAAAAAgwCUAAABsAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-28T08:22:55.774Z",
+              "WhenOpened": "2026-03-11T12:39:07.175Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "App.cs",
+              "DocumentMoniker": "C:\\2827-DI0846-SOLAR.EL.RibbonButton.Civil\\01-Ribbon\\App.cs",
+              "RelativeDocumentMoniker": "01-Ribbon\\App.cs",
+              "ToolTip": "C:\\2827-DI0846-SOLAR.EL.RibbonButton.Civil\\01-Ribbon\\App.cs",
+              "RelativeToolTip": "01-Ribbon\\App.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-04T14:11:36.122Z",
               "EditorCaption": ""
             }
           ]
@@ -102,16 +140,6 @@
             {
               "$type": "Bookmark",
               "Name": "ST:2:0:{e8034f19-ab72-4f06-83fd-f6832b41aa63}"
-            }
-          ]
-        },
-        {
-          "DockedWidth": 162,
-          "SelectedChildIndex": -1,
-          "Children": [
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{004be353-6879-467c-9d1e-9ac23cdf6d49}"
             }
           ]
         }

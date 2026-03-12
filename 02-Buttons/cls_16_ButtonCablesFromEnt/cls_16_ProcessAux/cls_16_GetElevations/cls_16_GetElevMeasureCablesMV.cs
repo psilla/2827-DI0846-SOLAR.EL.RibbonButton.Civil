@@ -10,41 +10,41 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
         public static bool GetElevMeasureCablesMV(
             Transaction tr,
             SolarSettings solarSet,
-            PromptSelectionResult psrCtLab,
-            PromptSelectionResult psrCtBlock,
-            PromptSelectionResult psrEstBlock,
-            PromptSelectionResult psrCtCab,
-            out double elevCtLabel,
-            out double elevCtBlock,
-            out double elevEstBlock,
-            out double elevCtCab
+            PromptSelectionResult psrLabelCt,
+            PromptSelectionResult psrBlockRefCt,
+            PromptSelectionResult psrBlockRefEst,
+            PromptSelectionResult psrPolyMvCable,
+            out double elevLabelCt,
+            out double elevBlockRefCt,
+            out double elevBlockRefEst,
+            out double elevPolyMvCable
         )
         {
             // Valores por defecto
-            elevCtLabel = 0;
-            elevCtBlock = 0;
-            elevEstBlock = 0;
-            elevCtCab = 0;
+            elevLabelCt = 0;
+            elevBlockRefCt = 0;
+            elevBlockRefEst = 0;
+            elevPolyMvCable = 0;
 
             // Validamos elevaciones
             // LABELS CT
             if (!cls_00_GetEntityElev.AllEntHaveSameElev(
-                tr, psrCtLab, solarSet.LabelInvTag, out elevCtLabel
+                tr, psrLabelCt, solarSet.LabelInvTag, out elevLabelCt
             )) return false;
 
             // BLOCKREF CT
             if (!cls_00_GetEntityElev.AllEntHaveSameElev(
-                tr, psrCtBlock, solarSet.BlockRefInvTag, out elevCtBlock
+                tr, psrBlockRefCt, solarSet.BlockRefInvTag, out elevBlockRefCt
             )) return false;
 
             // BLOCKREF ESTACION
             if (!cls_00_GetEntityElev.AllEntHaveSameElev(
-                tr, psrEstBlock, solarSet.BlockRefEstTag, out elevEstBlock
+                tr, psrBlockRefEst, solarSet.BlockRefEstTag, out elevBlockRefEst
             )) return false;
 
             // CABLES CT - ESTACION
             if (!cls_00_GetEntityElev.AllEntHaveSameElev(
-                tr, psrCtCab, solarSet.CableN2Tag, out elevCtCab
+                tr, psrPolyMvCable, solarSet.CableN2Tag, out elevPolyMvCable
             )) return false;
 
             // return

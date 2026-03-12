@@ -128,36 +128,18 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
             for (int i = 0; i < referenceFields.Count; i++)
             {
                 string fieldValue = referenceFields[i];
-                // Extraemos la clave alfabética
+                // Extraemos la clave alfabetica
                 string fieldKey = cls_00_MTextObjectsByLayer.GetAlphabeticFieldKey(fieldValue);
-                // Validamos
-                if (string.IsNullOrEmpty(fieldKey))
-                {
-                    // Mensaje
-                    MessageBox.Show(
-                        $"Invalid field format: '{fieldValue}'", "Invalid Label Format",
-                        MessageBoxButtons.OK, MessageBoxIcon.Error
-                    );
-                    // Finalizamos
-                    return null;
-                }
-                // Validamos duplicidad
-                if (result.ContainsKey(fieldKey))
-                {
-                    // Mensaje
-                    MessageBox.Show(
-                        $"Duplicate field key found: '{fieldKey}'", "Invalid Label Format",
-                        MessageBoxButtons.OK, MessageBoxIcon.Error
-                    );
-                    // Finalizamos
-                    return null;
-                }
+                // Validamos clave alfabetica
+                if (string.IsNullOrEmpty(fieldKey)) continue;
 
+                // Validamos duplicidad
+                if (result.ContainsKey(fieldKey)) continue;
+               
                 // Asignamos por defecto
-                string summaryValue =
-                    i < defaultSummaries.Length
-                        ? defaultSummaries[i]
-                        : string.Empty;
+                string summaryValue = i < defaultSummaries.Length
+                    ? defaultSummaries[i]
+                    : string.Empty;
                 // Almacenamos
                 result.Add(fieldKey, summaryValue);
             }

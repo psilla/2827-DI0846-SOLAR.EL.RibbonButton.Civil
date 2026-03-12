@@ -38,15 +38,22 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
                     {
                         // Obtenemos la etiqueta 
                         Entity labelEnt = labelEntities.First();
+
+                        string text = null;
                         // Validamos
                         if (labelEnt is MText mtext)
                         {
                             // Obtenemos el valor
-                            string text = mtext.Contents.Trim();
-                            // Validamos
-                            if (!string.IsNullOrWhiteSpace(text))
-                                entLabelText = text;
+                            text = mtext.Contents;
                         }
+                        else if (labelEnt is DBText dbtext)
+                        {
+                            // Obtenemos el valor
+                            text = dbtext.TextString;
+                        }
+                        // Validamos
+                        if (!string.IsNullOrWhiteSpace(text))
+                            entLabelText = text.Trim();
                     }
                     // Caso2: X etiquetas
                     else
@@ -60,6 +67,5 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
             // return
             return entLabelByRegion;
         }
-
     }
 }

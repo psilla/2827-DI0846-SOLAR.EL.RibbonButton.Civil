@@ -1,7 +1,11 @@
 ﻿using System.Collections.Generic;
+using System.Windows.Forms;
+using Autodesk.AutoCAD.DatabaseServices;
 using Autodesk.AutoCAD.EditorInput;
-using TYPSA.SharedLib.Autocad.GetEntities;
 using SOLAR.EL.RibbonButton.Autocad.Settings;
+using TYPSA.SharedLib.Autocad.GetEntities;
+using TYPSA.SharedLib.Autocad.GetLayersInfo;
+using TYPSA.SharedLib.Autocad.SelectEntities;
 
 namespace SOLAR.EL.RibbonButton.Autocad.Process
 {
@@ -13,53 +17,61 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
             List<string> docLayers,
             bool analyzeAllDoc,
             out SelectionSet analyzePoly,
-            out PromptSelectionResult psrContGen,
-            out PromptSelectionResult psrContInv,
-            out PromptSelectionResult psrTrackers,
-            out PromptSelectionResult psrInvLabels
+            out PromptSelectionResult psrPolyCt,
+            out PromptSelectionResult psrPolyInv,
+            out PromptSelectionResult psrBlockRefTrack,
+            out PromptSelectionResult psrLabelInv,
+            out string psrPolyCtLayer,
+            out string psrPolyInvLayer,
+            out string psrBlockRefTrackLayer,
+            out string psrLabelInvLayer
         )
         {
             // Valores por defecto
             analyzePoly = null;
-            psrContGen = null;
-            psrContInv = null;
-            psrTrackers = null;
-            psrInvLabels = null;
+            psrPolyCt = null;
+            psrPolyInv = null;
+            psrBlockRefTrack = null;
+            psrLabelInv = null;
 
-            // Seleccionamos Entidades
-            // CONTORNOS CT
-            psrContGen = cls_00_GetEntityByLayer.GetEntityByLayer(
-                docLayers, ed, solarSet.PolyCtTag, "LWPOLYLINE", solarSet.PolyCtLayer
+            psrPolyCtLayer = null;
+            psrPolyInvLayer = null;
+            psrBlockRefTrackLayer = null;
+            psrLabelInvLayer = null;
+
+            // POLYS CT
+            psrPolyCt = cls_00_GetEntityByLayer.GetEntityByLayer(
+                docLayers, ed, solarSet.PolyCtTag, "LWPOLYLINE", out psrPolyCtLayer, solarSet.PolyCtLayer
             );
             // Validamos
-            if (psrContGen == null) return false;
+            if (psrPolyCt == null) return false;
             // Seleccionamos en funcion del bool
             analyzePoly = cls_00_GetPolylinesByUser.GetPolylinesByUser(
-                ed, analyzeAllDoc, psrContGen, solarSet.PolyCtTag
+                ed, analyzeAllDoc, psrPolyCt, solarSet.PolyCtTag
             );
             // Validamos
             if (analyzePoly == null) return false;
 
-            // CONTORNOS INVERSORES
-            psrContInv = cls_00_GetEntityByLayer.GetEntityByLayer(
-                docLayers, ed, solarSet.PolyInvTag, "LWPOLYLINE", solarSet.PolyInvLayer
+            // POLYS INV
+            psrPolyInv = cls_00_GetEntityByLayer.GetEntityByLayer(
+                docLayers, ed, solarSet.PolyInvTag, "LWPOLYLINE", out psrPolyInvLayer, solarSet.PolyInvLayer
             );
             // Validamos
-            if (psrContInv == null) return false;
+            if (psrPolyInv == null) return false;
 
-            // BLOCKREF TRACKERS
-            psrTrackers = cls_00_GetEntityByLayer.GetEntityByLayer(
-                docLayers, ed, solarSet.BlockRefTrackTag, "INSERT", solarSet.BlockRefTrackLayer
+            // BLOCKREF TRACK
+            psrBlockRefTrack = cls_00_GetEntityByLayer.GetEntityByLayer(
+                docLayers, ed, solarSet.BlockRefTrackTag, "INSERT", out psrBlockRefTrackLayer, solarSet.BlockRefTrackLayer
             );
             // Validamos
-            if (psrTrackers == null) return false;
+            if (psrBlockRefTrack == null) return false;
 
-            // LABELS INVERSORES
-            psrInvLabels = cls_00_GetEntityByLayer.GetEntityByLayer(
-                docLayers, ed, solarSet.LabelInvTag, "MTEXT", solarSet.LabelInvLayer
+            // LABELS INV
+            psrLabelInv = cls_00_GetEntityByLayer.GetTextAndMTextByLayer(
+                docLayers, ed, solarSet.LabelInvTag, out psrLabelInvLayer, solarSet.LabelInvLayer
             );
             // Validamos
-            if (psrInvLabels == null) return false;
+            if (psrLabelInv == null) return false;
 
             // return
             return true; 

@@ -15,8 +15,8 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
             Transaction tr,
             BlockTableRecord btr,
             SolarSettings solarSet,
-            Polyline str,
-            BlockReference tracker,
+            Polyline polyStr,
+            BlockReference blockreftrack,
             Dictionary<string, string> propPreDict,
             int ctStartIndex,
             int invIndex,
@@ -67,8 +67,8 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
             {
                 // Definimos pto insercion de la etiqueta
                 Point3d basePoint = isHorizontal
-                    ? cls_00_GetBottomPoint.GetBottomEdgeLeftPoint(str, tracker)
-                    : cls_00_GetBottomPoint.GetBottomEdgeMidPoint(str, tracker);
+                    ? cls_00_GetBottomPoint.GetBottomEdgeLeftPoint(polyStr, blockreftrack)
+                    : cls_00_GetBottomPoint.GetBottomEdgeMidPoint(polyStr, blockreftrack);
 
                 double margin = 0.1;
                 // Aplicamos margen
@@ -88,9 +88,8 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
                 }
                 // Dibujamos etiqueta
                 labelId = cls_00_DrawMtext.DrawMTextOnPoint(
-                    basePoint, tagText, tr, btr,
-                    isHorizontal, 1, 7, solarSet.LabelStringLayer,
-                    chosenStyle, chosenJustification
+                    basePoint, tagText, tr, btr, isHorizontal, 1, 7, 
+                    solarSet.LabelStringLayer, chosenStyle, chosenJustification
                 );
             }
             // catch

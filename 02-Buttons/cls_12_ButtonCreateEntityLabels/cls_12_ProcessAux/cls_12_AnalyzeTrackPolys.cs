@@ -8,6 +8,16 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
 {
     internal class cls_12_AnalyzeTrackPolys
     {
+        private static bool AllElevationsEqual(List<double> elevations, double tolerance = 1e-3)
+        {
+            // Validamos
+            if (elevations == null || elevations.Count <= 1) return true;
+            // Obtenemos elevacion
+            double reference = elevations[0];
+            // return
+            return elevations.All(e => Math.Abs(e - reference) <= tolerance);
+        }
+
         public static void AnalyzeTrackPolys(
             Transaction tr,
             ObjectId trkId,
@@ -18,13 +28,12 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
         )
         {
             // Obtenemos el tracker
-            BlockReference tracker =
-                tr.GetObject(trkId, OpenMode.ForRead) as BlockReference;
+            BlockReference tracker = tr.GetObject(trkId, OpenMode.ForRead) as BlockReference;
             // Validamos
             if (tracker == null) return;
 
             // Obtenemos la btr
-            BlockTableRecord trackerBtr =
+            BlockTableRecord trackerBtr = 
                 tr.GetObject(tracker.BlockTableRecord, OpenMode.ForRead) as BlockTableRecord;
             // Validamos
             if (trackerBtr == null) return;
@@ -38,7 +47,7 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
             // Iteramos
             foreach (ObjectId entId in trackerBtr)
             {
-                // Analizamos poly
+                // Analizamos polys dentro del blockRef
                 if (tr.GetObject(entId, OpenMode.ForRead) is Polyline poly)
                 {
                     // Validamos por capa
@@ -81,15 +90,7 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
             }
         }
 
-        private static bool AllElevationsEqual(List<double> elevations, double tolerance = 1e-3)
-        {
-            // Validamos
-            if (elevations == null || elevations.Count <= 1) return true;
-            // Obtenemos elevacion
-            double reference = elevations[0];
-            // return
-            return elevations.All(e => Math.Abs(e - reference) <= tolerance);
-        }
+        
 
 
 

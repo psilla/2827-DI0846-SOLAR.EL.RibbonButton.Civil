@@ -6,8 +6,8 @@ using System.Linq;
 using System.Windows.Forms;
 using TYPSA.SharedLib.Autocad.GetLayersInfo;
 using TYPSA.SharedLib.Autocad.IsolateEntities;
-using TYPSA.SharedLib.Excel;
 using SOLAR.EL.RibbonButton.Autocad.Settings;
+using TYPSA.SharedLib.ExcelAutocad;
 
 namespace SOLAR.EL.RibbonButton.Autocad.Process
 {
@@ -39,7 +39,9 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
                 if (!cls_16_GetEntMeasureCablesMV.GetEntMeasureCablesMV(
                     ed, docLayers, solarSet, 
                     out PromptSelectionResult psrCtLab, out PromptSelectionResult psrCtBlock, 
-                    out PromptSelectionResult psrEstBlock, out PromptSelectionResult psrCtCab
+                    out PromptSelectionResult psrEstBlock, out PromptSelectionResult psrCtCab,
+                    out List<string> psrCtLabLayers, out List<string> psrCtBlockLayers,
+                    out List<string> psrEstBlockLayers, out List<string> psrCtCabLayers
                 )) return null;
 
                 // Validamos elevaciones

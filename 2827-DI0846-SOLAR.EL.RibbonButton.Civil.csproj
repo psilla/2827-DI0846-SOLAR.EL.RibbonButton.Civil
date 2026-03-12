@@ -48,9 +48,8 @@
     <Reference Include="acmgd">
       <HintPath>..\Program Files\Autodesk\AutoCAD 2023\acmgd.dll</HintPath>
     </Reference>
-    <Reference Include="AdWindows, Version=4.0.0.6, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\AdWindows.dll</HintPath>
+    <Reference Include="AdWindows">
+      <HintPath>..\Program Files\Autodesk\AutoCAD 2023\AdWindows.dll</HintPath>
     </Reference>
     <Reference Include="AeccDbMgd">
       <HintPath>..\Program Files\Autodesk\AutoCAD 2023\C3D\AeccDbMgd.dll</HintPath>
@@ -157,9 +156,9 @@
       <Project>{631b9318-a021-4b24-87f0-3fec637eae77}</Project>
       <Name>TYPSA.SharedLibAutocad</Name>
     </ProjectReference>
-    <ProjectReference Include="..\0000-TYPSA.SharedLibExcel\TYPSA.SharedLibExcel\TYPSA.SharedLibExcel.csproj">
-      <Project>{ff31b661-8ce6-420f-8720-f077b273e9c6}</Project>
-      <Name>TYPSA.SharedLibExcel</Name>
+    <ProjectReference Include="..\0000-TYPSA.SharedLibExcelAutocad\TYPSA.SharedLibExcelAutocad\TYPSA.SharedLibExcelAutocad.csproj">
+      <Project>{2871f6ca-5b41-46fd-acb5-421486273b5d}</Project>
+      <Name>TYPSA.SharedLibExcelAutocad</Name>
     </ProjectReference>
     <ProjectReference Include="..\0000-TYPSA.SharedLibForms\TYPSA.SharedLibForms\TYPSA.SharedLibForms.csproj">
       <Project>{8f836313-b339-4db6-8a55-af61386871b4}</Project>

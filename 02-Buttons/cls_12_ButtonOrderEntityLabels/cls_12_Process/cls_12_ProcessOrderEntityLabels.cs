@@ -1,7 +1,6 @@
 ﻿using Autodesk.AutoCAD.DatabaseServices;
 using Autodesk.AutoCAD.EditorInput;
 using System.Collections.Generic;
-using System.Linq;
 using System.Windows.Forms;
 using TYPSA.SharedLib.Autocad.GetEntities;
 using TYPSA.SharedLib.Autocad.GetLayersInfo;
@@ -29,11 +28,12 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
                 // Obtenemos el listado de capas del documento
                 List<string> docLayers = cls_00_GetLayerNamesFromDoc.GetLayerNamesFromDoc(db);
 
+                List<string> psrStringLabLayers = null;
                 List<string> defaultLayersStringLab =
                 new List<string> { solarSet.LabelStringLayer };
                 // Obtenemos las etiquetas
-                PromptSelectionResult psrStringLab = cls_00_GetEntityByLayer.GetEntityByLayers(
-                    docLayers, ed, solarSet.LabelStringTag, "MTEXT", defaultLayersStringLab
+                PromptSelectionResult psrStringLab = cls_00_GetEntityByLayer.GetTextAndMTextByLayers(
+                    docLayers, ed, solarSet.LabelStringTag, out psrStringLabLayers, defaultLayersStringLab
                 );
                 // Validamos
                 if (psrStringLab == null) return null;
@@ -96,15 +96,30 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
         {
             // Obtenemos el texto
             DBObject dbObj = tr.GetObject(labelId, OpenMode.ForWrite);
-            MText mText = dbObj as MText;
-            // Validamos
-            if (mText == null) return false;
 
-            // Obtenemos valor del texto
-            string value = mText.Contents;
+            string value = null;
+            bool isMText = false;
+            bool isDBText = false;
+            // Validamos tipo
+            if (dbObj is MText mText)
+            {
+                value = mText.Contents;
+                isMText = true;
+            }
+            else if (dbObj is DBText dbText)
+            {
+                value = dbText.TextString;
+                isDBText = true;
+            }
+            else
+            {
+                return false;
+            }
+
             // Extraemos campos
-            List<string> originalFields =
-                cls_00_MTextObjectsByLayer.SplitLabelValueByCondAndToken(autoSettings, value);
+            List<string> originalFields = cls_00_MTextObjectsByLayer.SplitLabelValueByCondAndToken(
+                autoSettings, value
+            );
             // Validamos
             if (originalFields == null || originalFields.Count == 0) return false;
 
@@ -129,10 +144,15 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
                 reordered[newIndex] = originalFields[i];
             }
 
-            // Reconstruimos el texto
+            // Reconstruimos texto
             char separator = cls_00_MTextObjectsByLayer.GetLabelSeparator(autoSettings, value);
-            // Asignamos
-            mText.Contents = string.Join(separator.ToString(), reordered);
+            string newValue = string.Join(separator.ToString(), reordered);
+
+            // Asignamos segun tipo
+            if (isMText)
+                ((MText)dbObj).Contents = newValue;
+            else if (isDBText)
+                ((DBText)dbObj).TextString = newValue;
 
             // return
             return true;

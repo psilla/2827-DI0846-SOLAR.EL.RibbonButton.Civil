@@ -26,11 +26,12 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
                 // Obtenemos el listado de capas del documento
                 List<string> docLayers = cls_00_GetLayerNamesFromDoc.GetLayerNamesFromDoc(db);
 
+                List<string> psrStringLabLayers = null;
                 List<string> defaultLayersStringLab =
                 new List<string> { solarSet.LabelStringLayer };
                 // Obtenemos las etiquetas
                 PromptSelectionResult psrStringLab = cls_00_GetEntityByLayer.GetEntityByLayers(
-                    docLayers, ed, solarSet.LabelStringTag, "MTEXT", defaultLayersStringLab
+                    docLayers, ed, solarSet.LabelStringTag, "MTEXT", out psrStringLabLayers, defaultLayersStringLab
                 );
                 // Validamos
                 if (psrStringLab == null) return null;
@@ -85,19 +86,34 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
         {
             wasModified = false;
 
-            // Obtenemos el texto
+            // Obtenemos el objeto
             DBObject dbObj = tr.GetObject(labelId, OpenMode.ForWrite);
-            MText mText = dbObj as MText;
-            // Validamos
-            if (mText == null) return false;
 
-            string originalValue = mText.Contents;
+            string originalValue = null;
+            bool isMText = false;
+            bool isDBText = false;
+            // Validamos tipo
+            if (dbObj is MText mText)
+            {
+                originalValue = mText.Contents;
+                isMText = true;
+            }
+            else if (dbObj is DBText dbText)
+            {
+                originalValue = dbText.TextString;
+                isDBText = true;
+            }
+            else
+            {
+                return false;
+            }
+
             // Validamos
             if (string.IsNullOrWhiteSpace(originalValue))
-                return true; // No error, simplemente no hay nada que hacer
+                return true; // No error, nada que hacer
 
             if (!originalValue.Contains(textToRemove))
-                return true; // No se modifica, pero es valido
+                return true; // No se modifica
 
             // Definimos valor modificado
             string newValue = originalValue.Replace(textToRemove, string.Empty);
@@ -106,12 +122,20 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
             newValue = System.Text.RegularExpressions.Regex
                 .Replace(newValue, @"\s{2,}", " ")
                 .Trim();
+
+            // Aplicamos según tipo
+            if (isMText)
+                ((MText)dbObj).Contents = newValue;
+            else if (isDBText)
+                ((DBText)dbObj).TextString = newValue;
             // Asignamos
-            mText.Contents = newValue;
             wasModified = true;
+
             // return
             return true;
         }
+
+        
 
 
 

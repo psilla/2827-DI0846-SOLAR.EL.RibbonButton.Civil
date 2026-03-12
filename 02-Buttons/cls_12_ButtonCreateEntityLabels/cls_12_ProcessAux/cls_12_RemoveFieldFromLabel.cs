@@ -35,9 +35,7 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
 
             // Actualizamos valor
             UpdateMTextContents(
-                mText,
-                newText,
-                infoRegiones,
+                mText, newText, infoRegiones,
                 "Tracker field removed",
                 "Error removing tracker field"
             );

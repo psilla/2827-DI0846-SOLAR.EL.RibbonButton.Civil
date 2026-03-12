@@ -10,7 +10,8 @@ using TYPSA.SharedLib.Autocad.GetLayersInfo;
 using TYPSA.SharedLib.Autocad.IsolateEntities;
 using TYPSA.SharedLib.Autocad.ObjectsByTypeByLayer;
 using TYPSA.SharedLib.Autocad.ProcessPolyAndRegion;
-using TYPSA.SharedLib.Excel;
+//using TYPSA.SharedLib.Excel;
+using TYPSA.SharedLib.ExcelAutocad;
 
 namespace SOLAR.EL.RibbonButton.Autocad.Process
 {
@@ -45,7 +46,10 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
                     out SelectionSet analyzePoly,
                     out PromptSelectionResult psrContInv, out PromptSelectionResult psrInvLab,
                     out PromptSelectionResult psrInvBlock, out PromptSelectionResult psrCtBlock,
-                    out PromptSelectionResult psrInvCab
+                    out PromptSelectionResult psrInvCab,
+                    out List<string> psrContInvLayers, out List<string> psrInvLabLayers,
+                    out List<string> psrInvBlockLayers, out List<string> psrCtBlockLayers,
+                    out List<string> psrInvCabLayers
                 )) return null;
 
                 // Validamos elevaciones

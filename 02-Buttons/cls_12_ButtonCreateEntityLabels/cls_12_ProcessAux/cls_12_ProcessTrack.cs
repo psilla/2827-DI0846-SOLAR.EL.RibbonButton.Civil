@@ -12,7 +12,7 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
             Transaction tr,
             BlockTableRecord btr,
             SolarSettings solarSet,
-            BlockReference tracker,
+            BlockReference blockreftrack,
             Dictionary<string, string> propPreDict,
             int ctStartIndex,
             int invIndex, 
@@ -31,18 +31,18 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
         {
             int labelsCreated = 0;
 
-            // Obtener strings de este tracker
-            List<Polyline> stringsInTrack = cls_00_GetNestedPolysInBlockRef.
-                GetNestedPolysInBlockRef(tracker, tr, solarSet.PolyStringLayer);
+            // Obtener strings de este blockreftrack
+            List<Polyline> polyStrListInTrack = cls_00_GetNestedPolysInBlockRef.
+                GetNestedPolysInBlockRef(blockreftrack, tr, solarSet.PolyStringLayer);
             // Validamos
-            if (stringsInTrack == null || stringsInTrack.Count == 0) return null;
+            if (polyStrListInTrack == null || polyStrListInTrack.Count == 0) return null;
 
             // Iteramos
-            foreach (Polyline str in stringsInTrack)
+            foreach (Polyline polyStr in polyStrListInTrack)
             {
                 // Procesamos String
                 ObjectId labelId = cls_12_ProcessString.ProcessString(
-                    tr, btr, solarSet, str, tracker, propPreDict,
+                    tr, btr, solarSet, polyStr, blockreftrack, propPreDict,
                     ctStartIndex, invIndex, trackIndex, stringIndex,
                     isHorizontal, chosenStyle, chosenJustification,
                     infoRegiones, MPPtSelBool, numCenTranAsString,

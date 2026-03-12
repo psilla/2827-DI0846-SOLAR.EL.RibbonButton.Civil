@@ -10,49 +10,49 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
         public static bool GetElevMeasureCablesN2(
             Transaction tr,
             SolarSettings solarSet,
-            PromptSelectionResult psrContInv,
-            PromptSelectionResult psrInvLab,
-            PromptSelectionResult psrInvBlock,
-            PromptSelectionResult psrCtBlock,
-            PromptSelectionResult psrInvCab,
-            out double elevInvCont,
-            out double elevInvLabel,
-            out double elevInvBlock,
-            out double elevCtBlock,
-            out double elevInvCab
+            PromptSelectionResult psrPolyInv,
+            PromptSelectionResult psrLabelInv,
+            PromptSelectionResult psrBlockRefInv,
+            PromptSelectionResult psrBlockRefCt,
+            PromptSelectionResult psrPolyN2Cable,
+            out double elevPolyInv,
+            out double elevLabelInv,
+            out double elevBlockRefInv,
+            out double elevBlockRefCt,
+            out double elevPolyN2Cable
         )
         {
             // Valores por defecto
-            elevInvCont = 0;
-            elevInvLabel = 0;
-            elevInvBlock = 0;
-            elevCtBlock = 0;
-            elevInvCab = 0;
+            elevPolyInv = 0;
+            elevLabelInv = 0;
+            elevBlockRefInv = 0;
+            elevBlockRefCt = 0;
+            elevPolyN2Cable = 0;
 
             // Validamos elevaciones
             // CONTORNOS INVERSORES
             if (!cls_00_GetEntityElev.AllEntHaveSameElev(
-                tr, psrContInv, solarSet.PolyInvTag, out elevInvCont
+                tr, psrPolyInv, solarSet.PolyInvTag, out elevPolyInv
             )) return false;
 
             // LABELS INVERSORES
             if (!cls_00_GetEntityElev.AllEntHaveSameElev(
-                tr, psrInvLab, solarSet.LabelInvTag, out elevInvLabel
+                tr, psrLabelInv, solarSet.LabelInvTag, out elevLabelInv
             )) return false;
 
             // BLOCKREF INVERSORES
             if (!cls_00_GetEntityElev.AllEntHaveSameElev(
-                tr, psrInvBlock, solarSet.BlockRefInvTag, out elevInvBlock
+                tr, psrBlockRefInv, solarSet.BlockRefInvTag, out elevBlockRefInv
             )) return false;
 
             // BLOCKREF CT
             if (!cls_00_GetEntityElev.AllEntHaveSameElev(
-                tr, psrCtBlock, solarSet.BlockRefInvTag, out elevCtBlock
+                tr, psrBlockRefCt, solarSet.BlockRefInvTag, out elevBlockRefCt
             )) return false;
 
             // CABLES INVERSOR - CT
             if (!cls_00_GetEntityElev.AllEntHaveSameElev(
-                tr, psrInvCab, solarSet.CableN2Tag, out elevInvCab
+                tr, psrPolyN2Cable, solarSet.CableN2Tag, out elevPolyN2Cable
             )) return false;
 
             // return
