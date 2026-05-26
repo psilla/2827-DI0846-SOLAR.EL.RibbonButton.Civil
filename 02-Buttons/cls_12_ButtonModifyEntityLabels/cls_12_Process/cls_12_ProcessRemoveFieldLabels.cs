@@ -40,8 +40,8 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
                 HashSet<ObjectId> psrStringLabIds = new HashSet<ObjectId>(psrStringLab.Value.GetObjectIds());
 
                 // Texto a eliminar
-                string textToRemove = InstanciarFormularios.TextBoxFormOut(
-                    "Enter the text to remove from all labels:", "+/-"
+                string textToRemove = cls_00_InstaForm_TextBox.TextBoxFormOutAsStr(
+                    "Enter the text to remove from all labels:", defaultValue: "+/-"
                 );
                 // Validamos
                 if (string.IsNullOrWhiteSpace(textToRemove))

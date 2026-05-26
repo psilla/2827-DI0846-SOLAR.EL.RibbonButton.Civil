@@ -24,8 +24,9 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
                 if (dictPolyToRegionContInv.TryGetValue(invHandle, out Handle regionHandle))
                 {
                     // Buscar la region correspondiente
-                    Region invRegion =
-                        validRegionContInv.FirstOrDefault(r => r.Handle == regionHandle);
+                    Region invRegion = validRegionContInv.FirstOrDefault(
+                        r => r.Handle == regionHandle
+                    );
                     // Validamos
                     if (invRegion != null)
                     {

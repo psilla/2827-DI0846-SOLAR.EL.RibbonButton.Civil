@@ -1,11 +1,12 @@
-﻿using Autodesk.AutoCAD.DatabaseServices;
-using Autodesk.AutoCAD.Geometry;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using Autodesk.AutoCAD.DatabaseServices;
+using Autodesk.AutoCAD.Geometry;
+using SOLAR.EL.RibbonButton.Autocad.Settings;
 using TYPSA.SharedLib.Autocad.DrawEntities;
 using TYPSA.SharedLib.Autocad.GetEntityCoordinates;
-using SOLAR.EL.RibbonButton.Autocad.Settings;
 
 namespace SOLAR.EL.RibbonButton.Autocad.Process
 {
@@ -17,7 +18,8 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
             SolarSettings solarSet,
             Polyline polyStr,
             BlockReference blockreftrack,
-            Dictionary<string, string> propPreDict,
+            Dictionary<string, string> labelFieldsDict,
+            string invInCtLayer,
             int ctStartIndex,
             int invIndex,
             int trackIndex,
@@ -29,38 +31,92 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
             bool MPPtSelBool,
             string numCtAsString,
             int totalTrackersCT,
-            string charSepSel
+            string charSepSel,
+            bool inverterOutsideCt
         )
         {
             ObjectId labelId = ObjectId.Null;
 
-            // Número de dígitos para track
+            // -----------------------------
+            // Numero de digitos para tracker
+            // -----------------------------
+
             int trackDigits = Math.Max(2, totalTrackersCT.ToString().Length);
             string trackIndexStr = trackIndex.ToString($"D{trackDigits}");
 
-            // Número de dígitos para inversor y string
+            // -----------------------------
+            // Numero de digitos para inversor
+            // -----------------------------
+
             int invDigits = Math.Max(2, invIndex.ToString().Length);
+
+            // -----------------------------
+            // Numero de digitos para string
+            // -----------------------------
+
             int strDigits = Math.Max(2, stringIndex.ToString().Length);
+
+            // -----------------------------
+            // Parte region
+            // -----------------------------
 
             string regionPart = string.IsNullOrWhiteSpace(numCtAsString)
                 ? ctStartIndex.ToString("D2")
                 : numCtAsString.PadLeft(2, '0');
 
-            // Siempre reemplazamos por X según la longitud
+            // -----------------------------
+            // Reemplazar Inversor/String por incognita
+            // -----------------------------
+
             string displayInvPart = new string('X', invDigits);
             string displayStrPart = new string('X', strDigits);
 
-            string invPart = $"{propPreDict[solarSet.ContInvProp]}{displayInvPart}";
+            // -----------------------------
+            // Obtener parte Inversor/Combiner
+            // -----------------------------
+
+            string invProp = inverterOutsideCt 
+                ? solarSet.ContInvProp 
+                : solarSet.ComBoxProp;
+            // Vemos que prefijo usar
+            string invPart = $"{labelFieldsDict[invProp]}{displayInvPart}";
             invPart += MPPtSelBool
                 ? $"{charSepSel}${charSepSel}"
                 : $"{charSepSel}";
 
-            // Construimos la etiqueta final (siempre incluye Tracker)
+            // -----------------------------
+            // Obtener parte layer inversor en CT
+            // -----------------------------
+
+            string invInCtLayerPart = "";
+            // Dentro del CT
+            if (!inverterOutsideCt && !string.IsNullOrWhiteSpace(invInCtLayer)
+            )
+            {
+                // Obtener parte numerica
+                string numericPart = new string(invInCtLayer.Where(char.IsDigit).ToArray());
+                // Obtenemos 2 ultimos digitos
+                if (numericPart.Length > 2)
+                {
+                    numericPart = numericPart.Substring(numericPart.Length - 2);
+                }
+                // Validamos
+                if (!string.IsNullOrWhiteSpace(numericPart))
+                {
+                    invInCtLayerPart =$"{labelFieldsDict[solarSet.ContInvInCtProp]}" + $"{numericPart}" + $"{charSepSel}";
+                }
+            }
+
+            // -----------------------------
+            // Construir la etiqueta final
+            // -----------------------------
+
             string tagText =
-                $"{propPreDict[solarSet.ContGenProp]}{regionPart}{charSepSel}" +
+                $"{labelFieldsDict[solarSet.ContGenProp]}{regionPart}{charSepSel}" +
+                $"{invInCtLayerPart}" +
                 $"{invPart}" +
-                $"{propPreDict[solarSet.TrackProp]}{trackIndexStr}{charSepSel}" +
-                $"{propPreDict[solarSet.StringProp]}{displayStrPart} +/-";
+                $"{labelFieldsDict[solarSet.TrackProp]}{trackIndexStr}{charSepSel}" +
+                $"{labelFieldsDict[solarSet.StringProp]}{displayStrPart} +/-";
 
             // try
             try

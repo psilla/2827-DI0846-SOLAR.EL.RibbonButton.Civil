@@ -10,13 +10,88 @@ using TYPSA.SharedLib.Autocad.GetLayersInfo;
 using TYPSA.SharedLib.Autocad.IsolateEntities;
 using TYPSA.SharedLib.Autocad.ObjectsByTypeByLayer;
 using TYPSA.SharedLib.Autocad.ProcessPolyAndRegion;
-//using TYPSA.SharedLib.Excel;
 using TYPSA.SharedLib.ExcelAutocad;
 
 namespace SOLAR.EL.RibbonButton.Autocad.Process
 {
     internal class cls_16_ProcessMeasureCablesN2
     {
+        public static bool ValidateAndIsolateInvalidCableData(
+            Editor ed,
+            List<Region> validRegionEntity,
+            HashSet<ObjectId> psrInvCabIds,
+            HashSet<ObjectId> cablesConnectedToInv,
+            HashSet<ObjectId> cablesConnectedToCt,
+            List<Region> invalidRegions,
+            HashSet<ObjectId> unusedLabelIds,
+            List<ObjectId> invalidInverterIds,
+            int invertersWithNoCable,
+            int invertersWithMultipleCables
+        )
+        {
+            // Cables que conectan al INV pero no al CT
+            HashSet<ObjectId> cablesInvNotCt = new HashSet<ObjectId>(cablesConnectedToInv);
+            cablesInvNotCt.ExceptWith(cablesConnectedToCt);
+            // Cables que conectan al CT pero no al INV
+            HashSet<ObjectId> cablesCtNotInv = new HashSet<ObjectId>(cablesConnectedToCt);
+            cablesCtNotInv.ExceptWith(cablesConnectedToInv);
+            // Cables que no conectan ni al INV ni al CT
+            HashSet<ObjectId> cablesNeitherInvNorCt = new HashSet<ObjectId>(psrInvCabIds);
+            cablesNeitherInvNorCt.ExceptWith(cablesConnectedToInv);
+            cablesNeitherInvNorCt.ExceptWith(cablesConnectedToCt);
+            // Unión final de cables a aislar
+            HashSet<ObjectId> invalidCableIds = new HashSet<ObjectId>();
+            invalidCableIds.UnionWith(cablesInvNotCt);
+            invalidCableIds.UnionWith(cablesCtNotInv);
+            invalidCableIds.UnionWith(cablesNeitherInvNorCt);
+
+            bool hasLabelErrors = invalidRegions.Count > 0 || unusedLabelIds.Count > 0;
+            bool hasCableErrors = invalidInverterIds.Count > 0 || invalidCableIds.Count > 0;
+            // Ids a aislar
+            HashSet<ObjectId> idsToIsolate = new HashSet<ObjectId>();
+            // Validamos
+            if (hasLabelErrors)
+            {
+                // Regiones
+                idsToIsolate.UnionWith(cls_16_ValidateDataEnt.GetInvalidLabelRegionIds(invalidRegions));
+                // Etiquetas no usadas
+                idsToIsolate.UnionWith(unusedLabelIds);
+            }
+            // Validamos
+            if (hasCableErrors)
+            {
+                // Inversores con error de cable
+                idsToIsolate.UnionWith(invalidInverterIds);
+                // Cables sin uso
+                idsToIsolate.UnionWith(invalidCableIds);
+                // Mensaje
+                cls_16_ValidateDataEnt.ShowCableValidationMessageInv(
+                    invertersWithNoCable, invertersWithMultipleCables, invalidCableIds.Count
+                );
+            }
+            // Si hay cualquier error → borrar + aislar una sola vez
+            if (idsToIsolate.Count > 0)
+            {
+                // Obtenemos regiones a borrar
+                List<Region> regionsToDelete = validRegionEntity
+                    .Where(r => !idsToIsolate.Contains(r.ObjectId))
+                    .ToList();
+                // Iteramos
+                foreach (Region region in regionsToDelete)
+                {
+                    // Borramos
+                    cls_00_DeleteEntity.DeleteEntity(region);
+                }
+                // Aislamos
+                cls_00_IsolateEntities.IsolateObjects(ed, idsToIsolate);
+                // Finalizamos
+                return false;
+            }
+
+            // return
+            return true;
+        }
+
         public static int? ProcessMeasureCablesN2(
             Editor ed, 
             Database db, 
@@ -32,38 +107,45 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
             // try
             try
             {
-                // Obtenemos settings
+                // -----------------------------
+                // Obtener settings
+                // -----------------------------
+
                 SolarSettings solarSet = SolarSettings.GetDefaultSolarSettings();
                 AutocadSettings autoSettings = AutocadSettings.GetDefaultSettings();
 
-                // Obtenemos el listado de capas del documento
-                List<string> docLayers = 
-                    cls_00_GetLayerNamesFromDoc.GetLayerNamesFromDoc(db);
+                // -----------------------------
+                // Obtener listado de capas del documento
+                // -----------------------------
 
-                // Seleccionamos Entidades
+                List<string> docLayers = cls_00_GetLayerNamesFromDoc.GetLayerNamesFromDoc(db);
+
+                // -----------------------------
+                // Seleccionar Entidades
+                // -----------------------------
+
                 if (!cls_16_GetEntMeasureCablesN2.GetEntMeasureCablesN2(
                     ed, docLayers, solarSet,
-                    out SelectionSet analyzePoly,
                     out PromptSelectionResult psrContInv, out PromptSelectionResult psrInvLab,
                     out PromptSelectionResult psrInvBlock, out PromptSelectionResult psrCtBlock,
                     out PromptSelectionResult psrInvCab,
-                    out List<string> psrContInvLayers, out List<string> psrInvLabLayers,
-                    out List<string> psrInvBlockLayers, out List<string> psrCtBlockLayers,
+                    out string psrContInvLayer, out string psrInvLabLayer,
+                    out string psrInvBlockLayer, out string psrCtBlockLayer,
                     out List<string> psrInvCabLayers
                 )) return null;
 
-                // Validamos elevaciones
+                // -----------------------------
+                // Comprobar Elevaciones
+                // -----------------------------
+
                 if (!cls_16_GetElevMeasureCablesN2.GetElevMeasureCablesN2(
                     tr, solarSet, psrContInv, psrInvLab, psrInvBlock, psrCtBlock, psrInvCab,
                     out double elevInvCont, out double elevInvLabel, out double elevInvBlock,
                     out double elevCtBlock, out double elevInvCab
                 )) return null;
-
-                // Validamos elevaciones entre Entidades
-                if (Math.Abs(elevInvCont - elevInvLabel) > 1e-6 ||
-                    Math.Abs(elevInvCont - elevInvBlock) > 1e-6 ||
-                    Math.Abs(elevInvCont - elevCtBlock) > 1e-6 ||
-                    Math.Abs(elevInvCont - elevInvCab) > 1e-6
+                // Validamos elevaciones
+                if (Math.Abs(elevInvCont - elevInvLabel) > 1e-6 || Math.Abs(elevInvCont - elevInvBlock) > 1e-6 ||
+                    Math.Abs(elevInvCont - elevCtBlock) > 1e-6 || Math.Abs(elevInvCont - elevInvCab) > 1e-6
                 )
                 {
                     // Mensaje
@@ -81,28 +163,34 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
                     return null;
                 }
 
-                // Definimos offset por defecto
-                double offsetDistance = 0.15;
+                // -----------------------------
+                // Procesar Polys Inversores
+                // -----------------------------
 
+                double offsetDistance = 0.15;
                 // Obtenemos Regiones de los Inversores
                 if (!cls_00_ProcessPolysToRegions.ProcessPolysToRegions(
                     ed, tr, btr, psrContInv.Value, solarSet.PolyInvTag, offsetDistance, projectUnits,
-                    out List<Region> validRegionEntity,
-                    out Dictionary<Handle, Handle> dictPolyToRegionContInv
+                    out List<Region> validRegionEntity, out Dictionary<Handle, Handle> dictPolyToRegionContInv
                 )) return null;
 
-                // Obtenemos los Ids
+                // -----------------------------
+                // Obtener Ids
+                // -----------------------------
+
                 HashSet<ObjectId> psrInvLabIds = new HashSet<ObjectId>(psrInvLab.Value.GetObjectIds());
                 HashSet<ObjectId> psrInvBlockIds = new HashSet<ObjectId>(psrInvBlock.Value.GetObjectIds());
                 HashSet<ObjectId> psrCtBlockIds = new HashSet<ObjectId>(psrCtBlock.Value.GetObjectIds());
                 HashSet<ObjectId> psrInvCabIds = new HashSet<ObjectId>(psrInvCab.Value.GetObjectIds());
 
-                // Obtenemos Label por Inversor
-                Dictionary<Region, string> labelByEntity = 
-                    cls_16_GetDictLabelByEnt.GetDictLabelByEnt(
-                        tr, validRegionEntity, psrInvLabIds, solarSet.EntNoLabelValue, solarSet.EntMultiLabelValue, 
-                        out HashSet<ObjectId> unusedLabelIds
-                    );
+                // -----------------------------
+                // Obtener Label por Inversor
+                // -----------------------------
+
+                Dictionary<Region, string> labelByEntity = cls_16_GetDictLabelByEnt.GetDictLabelByEnt(
+                    tr, validRegionEntity, psrInvLabIds, solarSet.EntNoLabelValue, solarSet.EntMultiLabelValue, 
+                    out HashSet<ObjectId> unusedLabelIds
+                );
                 // Identificamos regiones con etiquetas invalidas
                 List<Region> invalidRegions = labelByEntity
                     .Where(kvp =>
@@ -111,7 +199,10 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
                     )
                     .Select(kvp => kvp.Key).ToList();
 
-                // Obtenemos Cable por Inversor
+                // -----------------------------
+                // Obtener Info Cable por Inversor
+                // -----------------------------
+
                 Dictionary<ObjectId, object> cableByEntity = cls_16_GetDictMeasureCablesN2.GetDictMeasureCablesN2(
                     tr, psrInvBlockIds, psrCtBlockIds, psrInvCabIds, solarSet.EntNoCableValue, solarSet.EntMultiCableValue, 
                     cableLengthCorrectionFactor, cableLengthFixedAllowance, cableNumberOfConductors,
@@ -125,87 +216,64 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
                     )
                     .Select(kvp => kvp.Key).ToList();
 
+                // -----------------------------
                 // Contadores
+                // -----------------------------
+
                 int invertersWithNoCable = cableByEntity.Count(kvp => kvp.Value is string s && s == solarSet.EntNoCableValue);
                 int invertersWithMultipleCables = cableByEntity.Count(kvp => kvp.Value is string s && s == solarSet.EntMultiCableValue);
 
-                // Cables invalidos
-                // Cables que conectan al INV pero no al CT
-                HashSet<ObjectId> cablesInvNotCt = new HashSet<ObjectId>(cablesConnectedToInv);
-                cablesInvNotCt.ExceptWith(cablesConnectedToCt);
-                // Cables que conectan al CT pero no al INV
-                HashSet<ObjectId> cablesCtNotInv = new HashSet<ObjectId>(cablesConnectedToCt);
-                cablesCtNotInv.ExceptWith(cablesConnectedToInv);
-                // Cables que no conectan ni al INV ni al CT
-                HashSet<ObjectId> cablesNeitherInvNorCt = new HashSet<ObjectId>(psrInvCabIds);
-                cablesNeitherInvNorCt.ExceptWith(cablesConnectedToInv);
-                cablesNeitherInvNorCt.ExceptWith(cablesConnectedToCt);
-                // Unión final de cables a aislar
-                HashSet<ObjectId> invalidCableIds = new HashSet<ObjectId>();
-                invalidCableIds.UnionWith(cablesInvNotCt);
-                invalidCableIds.UnionWith(cablesCtNotInv);
-                invalidCableIds.UnionWith(cablesNeitherInvNorCt);
+                // -----------------------------
+                // Detectar Cables invalidos
+                // -----------------------------
 
-                bool hasLabelErrors = invalidRegions.Count > 0 || unusedLabelIds.Count > 0;
-                bool hasCableErrors = invalidInverterIds.Count > 0 || invalidCableIds.Count > 0;
-                // Ids a aislar
-                HashSet<ObjectId> idsToIsolate = new HashSet<ObjectId>();
-                // Validamos
-                if (hasLabelErrors)
-                {
-                    // Regiones
-                    idsToIsolate.UnionWith(cls_16_ValidateDataEnt.GetInvalidLabelRegionIds(invalidRegions));
-                    // Etiquetas no usadas
-                    idsToIsolate.UnionWith(unusedLabelIds);
-                }
-                // Validamos
-                if (hasCableErrors)
-                {
-                    // Inversores con error de cable
-                    idsToIsolate.UnionWith(invalidInverterIds);
-                    // Cables sin uso
-                    idsToIsolate.UnionWith(invalidCableIds);
-                    // Mensaje
-                    cls_16_ValidateDataEnt.ShowCableValidationMessageInv(
-                        invertersWithNoCable, invertersWithMultipleCables, invalidCableIds.Count
-                    );
-                }
-                // Si hay cualquier error → borrar + aislar una sola vez
-                if (idsToIsolate.Count > 0)
-                {
-                    // Obtenemos regiones a borrar
-                    List<Region> regionsToDelete = validRegionEntity
-                        .Where(r => !idsToIsolate.Contains(r.ObjectId))
-                        .ToList();
-                    // Iteramos
-                    foreach (Region region in regionsToDelete)
-                    {
-                        // Borramos
-                        cls_00_DeleteEntity.DeleteEntity(region);
-                    }
-                    // Aislamos
-                    cls_00_IsolateEntities.IsolateObjects(ed, idsToIsolate);
-                    // Finalizamos
-                    return null;
-                }
+                if (!ValidateAndIsolateInvalidCableData(
+                    ed, validRegionEntity, psrInvCabIds, cablesConnectedToInv, cablesConnectedToCt,
+                    invalidRegions, unusedLabelIds, invalidInverterIds, invertersWithNoCable,
+                    invertersWithMultipleCables
+                )) return null;
+                              
+                // -----------------------------
+                // Diccionario Region con Inversor
+                // -----------------------------
 
                 HashSet<ObjectId> psrInvBlockIdsInRegion = new HashSet<ObjectId>();
                 // Creamos el diccionario Region → Inversores
-                Dictionary<Region, List<DBObject>> regionData =
-                    new Dictionary<Region, List<DBObject>>();
+                Dictionary<Region, List<DBObject>> regionData = new Dictionary<Region, List<DBObject>>();
                 // Asignamos Inversores por interseccion
-                int blockRefInvAddedByInter = cls_16_ElemByRegionByInter.AssignEntitiesByInter(
-                    tr, psrInvBlockIds, psrInvBlockIdsInRegion, validRegionEntity, regionData
+                //int blockRefInvAddedByInter = cls_16_ElemByRegionByInter.AssignEntitiesByInter(
+                //    tr, psrInvBlockIds, psrInvBlockIdsInRegion, validRegionEntity, regionData,
+                //    radTolerance: 2, boolByGeometryExt: false
+                //);
+                int blockRefInvAddedByInter = cls_16_ElemByRegionByInter.AssignEntitiesByInterIter(
+                    tr, psrInvBlockIds, psrInvBlockIdsInRegion, validRegionEntity, regionData,
+                    radTolerance: 2, boolByGeometryExt: false, toleranceStep: 1
                 );
 
+                bool showInfo = false;
+                // Debug
+                if (showInfo)
+                    cls_16_ElemByRegionByInter.ShowAssignEntitiesByInterSummary(
+                        regionData, psrInvBlockIdsInRegion, blockRefInvAddedByInter
+                    );
+
+                // -----------------------------
                 // Diccionario final: Region → Inversores + Label + Cable
+                // -----------------------------
+
                 Dictionary<Region, List<(ObjectId, string, object)>> inverterDataByRegion =
                     cls_16_GetDictByInvCable.GetDictByInvCable(regionData, labelByEntity, cableByEntity);
 
-                // Obtenemos el dict a exportar
+                // -----------------------------
+                // Diccionario a exportar
+                // -----------------------------
+
                 Dictionary<string, object> excelData = cls_16_BuildDataN2.BuildDataN2(inverterDataByRegion);
 
-                // Definimos headers
+                // -----------------------------
+                // Exportar a Excel
+                // -----------------------------
+
                 List<string> headers = new List<string>
                 {
                     nameof(EntityExcelRow.InverterHandle),
@@ -220,8 +288,7 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
                     nameof(EntityExcelRow.NumberOfConductors),
                     nameof(EntityExcelRow.TotalInstalledCableLength)
                 };
-
-                // Exportamos a Excel
+                // Exportamos
                 cls_00_ExportToExcelObjectDictExi_OpenXml.ExportObjectDictToExcelExi(
                     excelPath, excelData, headers,
                     sheetName: solarSet.SheetNameInv,
@@ -237,7 +304,7 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
                     cls_16_GetCabLengthSummary.BuildCableSummaryWithPhases(rows, r => r.InverterLabel, 1, validSeparators);
 
                 // Primera columna libre a la derecha de la tabla principal
-                int col = headers.Count + 2; 
+                int col = headers.Count + 2;
 
                 // Exportamos Tablas Resumen
                 cls_00_ExportEntCabSummary.ExportEntCabSummaryWithPhases(

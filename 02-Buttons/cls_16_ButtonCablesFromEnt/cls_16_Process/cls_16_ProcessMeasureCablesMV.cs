@@ -40,8 +40,8 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
                     ed, docLayers, solarSet, 
                     out PromptSelectionResult psrCtLab, out PromptSelectionResult psrCtBlock, 
                     out PromptSelectionResult psrEstBlock, out PromptSelectionResult psrCtCab,
-                    out List<string> psrCtLabLayers, out List<string> psrCtBlockLayers,
-                    out List<string> psrEstBlockLayers, out List<string> psrCtCabLayers
+                    out string psrCtLabLayers, out string psrCtBlockLayers,
+                    out string psrEstBlockLayers, out List<string> psrCtCabLayers
                 )) return null;
 
                 // Validamos elevaciones

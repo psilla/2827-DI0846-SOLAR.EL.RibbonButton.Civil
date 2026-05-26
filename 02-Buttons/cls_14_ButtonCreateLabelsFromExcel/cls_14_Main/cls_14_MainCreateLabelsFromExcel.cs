@@ -1,23 +1,68 @@
-﻿using Autodesk.AutoCAD.ApplicationServices;
+﻿using System.Collections.Generic;
+using System.Windows.Forms;
+using System;
+using Autodesk.AutoCAD.ApplicationServices;
 using Autodesk.AutoCAD.DatabaseServices;
 using Autodesk.AutoCAD.EditorInput;
-using System.Collections.Generic;
-using System.Windows.Forms;
+using SOLAR.EL.RibbonButton.Autocad.Process;
 using TYPSA.SharedLib.Autocad.GetDocument;
 using TYPSA.SharedLib.Autocad.Main;
-using SOLAR.EL.RibbonButton.Autocad.Process;
+using TYPSA.SharedLib.ExcelAutocad;
 
 namespace SOLAR.EL.RibbonButton.Autocad.Main
 {
     internal class cls_14_MainCreateLabelsFromExcel
     {
+        private static Dictionary<string, List<(double X, double Y)>> TryGetCoordFromExcel()
+        {
+            // try
+            try
+            {
+                // Seleccionar el directorio del Excel
+                string excelDirectory = cls_00_SelectExcelDirectory.SelectExcelDirectory();
+                // Validamos
+                if (string.IsNullOrEmpty(excelDirectory)) return null;
+
+                // Seleccionar el archivo de Excel
+                string excelPath = cls_00_SelectExcelFile.SelectExcelFile(excelDirectory);
+                // Validamos
+                if (string.IsNullOrEmpty(excelPath)) return null;
+
+                // Obtenemos el dict de informacion
+                Dictionary<string, List<(double X, double Y)>> dictFromExcel =
+                    cls_00_ReadCoordFromExcel.ReadCoordinatesFromExcel(excelPath);
+                // Validamos
+                if (dictFromExcel == null || dictFromExcel.Count == 0)
+                {
+                    // Mensaje
+                    MessageBox.Show("❌ No coordinates were found in the Excel file.", "Error");
+                    // Finalizamos
+                    return null;
+                }
+
+                // return
+                return dictFromExcel;
+            }
+            // catch
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    $"Error getting coordinates from Excel:\n\n{ex.Message}\n\n{ex.StackTrace}",
+                    "Excel Process Exception",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error
+                );
+
+                return null;
+            }
+        }
+
         public ProcessResult MainCreateLabelsFromExcel(
             string projectCode
         )
         {
             // Obtenemos el dict de informacion
-            Dictionary<string, List<(double X, double Y)>> dictFromExcel = 
-                cls_14_TryGetCoordFromExcel.TryGetCoordFromExcel();
+            Dictionary<string, List<(double X, double Y)>> dictFromExcel = TryGetCoordFromExcel();
             // Validamos
             if (dictFromExcel == null)
             {

@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using Autodesk.AutoCAD.Runtime;
 using System.Windows.Forms;
+using Autodesk.AutoCAD.Runtime;
+using SOLAR.EL.RibbonButton.Autocad.Main;
+using SOLAR.EL.RibbonButton.Autocad.Settings;
 using TYPSA.SharedLib.Autocad.Buttons;
 using TYPSA.SharedLib.Autocad.Main;
-using SOLAR.EL.RibbonButton.Autocad.Main;
+using TYPSA.SharedLib.Autocad.ObjectsByTypeByLayer;
 
 namespace SOLAR.EL.RibbonButton.Autocad.Buttons
 {
@@ -23,12 +25,16 @@ namespace SOLAR.EL.RibbonButton.Autocad.Buttons
             // Validamos
             if (!userData) return;
 
+            // Obtenemos settings
+            SolarSettings solarSet = SolarSettings.GetDefaultSolarSettings();
+            AutocadSettings autoSettings = AutocadSettings.GetDefaultSettings();
+
             // Procesar los archivos seleccionados
             cls_12_MainCreateEntityLabelsBack mainProcess = new cls_12_MainCreateEntityLabelsBack();
 
             // Obtener el resultado del proceso
             ProcessResult processResult = mainProcess.MainCreateEntityLabelsBack(
-                selectedFiles.ToArray(), projectCode
+                selectedFiles.ToArray(), projectCode, solarSet, autoSettings
             );
 
             // Mostrar el resumen de los resultados al finalizar

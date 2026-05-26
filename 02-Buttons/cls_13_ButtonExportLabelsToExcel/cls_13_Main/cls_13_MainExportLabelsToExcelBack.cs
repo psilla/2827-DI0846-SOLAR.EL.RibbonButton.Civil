@@ -8,7 +8,6 @@ using SOLAR.EL.RibbonButton.Autocad.Process;
 using TYPSA.SharedLib.Autocad.GetDocument;
 using TYPSA.SharedLib.Autocad.Main;
 using TYPSA.SharedLib.Autocad.Metrics;
-//using TYPSA.SharedLib.Excel;
 using TYPSA.SharedLib.ExcelAutocad;
 using TYPSA.SharedLib.UserForms;
 using Application = Autodesk.AutoCAD.ApplicationServices.Application;

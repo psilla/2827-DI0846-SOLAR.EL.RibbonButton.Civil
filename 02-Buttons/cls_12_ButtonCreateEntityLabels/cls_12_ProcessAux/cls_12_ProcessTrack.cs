@@ -13,7 +13,8 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
             BlockTableRecord btr,
             SolarSettings solarSet,
             BlockReference blockreftrack,
-            Dictionary<string, string> propPreDict,
+            Dictionary<string, string> labelFieldsDict,
+            string invInCtLayer,
             int ctStartIndex,
             int invIndex, 
             int trackIndex,
@@ -26,6 +27,7 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
             string numCenTranAsString,
             int totalTrackersCT,
             string charSepSel,
+            bool inverterOutsideCt,
             ref HashSet<ObjectId> createdLabelIds
         )
         {
@@ -42,11 +44,9 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
             {
                 // Procesamos String
                 ObjectId labelId = cls_12_ProcessString.ProcessString(
-                    tr, btr, solarSet, polyStr, blockreftrack, propPreDict,
-                    ctStartIndex, invIndex, trackIndex, stringIndex,
-                    isHorizontal, chosenStyle, chosenJustification,
-                    infoRegiones, MPPtSelBool, numCenTranAsString,
-                    totalTrackersCT, charSepSel
+                    tr, btr, solarSet, polyStr, blockreftrack, labelFieldsDict, invInCtLayer, ctStartIndex, invIndex, 
+                    trackIndex, stringIndex, isHorizontal, chosenStyle, chosenJustification,
+                    infoRegiones, MPPtSelBool, numCenTranAsString, totalTrackersCT, charSepSel, inverterOutsideCt
                 );
                 // Validamos
                 if (labelId != ObjectId.Null)

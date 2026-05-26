@@ -47,7 +47,7 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
 
             // BLOCKREF CT
             if (!cls_00_GetEntityElev.AllEntHaveSameElev(
-                tr, psrBlockRefCt, solarSet.BlockRefInvTag, out elevBlockRefCt
+                tr, psrBlockRefCt, solarSet.BlockRefCtTag, out elevBlockRefCt
             )) return false;
 
             // CABLES INVERSOR - CT

@@ -41,11 +41,10 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
 
                 // Seleccionamos Entidades
                 if (!cls_16_GetEntMeasureCablesN1.GetEntMeasureCablesN1(
-                    ed, docLayers, solarSet, 
-                    out SelectionSet analyzePoly, out PromptSelectionResult psrString, 
+                    ed, docLayers, solarSet,  out PromptSelectionResult psrString, 
                     out PromptSelectionResult psrStringLab, out PromptSelectionResult psrStringCab,
-                    out List<string> psrStringLayers, out List<string> psrStringLabLayers,
-                    out List<string> psrStringCabLayers
+                    out string psrStringLayers, out string psrStringLabLayers,
+                    out string psrStringCabLayers
                 )) return null;
 
                 // Validamos elevaciones

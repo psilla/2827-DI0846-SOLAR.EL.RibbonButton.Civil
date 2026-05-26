@@ -1,19 +1,23 @@
-﻿using Autodesk.AutoCAD.ApplicationServices;
+﻿using System;
+using System.Windows.Forms;
+using Autodesk.AutoCAD.ApplicationServices;
 using Autodesk.AutoCAD.DatabaseServices;
 using Autodesk.AutoCAD.EditorInput;
-using System;
-using System.Windows.Forms;
-using TYPSA.SharedLib.Autocad.GetDocument;
-using TYPSA.SharedLib.Autocad.Metrics;
-using TYPSA.SharedLib.Autocad.Main;
 using SOLAR.EL.RibbonButton.Autocad.Process;
+using SOLAR.EL.RibbonButton.Autocad.Settings;
+using TYPSA.SharedLib.Autocad.GetDocument;
+using TYPSA.SharedLib.Autocad.Main;
+using TYPSA.SharedLib.Autocad.Metrics;
+using TYPSA.SharedLib.Autocad.ObjectsByTypeByLayer;
 
 namespace SOLAR.EL.RibbonButton.Autocad.Main
 {
     internal class cls_12_MainCreateEntityLabels
     {
         public ProcessResult MainCreateEntityLabels(
-            string projectCode
+            string projectCode,
+            SolarSettings solarSet,
+            AutocadSettings autoSettings
         )
         {
             // Obtenemos variables
@@ -36,7 +40,7 @@ namespace SOLAR.EL.RibbonButton.Autocad.Main
 
                         // Llamamos al Main
                         int? totalLabelsCreated = cls_12_ProcessCreateEntityLabels.ProcessCreateEntityLabels(
-                            ed, db, tr, btr
+                            ed, db, tr, btr, solarSet, autoSettings
                         );
                         // Validamos
                         if (totalLabelsCreated == null)
@@ -54,10 +58,10 @@ namespace SOLAR.EL.RibbonButton.Autocad.Main
                         // Cerramos transaccion
                         tr.Commit();
 
-                        // Enviar Metricas App
-                        SendMetrics(1, totalLabelsCreated.Value, projectCode);
-                        // Enviar Metricas Serapis
-                        SerapisMetrics.InitializeMetricsAsync("69771c60c4aac3725f301e1e");
+                        //// Enviar Metricas App
+                        //SendMetrics(1, totalLabelsCreated.Value, projectCode);
+                        //// Enviar Metricas Serapis
+                        //SerapisMetrics.InitializeMetricsAsync("69771c60c4aac3725f301e1e");
 
                         // return
                         return new ProcessResult

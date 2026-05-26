@@ -87,25 +87,25 @@ namespace SOLAR.EL.RibbonButton.Autocad.Main
 
         private void SendMetrics(int totalFiles, int labelsExported, string projectCode)
         {
-            string accionId = "696e04dea266bb4378c54d3c";
-            string processLabelsCreation = "696e04dea266bb4378c54d3a";
-            string emailUser = Environment.UserName;
+            //string accionId = "696e04dea266bb4378c54d3c";
+            //string processLabelsCreation = "696e04dea266bb4378c54d3a";
+            //string emailUser = Environment.UserName;
 
-            var executed_process = new[]
-            {
-            new { proceso = processLabelsCreation, recuento = labelsExported }
-            };
+            //var executed_process = new[]
+            //{
+            //new { proceso = processLabelsCreation, recuento = labelsExported }
+            //};
 
-            var additionalData = new
-            {
-                ScriptName = "DE2827 - Energía: Cable Length Measurements",
-                FilesProcessed = totalFiles,
-                ProjectCode = projectCode,
-                ExecutionStatus = 1,
-                Version = "V.00.01"
-            };
+            //var additionalData = new
+            //{
+            //    ScriptName = "DE2827 - Energía: Cable Length Measurements",
+            //    FilesProcessed = totalFiles,
+            //    ProjectCode = projectCode,
+            //    ExecutionStatus = 1,
+            //    Version = "V.00.01"
+            //};
 
-            cls_00_MetricsSender.SendMetricsAsync(emailUser, accionId, executed_process, additionalData);
+            //cls_00_MetricsSender.SendMetricsAsync(emailUser, accionId, executed_process, additionalData);
         }
 
     }

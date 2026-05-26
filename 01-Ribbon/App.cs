@@ -113,7 +113,7 @@ namespace SOLAR.EL.RibbonButton.Autocad
                 // Separador visual
                 rps1.Items.Add(new Autodesk.Windows.RibbonSeparator());
 
-                // REMOVE FIELD STRING LABELS 
+                // REMOVE FIELD LABELS 
                 Autodesk.Windows.RibbonButton button5 = CreateRibbonButton(
                     name: "Remove Field From Labels",
                     text: "Modify String Labels",
@@ -122,7 +122,7 @@ namespace SOLAR.EL.RibbonButton.Autocad
                     tooltipTitle: "Remove Field From Labels",
                     tooltipContent: "Remove Field From Labels."
                 );
-                // ORDER STRING LABELS 
+                // ORDER LABELS 
                 Autodesk.Windows.RibbonButton button6 = CreateRibbonButton(
                     name: "Order Fields In Labels",
                     text: "Modify String Labels",
@@ -162,13 +162,13 @@ namespace SOLAR.EL.RibbonButton.Autocad
                 // Separador visual
                 rps1.Items.Add(new Autodesk.Windows.RibbonSeparator());
 
-                // CREATE STRING LABELS FROM EXCEL
+                // CREATE LABELS FROM EXCEL
                 // Document
                 Autodesk.Windows.RibbonButton button8 = CreateRibbonButton(
                     name: "Create String Labels from Excel Doc",
                     text: "Create String Labels from Excel",
                     image: Resources.labImport,
-                    commandParameter: "CreateStringLabelsFromExcelDoc",
+                    commandParameter: "CreateLabelsFromExcel",
                     tooltipTitle: "Create String Labels from Excel Doc",
                     tooltipContent: "Creates from Excel String labels in active document."
                 );

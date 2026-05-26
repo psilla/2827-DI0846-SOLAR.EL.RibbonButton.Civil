@@ -147,7 +147,7 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
             if (result == null) return null;
 
             // Mapeamos el dict
-            result = InstanciarFormularios.TextBoxFormOut_NextToLabel_String(
+            result = cls_00_InstaForm_TextBox.TextBoxFormOut_NextToLabel_String(
                 "Assign the summary type for each label field:\n" +
                 "Leave empty if the field should not be used for summaries.",
                 result, textBoxWidth: 300

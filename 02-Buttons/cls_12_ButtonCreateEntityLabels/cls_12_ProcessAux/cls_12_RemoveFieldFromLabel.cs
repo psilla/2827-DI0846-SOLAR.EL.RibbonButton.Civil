@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using Autodesk.AutoCAD.DatabaseServices;
+using TYPSA.SharedLib.Autocad.ObjectsByTypeByLayer;
 
 namespace SOLAR.EL.RibbonButton.Autocad.Process
 {
@@ -12,7 +14,8 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
             Transaction tr,
             ObjectId lblId,
             string charSepSel,
-            StringBuilder infoRegiones
+            StringBuilder infoRegiones,
+            string trackerPrefix
         )
         {
             // Obtenemos el texto
@@ -26,9 +29,16 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
             // Obtenemos los campos
             string[] fields = cleanLabel.Split(new[] { charSepSel }, StringSplitOptions.None);
 
-            // Eliminamos el campo del Tracker (penultimo)
+            int trackerFieldIndex = Array.FindIndex(
+                fields,
+                f => f.Trim().StartsWith(trackerPrefix)
+            );
+            // Validamos
+            if (trackerFieldIndex < 0) return;
+
+            // Eliminamos el campo del Tracker
             List<string> tempParts = fields.ToList();
-            tempParts.RemoveAt(tempParts.Count - 2);
+            tempParts.RemoveAt(trackerFieldIndex);
 
             // Juntamos todos los campos de nuevo
             string newText = string.Join(charSepSel, tempParts) + " +/-";

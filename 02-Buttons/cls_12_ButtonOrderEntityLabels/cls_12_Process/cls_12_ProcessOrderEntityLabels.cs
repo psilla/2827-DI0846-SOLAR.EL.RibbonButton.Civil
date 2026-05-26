@@ -1,12 +1,14 @@
-﻿using Autodesk.AutoCAD.DatabaseServices;
-using Autodesk.AutoCAD.EditorInput;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Windows.Forms;
+using Autodesk.AutoCAD.DatabaseServices;
+using Autodesk.AutoCAD.EditorInput;
+using SOLAR.EL.RibbonButton.Autocad.Settings;
 using TYPSA.SharedLib.Autocad.GetEntities;
 using TYPSA.SharedLib.Autocad.GetLayersInfo;
 using TYPSA.SharedLib.Autocad.ObjectsByTypeByLayer;
 using TYPSA.SharedLib.UserForms;
-using SOLAR.EL.RibbonButton.Autocad.Settings;
 
 namespace SOLAR.EL.RibbonButton.Autocad.Process
 {
@@ -28,12 +30,11 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
                 // Obtenemos el listado de capas del documento
                 List<string> docLayers = cls_00_GetLayerNamesFromDoc.GetLayerNamesFromDoc(db);
 
-                List<string> psrStringLabLayers = null;
-                List<string> defaultLayersStringLab =
-                new List<string> { solarSet.LabelStringLayer };
+                string psrStringLabLayer = null;
+                string defaultLayerStringLab = solarSet.LabelStringLayer;
                 // Obtenemos las etiquetas
-                PromptSelectionResult psrStringLab = cls_00_GetEntityByLayer.GetTextAndMTextByLayers(
-                    docLayers, ed, solarSet.LabelStringTag, out psrStringLabLayers, defaultLayersStringLab
+                PromptSelectionResult psrStringLab = cls_00_GetEntityByLayer.GetTextAndMTextByLayer(
+                    docLayers, ed, solarSet.LabelStringTag, out psrStringLabLayer, defaultLayerStringLab
                 );
                 // Validamos
                 if (psrStringLab == null) return null;
@@ -43,17 +44,16 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
 
                 // Validamos estructura de las etiquetas
                 if (!cls_00_MTextObjectsByLayer.AllLabelsHaveSameFieldCount(
-                    tr, psrStringLabIds, autoSettings,
-                    out int fieldCount, out List<string> referenceFields
+                    tr, psrStringLabIds, autoSettings, out int fieldCount, out List<string> referenceFields
                 )) return null;
 
                 // Construimos dict Campo - nuevo Indice
-                Dictionary<string, int> fieldOrderDict = BuildFieldOrderDictionary(referenceFields);
+                Dictionary<string, string> fieldOrderDict = BuildFieldOrderDictionary(referenceFields);
                 // Validamos
                 if (fieldOrderDict == null) return null;
 
                 // Form para reordenar
-                fieldOrderDict = InstanciarFormularios.TextBoxFormOut_NextToLabel_Integer(
+                Dictionary<string, int> fieldOrderDictAsInt = cls_00_InstaForm_TextBox.TextBoxFormOut_NextToLabel_Integer(
                     "Enter the new order for each field:", fieldOrderDict
                 );
                 // Validamos
@@ -68,12 +68,38 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
                     return null;
                 }
 
+                Dictionary<ObjectId, string> failedLabels = new Dictionary<ObjectId, string>();
                 // Iteramos
                 foreach (ObjectId id in psrStringLabIds)
                 {
                     // Aplicamos nuevo orden
-                    if (!ApplyFieldOrderToLabel(tr, id, autoSettings, fieldOrderDict)) return null;
+                    bool success = ApplyFieldOrderToLabel(
+                        tr, id, autoSettings, fieldOrderDictAsInt, out string error
+                    );
+                    // Validamos
+                    if (!success)
+                    {
+                        // Almacenamos la invalida
+                        failedLabels[id] = error ?? "Unknown error";
+                        continue; 
+                    }
                 }
+
+                // Validamos errores
+                if (failedLabels.Any())
+                {
+                    StringBuilder sb = new StringBuilder();
+                    sb.AppendLine("Some labels could not be processed:\n");
+                    foreach (var id in failedLabels)
+                    {
+                        sb.AppendLine($"- ObjectId: {id}");
+                    }
+                    // Mostramos con tu clase personalizada
+                    ShowStringBuilder.ShowInfo(
+                        $"Entities by Document Summary:", sb.ToString()
+                    );
+                }
+
                 // return
                 return referenceFields.Count;
             }
@@ -91,9 +117,12 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
             Transaction tr,
             ObjectId labelId,
             AutocadSettings autoSettings,
-            Dictionary<string, int> fieldOrderDict
+            Dictionary<string, int> fieldOrderDict,
+            out string error
         )
         {
+            error = null;
+
             // Obtenemos el texto
             DBObject dbObj = tr.GetObject(labelId, OpenMode.ForWrite);
 
@@ -113,6 +142,7 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
             }
             else
             {
+                error = "Unsupported object type (not MText or DBText)";
                 return false;
             }
 
@@ -121,27 +151,58 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
                 autoSettings, value
             );
             // Validamos
-            if (originalFields == null || originalFields.Count == 0) return false;
+            if (originalFields == null || originalFields.Count == 0)
+            {
+                error = "No fields found in label";
+                return false;
+            }
 
-            string[] reordered = new string[originalFields.Count];
+            int count = originalFields.Count;
+            string[] reordered = new string[count];
+            HashSet<int> usedIndexes = new HashSet<int>();
             // Reordenamos
-            for (int i = 0; i < originalFields.Count; i++)
+            for (int i = 0; i < count; i++)
             {
                 string fieldKey = cls_00_MTextObjectsByLayer.GetAlphabeticFieldKey(originalFields[i]);
                 // Validamos
-                if (!fieldOrderDict.ContainsKey(fieldKey))
+                if (string.IsNullOrEmpty(fieldKey))
                 {
-                    // Mensaje
-                    MessageBox.Show(
-                        $"Field '{fieldKey}' not found in order definition.", "Invalid Order",
-                        MessageBoxButtons.OK, MessageBoxIcon.Error
-                    );
-                    // Finalizamos
+                    error = $"Invalid field format: '{originalFields[i]}'";
                     return false;
                 }
-                // Almacenamos
+                // Validamos
+                if (!fieldOrderDict.ContainsKey(fieldKey))
+                {
+                    error = $"Field '{fieldKey}' not found in order definition";
+                    return false;
+                }
+
+                // Obtenemos indice
                 int newIndex = fieldOrderDict[fieldKey];
+
+                // Validar rango
+                if (newIndex < 0 || newIndex >= count)
+                {
+                    error = $"Index out of range for field '{fieldKey}' → {newIndex}";
+                    return false;
+                }
+
+                // Validar duplicados
+                if (!usedIndexes.Add(newIndex))
+                {
+                    error = $"Duplicate index detected: {newIndex}";
+                    return false;
+                }
+
+                // Almacenamos
                 reordered[newIndex] = originalFields[i];
+            }
+
+            // Validar que no haya nulls
+            if (reordered.Any(x => x == null))
+            {
+                error = "Reordering failed: missing fields in final structure";
+                return false;
             }
 
             // Reconstruimos texto
@@ -158,11 +219,11 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
             return true;
         }
 
-        private static Dictionary<string, int> BuildFieldOrderDictionary(
+        public static Dictionary<string, string> BuildFieldOrderDictionary(
             List<string> referenceFields
         )
         {
-            Dictionary<string, int> fieldOrderDict = new Dictionary<string, int>();
+            Dictionary<string, string> fieldOrderDict = new Dictionary<string, string>();
             // Iteramos segun numero de campos
             for (int i = 0; i < referenceFields.Count; i++)
             {
@@ -172,35 +233,73 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
                 // Validamos
                 if (string.IsNullOrEmpty(fieldKey))
                 {
-                    // Mensaje
                     MessageBox.Show(
-                        $"Invalid field format: '{fieldValue}'",
-                        "Invalid Label Format",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Error
+                        $"Invalid field format: '{fieldValue}'", "Invalid Label Format",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error
                     );
-                    // Finalizamos
                     return null;
                 }
-                // Validamos duplicados
+                // Validamos
                 if (fieldOrderDict.ContainsKey(fieldKey))
                 {
-                    // Mensaje
                     MessageBox.Show(
-                        $"Duplicate field key found: '{fieldKey}'",
-                        "Invalid Label Format",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Error
+                        $"Duplicate field key found: '{fieldKey}'", "Invalid Label Format",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error
                     );
-                    // Finalizamos
                     return null;
                 }
-                // Almacenamos
-                fieldOrderDict.Add(fieldKey, i);
+
+                // Convertimos a string
+                fieldOrderDict.Add(fieldKey, i.ToString());
             }
+
             // return
             return fieldOrderDict;
         }
+
+        //private static Dictionary<string, int> BuildFieldOrderDictionary(
+        //    List<string> referenceFields
+        //)
+        //{
+        //    Dictionary<string, int> fieldOrderDict = new Dictionary<string, int>();
+        //    // Iteramos segun numero de campos
+        //    for (int i = 0; i < referenceFields.Count; i++)
+        //    {
+        //        string fieldValue = referenceFields[i];
+        //        // Extraemos la clave alfabética
+        //        string fieldKey = cls_00_MTextObjectsByLayer.GetAlphabeticFieldKey(fieldValue);
+        //        // Validamos
+        //        if (string.IsNullOrEmpty(fieldKey))
+        //        {
+        //            // Mensaje
+        //            MessageBox.Show(
+        //                $"Invalid field format: '{fieldValue}'",
+        //                "Invalid Label Format",
+        //                MessageBoxButtons.OK,
+        //                MessageBoxIcon.Error
+        //            );
+        //            // Finalizamos
+        //            return null;
+        //        }
+        //        // Validamos duplicados
+        //        if (fieldOrderDict.ContainsKey(fieldKey))
+        //        {
+        //            // Mensaje
+        //            MessageBox.Show(
+        //                $"Duplicate field key found: '{fieldKey}'",
+        //                "Invalid Label Format",
+        //                MessageBoxButtons.OK,
+        //                MessageBoxIcon.Error
+        //            );
+        //            // Finalizamos
+        //            return null;
+        //        }
+        //        // Almacenamos
+        //        fieldOrderDict.Add(fieldKey, i);
+        //    }
+        //    // return
+        //    return fieldOrderDict;
+        //}
 
 
 

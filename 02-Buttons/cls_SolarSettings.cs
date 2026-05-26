@@ -33,11 +33,13 @@ namespace SOLAR.EL.RibbonButton.Autocad.Settings
     {
         // Etiquetas
         public string PolyCtTag { get; set; } = "Centros de Transformacion (Polylines)";
-        public string PolyInvTag { get; set; } = "Inversores (Polylines)";
+        public string PolyInvTag { get; set; } = "Inversores-Combiner (Polylines)";
+        public string PolyInvInCtTag { get; set; } = "Inversores in CTs (Polylines)";
         public string PolyStringTag { get; set; } = "Strings (Polylines)";
         public string BlockRefEstTag { get; set; } = "Subestación (BlockRef)";
         public string BlockRefCtTag { get; set; } = "Centros de Transformacion (BlockRef)";
         public string BlockRefInvTag { get; set; } = "Inversores (BlockRef)";
+        public string BlockRefComBoxTag { get; set; } = "Combiner Boxes (BlockRef)";
         public string BlockRefTrackTag { get; set; } = "Trackers (BlockRef)";
         public string LabelCtTag { get; set; } = "Centros de Transformacion (Tags)";
         public string LabelInvTag { get; set; } = "Inversores (Tags)";
@@ -49,19 +51,21 @@ namespace SOLAR.EL.RibbonButton.Autocad.Settings
         // Capas
         // Polys
         public string PolyCtLayer { get; set; } = "02.PV.EL_Grouping_CT";
-        public string PolyInvLayer { get; set; } = "02.PV.EL_Grouping_INV";
+        public string PolyInvLayer { get; set; } = "02.PV.EL_Grouping_Inverter";
         public string PolyStringLayer { get; set; } = "02.PV.EL_Grouping_String";
-        public string CableCtToEstLayer { get; set; } = "03.PV.EL_Cable_MT_circuit_";
-        public string CableInvToCtLayer { get; set; } = "02.PV.EL_Cable_N2";
-        public string CableStringToInvLayer { get; set; } = "02.PV.EL_Cable_N1+";
+        public string CableMVLayer { get; set; } = "03.PV.EL_Cable_MV_circuit_";
+        public string CableN2Layer { get; set; } = "02.PV.EL_Cable_AC-N2";
+        public string CableN1Layer { get; set; } = "02.PV.EL_Cable_DC-N1+";
+
         // BlockRef
         public string BlockRefEstLayer { get; set; } = "01.PV.EQ_Substation";
         public string BlockRefCtLayer { get; set; } = "01.PV.EQ_Transformation-centre";
-        public string BlockRefInvLayer { get; set; } = "01.PV.TX_INV_";
+        public string BlockRefInvLayer { get; set; } = "02.PV.EQ_Inverter";
         public string BlockRefTrackLayer { get; set; } = "01.PV.ST_Tracker";
+
         // Tags
         public string LabelCtLayer { get; set; } = "01.PV.TX_Transformation-centre_Text";
-        public string LabelInvLayer { get; set; } = "01.PV.TX_Power-inverter_Text";
+        public string LabelInvLayer { get; set; } = "02.PV.TX_Inverter_Text";
         public string LabelStringLayer { get; set; } = "02.PV.TX_String_Text";
 
         // Tipologías Tracker
@@ -76,6 +80,8 @@ namespace SOLAR.EL.RibbonButton.Autocad.Settings
         public string ContInvProp { get; set; } = "Prefijo Inversor";
         public string TrackProp { get; set; } = "Prefijo Tracker";
         public string StringProp { get; set; } = "Prefijo String";
+        public string ComBoxProp { get; set; } = "Prefijo Combiner Box";
+        public string ContInvInCtProp { get; set; } = "Prefijo Inversor en CT";
 
         // Hojas Excel
         public string SheetNameStr { get; set; } = "Cables-N1";

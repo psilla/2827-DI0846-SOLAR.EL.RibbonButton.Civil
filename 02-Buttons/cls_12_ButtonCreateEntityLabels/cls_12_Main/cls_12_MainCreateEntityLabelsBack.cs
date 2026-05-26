@@ -1,14 +1,16 @@
-﻿using Autodesk.AutoCAD.DatabaseServices;
-using Autodesk.AutoCAD.ApplicationServices;
-using Autodesk.AutoCAD.EditorInput;
-using Application = Autodesk.AutoCAD.ApplicationServices.Application;
-using System;
+﻿using System;
 using System.Windows.Forms;
-using TYPSA.SharedLib.Autocad.GetDocument;
-using TYPSA.SharedLib.Autocad.Metrics;
-using TYPSA.SharedLib.Autocad.Main;
-using TYPSA.SharedLib.UserForms;
+using Autodesk.AutoCAD.ApplicationServices;
+using Autodesk.AutoCAD.DatabaseServices;
+using Autodesk.AutoCAD.EditorInput;
 using SOLAR.EL.RibbonButton.Autocad.Process;
+using SOLAR.EL.RibbonButton.Autocad.Settings;
+using TYPSA.SharedLib.Autocad.GetDocument;
+using TYPSA.SharedLib.Autocad.Main;
+using TYPSA.SharedLib.Autocad.Metrics;
+using TYPSA.SharedLib.Autocad.ObjectsByTypeByLayer;
+using TYPSA.SharedLib.UserForms;
+using Application = Autodesk.AutoCAD.ApplicationServices.Application;
 
 namespace SOLAR.EL.RibbonButton.Autocad.Main
 {
@@ -16,7 +18,9 @@ namespace SOLAR.EL.RibbonButton.Autocad.Main
     {
         public ProcessResult MainCreateEntityLabelsBack(
             string[] selectedFiles, 
-            string projectCode
+            string projectCode,
+            SolarSettings solarSet,
+            AutocadSettings autoSettings
         )
         {
             // Variables para recopilar métricas
@@ -81,7 +85,7 @@ namespace SOLAR.EL.RibbonButton.Autocad.Main
 
                                         // Llamamos al Main
                                         int? totalLabelsCreated = cls_12_ProcessCreateEntityLabels.ProcessCreateEntityLabels(
-                                            ed, db, tr, btr
+                                            ed, db, tr, btr, solarSet, autoSettings
                                         );
                                         // Validamos
                                         if (totalLabelsCreated == null)

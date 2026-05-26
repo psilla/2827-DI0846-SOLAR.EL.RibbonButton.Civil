@@ -21,51 +21,154 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
 {
     internal class cls_12_ProcessCreateEntityLabels
     {
+        private static void ShowInvInCtLayerByInvRegionDebug(
+            Dictionary<Region, string> invInCtLayerByInvRegion
+        )
+        {
+            StringBuilder sb = new StringBuilder();
+
+            sb.AppendLine("📌 INV IN CT LAYER BY INV REGION");
+            sb.AppendLine();
+
+            // Validamos
+            if (
+                invInCtLayerByInvRegion == null ||
+                invInCtLayerByInvRegion.Count == 0
+            )
+            {
+                sb.AppendLine("❌ No data found.");
+            }
+            else
+            {
+                // Iteramos
+                foreach (var kvp in invInCtLayerByInvRegion)
+                {
+                    // Obtener region
+                    Region invRegion = kvp.Key;
+
+                    // Obtener layer
+                    string layer = kvp.Value;
+
+                    // Obtener handle region
+                    string regionHandle =
+                        invRegion != null
+                            ? invRegion.Handle.ToString()
+                            : "NULL";
+
+                    sb.AppendLine(
+                        $"🔹 InvRegion: {regionHandle}"
+                    );
+
+                    sb.AppendLine(
+                        $"   Layer: {layer}"
+                    );
+
+                    sb.AppendLine();
+                }
+            }
+
+            // -----------------------------
+            // Mostrar
+            // -----------------------------
+
+            ShowStringBuilder.ShowInfo(
+                "📌 Inv In CT Layer By Inv Region",
+                sb.ToString()
+            );
+        }
+
         public static int? ProcessCreateEntityLabels(
             Editor ed, 
             Database db, 
             Transaction tr, 
-            BlockTableRecord btr
+            BlockTableRecord btr,
+            SolarSettings solarSet,
+            AutocadSettings autoSettings
         )
         {
             // try
             try
             {
-                // Obtenemos settings
-                SolarSettings solarSet = SolarSettings.GetDefaultSolarSettings();
-                AutocadSettings autoSettings = AutocadSettings.GetDefaultSettings();
+                // -----------------------------
+                // Obtener las unidades del proyecto (actuales o elegidas por user)
+                // -----------------------------
 
-                // Obtenemos las unidades del proyecto (actuales o elegidas por user)
                 string projectUnits = cls_00_ProjectUnits.GetAndSetProjectUnits();
                 // Validamos
                 if (string.IsNullOrEmpty(projectUnits)) return null;
 
-                // Obtenemos Text Styles
-                List<string> availableTextStyles = 
-                    cls_00_DocumentInfo.GetAllTextStylesFromDrawing(db);
+                // -----------------------------
+                // Obtener Text Styles
+                // -----------------------------
 
-                // Validamos Config
-                if (!cls_12_CreateEntityLabelsConfig.CreateEntityLabelsConfig(
-                    solarSet, availableTextStyles,
-                    out bool isHorizontal, out bool hasMPPT,
-                    out bool hasTrackerInfo, out string separatorChar,
-                    out Dictionary<string, string> labelFieldsDict,
-                    out string selectedTextStyle, out AttachmentPoint selectedTextJust,
-                    out bool analyzeAllDoc
-                )) return null;
+                List<string> availableTextStyles = cls_00_DocumentInfo.GetAllTextStylesFromDrawing(db);
 
-                // Obtenemos el listado de capas del documento
+                // -----------------------------
+                // Obtener Capas Documento
+                // -----------------------------
+
                 List<string> docLayers = cls_00_GetLayerNamesFromDoc.GetLayerNamesFromDoc(db);
 
-                // Seleccionamos Entidades
-                if (!cls_12_GetRequiredEntities.GetRequiredEntities(
-                    ed, solarSet, docLayers, analyzeAllDoc,
-                    out SelectionSet analyzePoly,
-                    out PromptSelectionResult psrPolyCt, out PromptSelectionResult psrPolyInv,
-                    out PromptSelectionResult psrBlockRefTrack, out PromptSelectionResult psrLabelInv,
-                    out string psrPolyCtLayer, out string psrPolyInvLayer,
-                    out string psrBlockRefTrackLayer, out string psrLabelInvLayer
+                // -----------------------------
+                // Obtener Config Proyecto
+                // -----------------------------
+
+                if (!cls_12_CreateEntityLabelsConfig.CreateEntityLabelsConfig(
+                    solarSet, availableTextStyles, 
+                    out bool isHorizontal, out bool hasMPPT, out bool hasTrackerInfo, 
+                    out bool inverterOutsideCt, out string separatorChar, out Dictionary<string, string> labelFieldsDict,
+                    out string selectedTextStyle, out AttachmentPoint selectedTextJust, out bool analyzeAllDoc
                 )) return null;
+
+                // -----------------------------
+                // Seleccionar Entidades
+                // -----------------------------
+
+                // Variables comunes
+                SelectionSet analyzePoly;
+                PromptSelectionResult psrPolyCt;
+                PromptSelectionResult psrPolyInv;
+                PromptSelectionResult psrBlockRefTrack;
+                PromptSelectionResult psrLabelInv;
+                string psrPolyCtLayer;
+                string psrPolyInvLayer;
+                string psrBlockRefTrackLayer;
+                string psrLabelInvLayer;
+
+                // Variables adicionales
+                PromptSelectionResult psrPolyN2Cable = null;
+                PromptSelectionResult psrCtBlock = null;
+                PromptSelectionResult psrBlockRefComBox = null;
+                string psrPolyN2CableLayer = null;
+                string psrCtBlockLayer = null;
+                List<string> psrBlockRefComBoxLayers = null;
+              
+                // Fuera del CT
+                if (inverterOutsideCt)
+                {
+                    // Seleccionamos Entidades
+                    if (!cls_12_GetRequiredEntities.GetRequiredEntitiesByInv(
+                        ed, solarSet, docLayers, analyzeAllDoc, out analyzePoly,
+                        out psrPolyCt, out psrPolyInv, out psrBlockRefTrack, out psrLabelInv,
+                        out psrPolyCtLayer, out psrPolyInvLayer, out psrBlockRefTrackLayer, out psrLabelInvLayer
+                    )) return null;
+                }
+                // Dentro del CT
+                else
+                {
+                    // Seleccionamos Entidades
+                    if (!cls_12_GetRequiredEntities.GetRequiredEntitiesByComBox(
+                        ed, solarSet, docLayers, analyzeAllDoc, out analyzePoly,
+                        out psrPolyCt, out psrPolyInv, out psrBlockRefTrack, out psrLabelInv,
+                        out psrPolyN2Cable, out psrCtBlock, out psrBlockRefComBox, out psrPolyCtLayer, 
+                        out psrPolyInvLayer, out psrBlockRefTrackLayer, out psrLabelInvLayer, 
+                        out psrCtBlockLayer, out psrPolyN2CableLayer, out psrBlockRefComBoxLayers
+                    )) return null;
+                }
+
+                // -----------------------------
+                // Crear Capas por defecto
+                // -----------------------------
 
                 List<string> layersToCreate = new List<string>
                 {
@@ -75,34 +178,164 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
                 // Creamos las capas por defecto si no existen
                 cls_00_CreateLayerIfNotExists.CreateLayersIfNotExist(layersToCreate, db);
 
-                // Validamos elevaciones
-                if (!cls_12_GetRequiredElev.GetRequiredElevations(
-                    tr, solarSet, 
-                    psrPolyCt, psrPolyInv, psrBlockRefTrack, psrLabelInv, 
-                    out double elevPolyCt, out double elevPolyInv,
-                    out double elevBlockRefTrack, out double elevLabelInv
+                // -----------------------------
+                // Comprobar elevaciones
+                // -----------------------------
+
+                // Fuera del CT
+                if (inverterOutsideCt)
+                {
+                    if (!cls_12_GetRequiredElev.GetRequiredElevationsByInv(
+                        tr, solarSet,
+                        psrPolyCt, psrPolyInv, psrBlockRefTrack, psrLabelInv,
+                        out double elevPolyCt, out double elevPolyInv,
+                        out double elevBlockRefTrack, out double elevLabelInv
+                    )) return null;
+                    // Validamos elevaciones entre Entidades
+                    if (Math.Abs(elevPolyCt - elevPolyInv) > 1e-6 ||
+                        Math.Abs(elevPolyCt - elevBlockRefTrack) > 1e-6 ||
+                        Math.Abs(elevPolyCt - elevLabelInv) > 1e-6
+                    )
+                    {
+                        // Mensaje
+                        MessageBox.Show(
+                            $"⚠ Elevations are inconsistent across entities.\n\n" +
+                            $"{solarSet.PolyCtTag} Z: {elevPolyCt:F3}\n" +
+                            $"{solarSet.PolyInvTag} Z: {elevPolyInv:F3}\n" +
+                            $"{solarSet.BlockRefTrackTag} Z: {elevBlockRefTrack:F3}\n" +
+                            $"{solarSet.LabelInvTag} Z: {elevLabelInv:F3}",
+                            "Elevation Mismatch",
+                            MessageBoxButtons.OK, MessageBoxIcon.Warning
+                        );
+                        // Finalizamos
+                        return null;
+                    }
+                }
+                // Dentro del CT
+                else
+                {
+                    if (!cls_12_GetRequiredElev.GetRequiredElevationsByComBox(
+                        tr, solarSet,
+                        psrPolyCt, psrPolyInv, psrBlockRefTrack, psrLabelInv, psrPolyN2Cable, psrCtBlock, psrBlockRefComBox,
+                        out double elevPolyCt, out double elevPolyInv, out double elevBlockRefTrack, out double elevLabelInv,
+                        out double elevPolyN2Cable, out double elevBlockRefCt, out double elevBlockRefComBox
+                    )) return null;
+
+                    // Validamos elevaciones entre Entidades
+                    if (Math.Abs(elevPolyCt - elevPolyInv) > 1e-6 ||
+                        Math.Abs(elevPolyCt - elevBlockRefTrack) > 1e-6 ||
+                        Math.Abs(elevPolyCt - elevLabelInv) > 1e-6 ||
+                        Math.Abs(elevPolyCt - elevPolyN2Cable) > 1e-6 ||
+                        Math.Abs(elevPolyCt - elevBlockRefCt) > 1e-6 ||
+                        Math.Abs(elevPolyCt - elevBlockRefComBox) > 1e-6
+                    )
+                    {
+                        // Mensaje
+                        MessageBox.Show(
+                            $"⚠ Elevations are inconsistent across entities.\n\n" +
+                            $"{solarSet.PolyCtTag} Z: {elevPolyCt:F3}\n" +
+                            $"{solarSet.PolyInvTag} Z: {elevPolyInv:F3}\n" +
+                            $"{solarSet.BlockRefTrackTag} Z: {elevBlockRefTrack:F3}\n" +
+                            $"{solarSet.LabelInvTag} Z: {elevLabelInv:F3}\n" +
+                            $"{solarSet.CableN2Tag} Z: {elevPolyN2Cable:F3}\n" +
+                            $"{solarSet.BlockRefComBoxTag} Z: {elevBlockRefComBox:F3}",
+                            "Elevation Mismatch",
+                            MessageBoxButtons.OK, MessageBoxIcon.Warning
+                        );
+                        // Finalizamos
+                        return null;
+                    }
+                }
+
+                // -----------------------------
+                // Obtener Ids
+                // -----------------------------
+
+                HashSet<ObjectId> psrPolyInvIds;
+                HashSet<ObjectId> psrBlockRefTrackIds;
+                HashSet<ObjectId> psrLabelInvIds;
+                // Variables adicionales
+                HashSet<ObjectId> psrInvCabIds = null;
+                HashSet<ObjectId> psrCtBlockIds = null;
+                HashSet<ObjectId> psrBlockRefComBoxIds = null;
+
+                // Fuera del CT
+                if (inverterOutsideCt)
+                {
+                    psrPolyInvIds = new HashSet<ObjectId>(psrPolyInv.Value.GetObjectIds());
+                    psrBlockRefTrackIds = new HashSet<ObjectId>(psrBlockRefTrack.Value.GetObjectIds());
+                    psrLabelInvIds = new HashSet<ObjectId>(psrLabelInv.Value.GetObjectIds());
+                }
+                // Dentro del CT
+                else
+                {
+                    psrPolyInvIds = new HashSet<ObjectId>(psrPolyInv.Value.GetObjectIds());
+                    psrBlockRefTrackIds = new HashSet<ObjectId>(psrBlockRefTrack.Value.GetObjectIds());
+                    psrLabelInvIds = new HashSet<ObjectId>(psrLabelInv.Value.GetObjectIds());
+                    psrInvCabIds = new HashSet<ObjectId>(psrPolyN2Cable.Value.GetObjectIds());
+                    psrCtBlockIds = new HashSet<ObjectId>(psrCtBlock.Value.GetObjectIds());
+                    psrBlockRefComBoxIds = new HashSet<ObjectId>(psrBlockRefComBox.Value.GetObjectIds());
+                }
+
+                // -----------------------------
+                // Validar estructura etiquetas Inversores/combiner
+                // -----------------------------
+               
+                if (!cls_00_MTextObjectsByLayer.AllLabelsHaveSameFieldCount(
+                    tr, psrLabelInvIds, autoSettings, out int fieldCount, out List<string> referenceFields
                 )) return null;
 
-                // Validamos elevaciones entre Entidades
-                if (Math.Abs(elevPolyCt - elevPolyInv) > 1e-6 ||
-                    Math.Abs(elevPolyCt - elevBlockRefTrack) > 1e-6 ||
-                    Math.Abs(elevPolyCt - elevLabelInv) > 1e-6
-                )
+                // -----------------------------
+                // Obtener claves alfabeticas
+                // -----------------------------
+
+                Dictionary<string, string> fieldOrderDict = 
+                    cls_12_ProcessOrderEntityLabels.BuildFieldOrderDictionary(referenceFields);
+                // Validamos
+                if (fieldOrderDict == null) return null;
+
+                // -----------------------------
+                // Opciones fijas
+                // -----------------------------
+
+                List<string> fixedOptions = new List<string>
                 {
-                    // Mensaje
-                    MessageBox.Show(
-                        $"⚠ Elevations are inconsistent across entities.\n\n" +
-                        $"{solarSet.PolyCtTag} Z: {elevPolyCt:F3}\n" +
-                        $"{solarSet.PolyInvTag} Z: {elevPolyInv:F3}\n" +
-                        $"{solarSet.BlockRefTrackTag} Z: {elevBlockRefTrack:F3}\n" +
-                        $"{solarSet.LabelInvTag} Z: {elevLabelInv:F3}",
-                        "Elevation Mismatch",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Warning
-                    );
-                    // Finalizamos
-                    return null;
+                    solarSet.PolyCtTag, solarSet.PolyInvTag, solarSet.PolyInvInCtTag
+                };
+
+                // -----------------------------
+                // Construir Combo Fields
+                // -----------------------------
+
+                List<(string propiedad, List<string> options, string valorDefecto)> comboFields =
+                    new List<(string, List<string>, string)>();
+
+                int i = 0;
+                // Iteramos
+                foreach (string fieldKey in fieldOrderDict.Keys)
+                {
+                    comboFields.Add((fieldKey, fixedOptions, i < fixedOptions.Count
+                        ? fixedOptions[i] 
+                        : fixedOptions[0]
+                    ));
+                    // Contamos
+                    i++;
                 }
+
+                // -----------------------------
+                // Mostrar Combo Form
+                // -----------------------------
+
+                Dictionary<string, string> fieldMapResult = cls_00_InstaForm_ComboBox.ComboBoxFormOut_NextToLabel(
+                    "The following fields were detected in the Inverter/Combiner labels.\n" +
+                    "Please assign the corresponding label type to each field:", comboFields
+                );
+                // Validamos
+                if (fieldMapResult == null) return null;
+
+                // -----------------------------
+                // Validar Trackers/Strings
+                // -----------------------------
 
                 HashSet<ObjectId> blockRefTrackToIsolate = new HashSet<ObjectId>();
                 HashSet<ObjectId> blockRefTrackMultPoly = new HashSet<ObjectId>();
@@ -112,121 +345,202 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
                 {
                     // Validamos Trackers/Strings
                     cls_12_AnalyzeTrackPolys.AnalyzeTrackPolys(
-                        tr, trkId, solarSet, 
-                        blockRefTrackMultPoly, blockRefTrackToIsolate, blockRefTrackElevMismatch
+                        tr, trkId, solarSet, blockRefTrackMultPoly,
+                        blockRefTrackToIsolate, blockRefTrackElevMismatch
                     );
                 }
                 // Validamos
                 if (!cls_12_IsolateInvalidTrack.IsolateInvalidTrack(
-                    ed, solarSet,
-                    blockRefTrackMultPoly, blockRefTrackToIsolate, blockRefTrackElevMismatch
+                    ed, solarSet, blockRefTrackMultPoly,
+                    blockRefTrackToIsolate, blockRefTrackElevMismatch
                 )) return null;
 
-                // Obtenemos HashSet de Ids
-                HashSet<ObjectId> psrPolyInvIds = new HashSet<ObjectId>(psrPolyInv.Value.GetObjectIds());
-                HashSet<ObjectId> psrBlockRefTrackIds = new HashSet<ObjectId>(psrBlockRefTrack.Value.GetObjectIds());
-                HashSet<ObjectId> psrLabelInvIds = new HashSet<ObjectId>(psrLabelInv.Value.GetObjectIds());
+                // -----------------------------
+                // Procesar Polys CT/Inversores
+                // -----------------------------
 
                 // Definimos offset por defecto
                 double offsetDistance = 0.15;
-
                 // Obtenemos Regiones de los Contornos CT
                 if (!cls_00_ProcessPolysToRegions.ProcessPolysToRegions(
                     ed, tr, btr, analyzePoly, solarSet.PolyCtTag, offsetDistance, projectUnits,
-                    out List<Region> validRegionCt,
-                    out Dictionary<Handle, Handle> dictPolyToRegionContGen
+                    out List<Region> validRegionCt, out Dictionary<Handle, Handle> dictPolyToRegionContGen
                 )) return null;
 
                 // Obtenemos Regiones de los Contornos Inversores
                 if (!cls_00_ProcessPolysToRegions.ProcessPolysToRegions(
                     ed, tr, btr, psrPolyInv.Value, solarSet.PolyInvTag, offsetDistance, projectUnits,
-                    out List<Region> validRegionInv,
-                    out Dictionary<Handle, Handle> dictPolyToRegionContInv
+                    out List<Region> validRegionInv, out Dictionary<Handle, Handle> dictPolyToRegionContInv
                 )) return null;
 
-                // Almacenamos regiones para borrarlas
+                // -----------------------------
+                // Inversores dentro del CT
+                // -----------------------------
+
+                Dictionary<ObjectId, object> cableByEntity = null;
+                Dictionary<Region, string> invInCtLayerByInvRegion = new Dictionary<Region, string>();
+                // Dentro del CT
+                if (!inverterOutsideCt)
+                {
+                    // -----------------------------
+                    // Obtener Info Cable por Inversor
+                    // -----------------------------
+
+                    cableByEntity = cls_16_GetDictMeasureCablesN2.GetDictMeasureCablesN2(
+                        tr, psrBlockRefComBoxIds, psrCtBlockIds, psrInvCabIds, solarSet.EntNoCableValue, solarSet.EntMultiCableValue,
+                        psrBlockRefComBoxLayers, out HashSet<ObjectId> cablesConnectedToInv, out HashSet<ObjectId> cablesConnectedToCt
+                    );
+
+                    // -----------------------------
+                    // Diccionario Region con Inversor
+                    // -----------------------------
+
+                    HashSet<ObjectId> psrInvBlockIdsInRegion = new HashSet<ObjectId>();
+                    // Creamos el diccionario Region-Inversores
+                    Dictionary<Region, List<DBObject>> regionData = new Dictionary<Region, List<DBObject>>();
+
+                    // -----------------------------
+                    // Asignar Inversores por interseccion
+                    // -----------------------------
+
+                    int blockRefInvAddedByInter = cls_16_ElemByRegionByInter.AssignEntitiesByInterIter(
+                        tr, psrBlockRefComBoxIds, psrInvBlockIdsInRegion, validRegionInv, regionData,
+                        radTolerance: 2, boolByGeometryExt: false, toleranceStep: 1
+                    );
+
+                    // -----------------------------
+                    // Obtener Layer Inversor en CT por Region Inversor
+                    // -----------------------------
+
+                    foreach (var kvp in regionData)
+                    {
+                        // Obtener region inversor
+                        Region invRegion = kvp.Key;
+
+                        // Obtener inversores
+                        List<DBObject> invList = kvp.Value;
+                        // Validamos
+                        if (invList == null || invList.Count != 1) continue;
+
+                        // Obtener inversor
+                        BlockReference invBr = invList.First() as BlockReference;
+                        // Validamos
+                        if (invBr == null) continue;
+
+                        // Buscar info cable por Id
+                        if (
+                            cableByEntity.ContainsKey(invBr.ObjectId) &&
+                            cableByEntity[invBr.ObjectId] is EntityExcelRow row
+                        )
+                        {
+                            // Validamos
+                            if (!string.IsNullOrWhiteSpace(row.CableLayer)
+                            )
+                            {
+                                // Almacenamos
+                                invInCtLayerByInvRegion[invRegion] = row.CableLayer;
+                            }
+                        }
+                    }
+
+                    bool showInfo = false;
+                    // Debug
+                    if (showInfo)
+                    {
+                        ShowInvInCtLayerByInvRegionDebug(invInCtLayerByInvRegion);
+                    }
+                }
+
+                // -----------------------------
+                // Almacenar regiones para borrado posterior
+                // -----------------------------
+
                 List<Region> allValidRegion = new List<Region>();
                 allValidRegion.AddRange(validRegionCt);
                 allValidRegion.AddRange(validRegionInv);
 
-                StringBuilder infoRegion = new StringBuilder();
-                // Diccionario para almacenar los elementos por region
-                Dictionary<Region, List<DBObject>> dictRegionCtData = new Dictionary<Region, List<DBObject>>();
+                // -----------------------------
+                // Ordenar Regiones CT por centroide
+                // -----------------------------
 
-                // Ordenar lista de regiones por centroide
                 validRegionCt.Sort((a, b) => cls_00_GetEntityCentroid.CompareEntitiesByPosition(a, b, 10.0));
 
-                // Contador de CT
+                // -----------------------------
+                // Definir comienzo en caso de analizar parcialmente el proyecto
+                // -----------------------------
+
                 int ctStartIndex;
                 int trackStartIndex;
                 // Si no analizamos todo el documento
                 if (!analyzeAllDoc)
                 {
-                    // CT
-                    string msgCT = $"Enter the starting number for {solarSet.PolyCtTag}:";
-                    string inputCT = InstanciarFormularios.TextBoxFormOut(msgCT, "1");
-                    // Validamos
-                    if (string.IsNullOrWhiteSpace(inputCT) || !int.TryParse(inputCT, out ctStartIndex))
+                    Dictionary<string, string> fields = new Dictionary<string, string>
                     {
-                        // Mensaje
-                        MessageBox.Show("Invalid CT number. Operation will be canceled.", "Input Error");
-                        // Borramos regiones
+                        { solarSet.PolyCtTag, "1" },
+                        { solarSet.BlockRefTrackTag, "1" }
+                    };
+                    // Form
+                    Dictionary<string, int> result = cls_00_InstaForm_TextBox.TextBoxFormOut_NextToLabel_Integer(
+                        "Enter the starting numbering values:", fields, formTitle: "Start Numbering Form"
+                    );
+                    // Validamos
+                    if (result == null)
+                    {
+                        // Iteramos
                         foreach (Region region in allValidRegion)
                         {
+                            // Validamos
                             if (region != null && !region.IsErased)
                             {
-                                cls_00_DeleteEntity.DeleteEntity(region);
-                            } 
-                        }
-                        // Finalizamos
-                        return null;
-                    }
-                    // Tracker
-                    string msgTrack = "Enter the starting number for Tracker:";
-                    string inputTrack = InstanciarFormularios.TextBoxFormOut(msgTrack, "1");
-                    // Validamos
-                    if (string.IsNullOrWhiteSpace(inputTrack) || !int.TryParse(inputTrack, out trackStartIndex))
-                    {
-                        // Mensaje
-                        MessageBox.Show("Invalid Tracker number. Operation will be canceled.", "Input Error");
-                        // Borramos regiones
-                        foreach (Region region in allValidRegion)
-                        {
-                            if (region != null && !region.IsErased)
-                            {
+                                // Borramos region
                                 cls_00_DeleteEntity.DeleteEntity(region);
                             }
                         }
                         // Finalizamos
                         return null;
                     }
+
+                    // Asignamos
+                    ctStartIndex = result[solarSet.PolyCtTag];
+                    trackStartIndex = result[solarSet.BlockRefTrackTag];
                 }
-                // En caso de analizarlo
+                // En caso de analizarlo completo
                 else
                 {
                     ctStartIndex = 1;
                     trackStartIndex = 1;
                 }
 
+                // -----------------------------
+                // Procesar Regiones CT para ordenarlas
+                // -----------------------------
+
+                StringBuilder infoRegion = new StringBuilder();
                 // Lista para almacenar todos los pares (CT, INV) detectados
                 List<(int ctNumber, int invNumber, Region ctRegion, Region invRegion)> validRegionOrderList =
                     new List<(int, int, Region, Region)>();
                 // Iteramos por los CT
                 foreach (Region regionCt in validRegionCt)
                 {
-                    // Obtenemos los Inversores contenidos en este CT
+                    // -----------------------------
+                    // Obtener Inversores contenidos en este CT
+                    // -----------------------------
+
                     List<Entity> polyInvAsEntList = cls_00_GetEntityListByRegion.GetEntityListByRegionByPoint(
                         tr, regionCt, psrPolyInvIds
                     );
                     // Validamos
                     if (polyInvAsEntList == null || polyInvAsEntList.Count == 0) continue;
 
-                    // Obtenemos regiones de inversores
+                    // -----------------------------
+                    // Obtener regiones de Inversores
+                    // -----------------------------
+
                     List<Region> regionInvList = cls_12_GetRegionsByInvOrder.GetRegionsByInvOrder(
                         polyInvAsEntList, dictPolyToRegionContInv, validRegionInv, infoRegion
                     );
 
-                    // Iteramos por las regiones de los Inversores
+                    // Iteramos regiones de los Inversores
                     foreach (Region regionInv in regionInvList)
                     {
                         // Obtener etiqueta del Inversor
@@ -267,12 +581,35 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
                             {
                                 // Dividimos por el separador detectado
                                 string[] parts = cleanedValue.Split(new[] { sep.Value }, StringSplitOptions.None);
-                                // Validamos
-                                if (parts.Length >= 2)
+                                // Iteramos partes
+                                foreach (string part in parts)
                                 {
-                                    // Extraemos campos numericos
-                                    int.TryParse(new string(parts[0].Where(char.IsDigit).ToArray()), out ctNum);
-                                    int.TryParse(new string(parts[1].Where(char.IsDigit).ToArray()), out invNum);
+                                    // Obtener clave alfabetica
+                                    string fieldKey = cls_00_MTextObjectsByLayer.GetAlphabeticFieldKey(part);
+                                    // Validamos
+                                    if (string.IsNullOrWhiteSpace(fieldKey)) continue;
+                                    if (!fieldMapResult.ContainsKey(fieldKey)) continue;
+
+                                    // Obtener tipo asignado
+                                    string mappedType = fieldMapResult[fieldKey];
+
+                                    // Obtener numero
+                                    int number = 0;
+                                    // Parseamos
+                                    int.TryParse(
+                                        new string(part.Where(char.IsDigit).ToArray()), out number
+                                    );
+
+                                    // CT
+                                    if (mappedType == solarSet.PolyCtTag)
+                                    {
+                                        ctNum = number;
+                                    }
+                                    // Inversor
+                                    else if (mappedType == solarSet.PolyInvTag)
+                                    {
+                                        invNum = number;
+                                    }
                                 }
                             }
                             // Almacenamos
@@ -281,28 +618,45 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
                     }
                 }
 
-                // Ordenar por CT y por Inversor
+                // -----------------------------
+                // Ordenar Regiones por CT y por Inversor
+                // -----------------------------
+
                 var validRegionOrderListByCt = validRegionOrderList
                     .OrderBy(x => x.ctNumber).ThenBy(x => x.invNumber)
                     .GroupBy(x => x.ctNumber).ToList();
 
-                HashSet<ObjectId> createdLabelIds = new HashSet<ObjectId>();
+                // -----------------------------
+                // Procesar Regiones CT 
+                // -----------------------------
+
+                HashSet<ObjectId> stringLabelIds = new HashSet<ObjectId>();
                 // Contador global de etiquetas
                 int totalLabelsCreated = 0;
                 // Procesamos en el orden correcto
                 foreach (var ctGroup in validRegionOrderListByCt)
                 {
-                    // Obtenemos la region del CT
+                    // -----------------------------
+                    // Obtener la region del CT
+                    // -----------------------------
+
                     Region regionCt = ctGroup.First().ctRegion;
-                    // Lista de inversores ordenados dentro de este CT
+
+                    // -----------------------------
+                    // Lista de inversores ordenados dentro del CT
+                    // -----------------------------
+
                     List<(int invNumber, Region invRegion)> invRegionsOrdered =
                         ctGroup.Select(x => (x.invNumber, x.invRegion)).ToList();
-                    // Procesamos CT
+
+                    // -----------------------------
+                    // Procesar CT
+                    // -----------------------------
+
                     int labelsCreated = cls_12_ProcessCT.ProcessCtByInvLabel(
-                        solarSet, regionCt, tr, btr,
-                        psrBlockRefTrackIds, labelFieldsDict, ctStartIndex, trackStartIndex,
-                        isHorizontal, selectedTextStyle, selectedTextJust, infoRegion,
-                        hasMPPT, separatorChar, invRegionsOrdered, ref createdLabelIds
+                        solarSet, regionCt, tr, btr, psrBlockRefTrackIds, labelFieldsDict, invInCtLayerByInvRegion, ctStartIndex,
+                        trackStartIndex, isHorizontal, selectedTextStyle, selectedTextJust, infoRegion,
+                        hasMPPT, separatorChar, invRegionsOrdered, inverterOutsideCt, ref stringLabelIds
                     );
                     // Actualizamos contador
                     ctStartIndex++;
@@ -315,12 +669,30 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
                     $"📌 Entities by Document Summary:", infoRegion.ToString()
                 );
 
-                // Actualizamos etiquetas creadas 
+                // -----------------------------
+                // Actualizar etiquetas creadas 
+                // -----------------------------
+
+                // Definimos propiedad inversor
+                string invProp = inverterOutsideCt
+                    ? solarSet.ContInvProp
+                    : solarSet.ComBoxProp;
+                // Prefijo inversor
+                string invPrefix = labelFieldsDict[invProp];
+
+                // Iteramos 
                 foreach (var ctGroup in validRegionOrderListByCt)
                 {
-                    // Obtenemos la region del CT
+                    // -----------------------------
+                    // Obtener region del CT
+                    // -----------------------------
+
                     Region regionCt = ctGroup.First().ctRegion;
-                    // Accedemos a sus Inversores
+
+                    // -----------------------------
+                    // Acceder a sus Inversores/Combiner
+                    // -----------------------------
+
                     List<(int invNumber, Region invRegion)> invRegionsOrdered =
                         ctGroup.Select(x => (x.invNumber, x.invRegion)).ToList();
                     // Iteramos Inversores
@@ -329,9 +701,13 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
                         // Validamos
                         if (invRegion == null) continue;
 
-                        // Obtenemos etiquetas por Inversor
-                        List<Entity> invLabelEntities = cls_00_GetEntityListByRegion.
-                            GetEntityListByRegionByPoint(tr, invRegion, createdLabelIds);
+                        // -----------------------------
+                        // Obtener etiquetas por Inversor/Combiner
+                        // -----------------------------
+
+                        List<Entity> invLabelEntities = cls_00_GetEntityListByRegion.GetEntityListByRegionByPoint(
+                            tr, invRegion, stringLabelIds
+                        );
                         // Validamos
                         if (invLabelEntities == null || invLabelEntities.Count == 0) continue;
 
@@ -340,19 +716,39 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
                         {
                             // Validamos
                             if (!(ent is MText mText)) continue;
-                            // Obtenemos los campos
-                            string[] fields = cls_12_RemoveFieldFromLabel.
-                                SplitLabelFields(mText.Contents, separatorChar); ;
-                            // Accedemos al campo del Inversor (segundo)
-                            string secondField = fields[1];
+
+                            // -----------------------------
+                            // Obtener campos 
+                            // -----------------------------
+
+                            string[] fields = cls_12_RemoveFieldFromLabel.SplitLabelFields(
+                                mText.Contents, separatorChar
+                            );
+
+                            // -----------------------------
+                            // Buscar campo Inversor/Combiner
+                            // -----------------------------
+
+                            int invFieldIndex = Array.FindIndex(
+                                fields, f => f.Trim().StartsWith(invPrefix)
+                            );
                             // Validamos
-                            if (secondField.Contains("X"))
+                            if (invFieldIndex < 0) continue;
+
+                            // Obtenemos
+                            string invField = fields[invFieldIndex];
+
+                            // -----------------------------
+                            // Reemplazar la incognita
+                            // -----------------------------
+
+                            if (invField.Contains("X"))
                             {
                                 // Formateamos
                                 string formattedInvNum = invNumber.ToString("D2");
-                                secondField = Regex.Replace(secondField, "X+", formattedInvNum);
+                                invField = Regex.Replace(invField, "X+", formattedInvNum);
                                 // Actualizamos
-                                fields[1] = secondField;
+                                fields[invFieldIndex] = invField;
                                 // Recomponemos la etiqueta
                                 string newText = string.Join(separatorChar, fields);
                                 // Actualizamos valor
@@ -363,28 +759,63 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
                             }
                         }
 
+                        // -----------------------------
+                        // Agrupar etiquetas por Tracker
+                        // -----------------------------
+
+                        // Prefijo tracker
+                        string trackerPrefix = labelFieldsDict[solarSet.TrackProp];
+
                         // Numeracion de strings global por inversor
                         int stringIndex = 1;
                         // Agrupamos por Tracker (antes limpiamos todo antes del espacio)
-                        var groupedByTracker = invLabelEntities
-                            .OfType<MText>()
-                            .GroupBy(m =>
-                            {
-                                // Obtenemos contenido
-                                string cleanLabel = cls_12_RemoveFieldFromLabel.GetCleanLabel(m.Contents);
-                                // Obtenemos los campos
-                                string[] fields = cls_12_RemoveFieldFromLabel.
-                                    SplitLabelFields(cleanLabel, separatorChar);
-                                // Obtenemos el campo del Tracker (penultimo)
-                                string trackerField = fields[fields.Length - 2].Trim();
-                                // return
-                                return trackerField;
-                            })
-                            .ToList();
-                        // Iteramos
+                        var groupedByTracker = invLabelEntities.OfType<MText>().GroupBy(m =>
+                        {
+                            // -----------------------------
+                            // Obtener contenido
+                            // -----------------------------
+
+                            string cleanLabel = cls_12_RemoveFieldFromLabel.GetCleanLabel(m.Contents);
+
+                            // -----------------------------
+                            // Obtener campos 
+                            // -----------------------------
+
+                            string[] fields = cls_12_RemoveFieldFromLabel.SplitLabelFields(
+                                cleanLabel, separatorChar
+                            );
+
+                            // -----------------------------
+                            // Buscar campo Tracker
+                            // -----------------------------
+
+                            int trackerFieldIndex = Array.FindIndex(
+                                fields, f => f.Trim().StartsWith(trackerPrefix)
+                            );
+                            // Validamos
+                            if (trackerFieldIndex < 0) return string.Empty;
+
+                            // Obtenemos
+                            string trackerField = fields[trackerFieldIndex].Trim();
+
+                            // return
+                            return trackerField;
+                        })
+                        .ToList();
+
+                        // -----------------------------
+                        // Iterar etiquetas por Tracker
+                        // -----------------------------
+
                         foreach (var group in groupedByTracker)
                         {
-                            // Ordenamos por String
+                            // -----------------------------
+                            // Ordenar etiquetas por String
+                            // -----------------------------
+
+                            // Prefijo String
+                            string stringPrefix = labelFieldsDict[solarSet.StringProp];
+                            // Ordenamos
                             var orderedGroup = group
                                 .OrderBy(m => m, Comparer<MText>.Create((m1, m2) =>
                                 {
@@ -396,23 +827,54 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
                             // Iteramos
                             foreach (MText mText in orderedGroup)
                             {
-                                // Obtenemos contenido
-                                string cleanLabel =
-                                    cls_12_RemoveFieldFromLabel.GetCleanLabel(mText.Contents);
-                                // Obtenemos los campos
-                                string[] fields = cls_12_RemoveFieldFromLabel.
-                                    SplitLabelFields(cleanLabel, separatorChar);
-                                // Obtenemos el campo del String (ultimo)
-                                int lastIndex = fields.Length - 1;
-                                string lastField = fields[lastIndex].Trim();
-                                // Validamos que tenga X
-                                if (lastField.Contains("X"))
+                                // -----------------------------
+                                // Obtener contenido
+                                // -----------------------------
+
+                                string cleanLabel = cls_12_RemoveFieldFromLabel.GetCleanLabel(mText.Contents);
+
+                                // -----------------------------
+                                // Obtener campos 
+                                // -----------------------------
+
+                                string[] fields = cls_12_RemoveFieldFromLabel.SplitLabelFields(
+                                    cleanLabel, separatorChar
+                                );
+
+                                // -----------------------------
+                                // Buscar campo String
+                                // -----------------------------
+
+                                int stringFieldIndex = Array.FindIndex(
+                                    fields,
+                                    f =>
+                                    {
+                                        string cleanField = f.Trim();
+                                        // return
+                                        return Regex.IsMatch(
+                                            cleanField,
+                                            $"^{Regex.Escape(stringPrefix)}(X+|\\d+)$",
+                                            RegexOptions.IgnoreCase
+                                        );
+                                    }
+                                );
+                                // Validamos
+                                if (stringFieldIndex < 0) continue;
+
+                                // Obtenemos
+                                string stringField = fields[stringFieldIndex].Trim();
+
+                                // -----------------------------
+                                // Reemplazar la incognita
+                                // -----------------------------
+
+                                if (stringField.Contains("X"))
                                 {
                                     // Formateamos
                                     string formattedStringNum = stringIndex.ToString("D2");
-                                    lastField = Regex.Replace(lastField, "X+", formattedStringNum);
+                                    stringField = Regex.Replace(stringField, "X+", formattedStringNum);
                                     // Actualizamos
-                                    fields[lastIndex] = lastField;
+                                    fields[stringFieldIndex] = stringField;
                                     // Reconstruir etiqueta completa con " +/-" otra vez
                                     string newText = string.Join(separatorChar, fields) + " +/-";
                                     // Actualizamos contador
@@ -428,20 +890,28 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
                     }
                 }
 
-                // Si el usuario no quiere mostrar el campo Tracker en la etiqueta
+                // -----------------------------
+                // Eliminar campo Tracker de la etiqueta
+                // -----------------------------
+
                 if (!hasTrackerInfo)
                 {
+                    // Prefijo tracker
+                    string trackerPrefix = labelFieldsDict[solarSet.TrackProp];
                     // Iteramos
-                    foreach (ObjectId lblId in createdLabelIds)
+                    foreach (ObjectId lblId in stringLabelIds)
                     {
                         // Actualizamos etiqueta
                         cls_12_RemoveFieldFromLabel.RemoveFieldFromLabel(
-                            tr, lblId, separatorChar, infoRegion
+                            tr, lblId, separatorChar, infoRegion, trackerPrefix
                         );
                     }
                 }
 
-                // Borrar regiones de contornos generales
+                // -----------------------------
+                // Borrar regiones de CT
+                // -----------------------------
+
                 foreach (Region region in validRegionCt)
                 {
                     // Validamos
@@ -451,7 +921,10 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
                     }
                 }
 
-                // Borrar regiones de contornos de inversores
+                // -----------------------------
+                // Borrar regiones de Inversores
+                // -----------------------------
+
                 foreach (Region region in validRegionInv)
                 {
                     // Validamos
@@ -460,6 +933,7 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
                         cls_00_DeleteEntity.DeleteEntity(region);
                     }
                 }
+
                 // return
                 return totalLabelsCreated;
             }
@@ -471,6 +945,9 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
                 // Finalizamos
                 return null;
             }
+
+            // Por defecto
+            return 0;
         }
 
 

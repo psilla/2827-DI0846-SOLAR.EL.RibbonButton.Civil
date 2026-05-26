@@ -26,10 +26,10 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
             string tipEstFija = solarSet.TipEstFija;
 
             // DEFINIMOS ORIENTACION DE LOS TRACKERS (VERTICAL U HORIZONTAL)
-            string trackSel = InstanciarFormularios.DropDownFormListOut(
+            string trackSel = cls_00_InstaForm_ComboBox.ComboBoxFormListOut(
                 "Select the String configuration typology:",
                 new List<string> { tipTrack, tipEstFija },
-                "String Typology", tipTrack
+                formText: "String Typology", defaultValue: tipTrack
             );
             // Validamos
             if (trackSel == null) return false;

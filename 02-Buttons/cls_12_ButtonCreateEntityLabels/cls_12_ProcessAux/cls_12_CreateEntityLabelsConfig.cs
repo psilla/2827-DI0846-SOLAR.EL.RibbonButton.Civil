@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Windows.Forms;
 using Autodesk.AutoCAD.DatabaseServices;
 using TYPSA.SharedLib.Autocad.DrawEntities;
 using TYPSA.SharedLib.UserForms;
@@ -9,12 +10,37 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
 {
     internal class cls_12_CreateEntityLabelsConfig
     {
+        private static class LabelConfigKeys
+        {
+            // String configuration
+            public const string StringTypology = "Select the string configuration typology (Tracker / Fixed Structure):";
+
+            // MPPT
+            public const string MPPTConfiguration = "Enable MPPT in label configuration ($):";
+
+            // Tracker info
+            public const string TrackerInfo = "Include tracker information in label:";
+
+            // Separator
+            public const string LabelSeparator = "Select the separator character for the label:";
+
+            // Text style
+            public const string TextStyle = "Select the text style for labels:";
+
+            // Document analysis
+            public const string AnalyzeDocument = "Analyze all elements in the document (True) or select manually (False):";
+
+            // Inverter location
+            public const string InverterOutsideCt = "Are the inverters outside the CT (True) or inside the CT (False):";
+        }
+
         public static bool CreateEntityLabelsConfig(
             SolarSettings solarSet,
             List<string> availableTextStyles,
             out bool isHorizontal,
             out bool hasMPPT,
             out bool hasTrackerInfo,
+            out bool inverterOutsideCt,
             out string separatorChar,
             out Dictionary<string, string> labelFieldsDict,
             out string selectedTextStyle,
@@ -22,122 +48,136 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
             out bool analyzeAllDoc
         )
         {
-            // Valores por defecto
+            // Defaults
             isHorizontal = false;
             hasMPPT = false;
             hasTrackerInfo = false;
+            inverterOutsideCt = true;
             separatorChar = string.Empty;
             labelFieldsDict = new Dictionary<string, string>();
             selectedTextStyle = string.Empty;
             selectedTextJust = AttachmentPoint.MiddleCenter;
             analyzeAllDoc = false;
 
-            // Definimos valores
             string tipTrack = solarSet.TipTrack;
             string tipEstFija = solarSet.TipEstFija;
             string contGenTag = solarSet.PolyCtTag;
 
-            // DEFINIMOS ORIENTACION DE LOS TRACKERS (VERTICAL U HORIZONTAL)
-            string trackSel = InstanciarFormularios.DropDownFormListOut(
-                "Select the String configuration typology:",
-                new List<string> { tipTrack, tipEstFija },
-                "String Typology", tipTrack
-            );
-            // Validamos
-            if (trackSel == null) return false;
-            // Definimos orientacion label
-            isHorizontal = (trackSel == tipEstFija);
+            // Definimos campos
+            var fields = new List<ComboTextBoxForm_NextToLabel.FieldDefinition>()
+            {
+                new ComboTextBoxForm_NextToLabel.FieldDefinition
+                {
+                    Propiedad = LabelConfigKeys.StringTypology,
+                    Type = FieldType.ComboBox,
+                    Opciones = new List<string> { tipTrack, tipEstFija },
+                    ValorDefecto = tipTrack
+                },
 
-            // DEFINIMOS CONFIGURACION CON/SIN MPPT
-            string MPPtConfigMess =
-                "True: Label configuration with MPPT ($).\n" +
-                "False: Label configuration without MPPT ($).";
+                new ComboTextBoxForm_NextToLabel.FieldDefinition
+                {
+                    Propiedad = LabelConfigKeys.MPPTConfiguration,
+                    Type = FieldType.ComboBox,
+                    Opciones = new List<string> { "True", "False" },
+                    ValorDefecto = "False"
+                },
+
+                new ComboTextBoxForm_NextToLabel.FieldDefinition
+                {
+                    Propiedad = LabelConfigKeys.TrackerInfo,
+                    Type = FieldType.ComboBox,
+                    Opciones = new List<string> { "True", "False" },
+                    ValorDefecto = "True"
+                },
+
+                new ComboTextBoxForm_NextToLabel.FieldDefinition
+                {
+                    Propiedad = LabelConfigKeys.InverterOutsideCt,
+                    Type = FieldType.ComboBox,
+                    Opciones = new List<string> { "True", "False" },
+                    ValorDefecto = "False"
+                },
+
+                new ComboTextBoxForm_NextToLabel.FieldDefinition
+                {
+                    Propiedad = LabelConfigKeys.LabelSeparator,
+                    Type = FieldType.ComboBox,
+                    Opciones = new List<string> { ".", "-", "_", ",", ";" },
+                    ValorDefecto = "-"
+                },
+
+                new ComboTextBoxForm_NextToLabel.FieldDefinition
+                {
+                    Propiedad = LabelConfigKeys.TextStyle,
+                    Type = FieldType.ComboBox,
+                    Opciones = availableTextStyles,
+                    ValorDefecto = solarSet.LabelStyle
+                },
+
+                new ComboTextBoxForm_NextToLabel.FieldDefinition
+                {
+                    Propiedad = LabelConfigKeys.AnalyzeDocument,
+                    Type = FieldType.ComboBox,
+                    Opciones = new List<string> { "True", "False" },
+                    ValorDefecto = "True"
+                }
+            };
             // Form
-            object MPPtSel = InstanciarFormularios.DropDownFormOut(
-                MPPtConfigMess, false
+            var form = new ComboTextBoxForm_NextToLabel(
+                "Define label configuration settings:", fields, formTitle: "Label Configuration Form"
             );
             // Validamos
-            if (MPPtSel == null) return false;
-            // Convertimos a boolean
-            hasMPPT = Convert.ToBoolean(MPPtSel);
+            if (form.ShowDialog() != DialogResult.OK) return false;
 
-            // DEFINIMOS CONFIGURACION CON/SIN TRACKER INFO
-            string trackLabelConfigMess =
-                "True: Label configuration with Tracker info.\n" +
-                "False: Label configuration without Tracker info.";
-            // Form
-            object trackLabelSel = InstanciarFormularios.DropDownFormOut(
-                trackLabelConfigMess, true
-            );
-            // Validamos
-            if (trackLabelSel == null) return false;
-            // Convertimos a boolean
-            hasTrackerInfo = Convert.ToBoolean(trackLabelSel);
+            // Obtenemos salida
+            Dictionary<string, string> comboResult = form.salida;
 
-            // DEFINIMOS CARACTER SEPARADOR LABELS
-            separatorChar = InstanciarFormularios.DropDownFormListOut(
-                "Select the separator character for the label:",
-                new List<string> { ".", "-", "_", ",", ";" },
-                "Label Separator Selection", "-"
-            );
-            // Validamos la selección
-            if (string.IsNullOrEmpty(separatorChar)) return false;
+            // Asignamos
+            isHorizontal = comboResult[LabelConfigKeys.StringTypology] == tipEstFija;
+            hasMPPT = Convert.ToBoolean(comboResult[LabelConfigKeys.MPPTConfiguration]);
+            hasTrackerInfo = Convert.ToBoolean(comboResult[LabelConfigKeys.TrackerInfo]);
+            inverterOutsideCt = Convert.ToBoolean(comboResult[LabelConfigKeys.InverterOutsideCt]);
+            separatorChar = comboResult[LabelConfigKeys.LabelSeparator];
+            selectedTextStyle = comboResult[LabelConfigKeys.TextStyle];
+            analyzeAllDoc = Convert.ToBoolean(comboResult[LabelConfigKeys.AnalyzeDocument]);
+
+            // Justificacion Text
+            selectedTextJust = isHorizontal
+                ? cls_00_DrawEntities.AskMTextJustificationFromUser(AttachmentPoint.BottomLeft)
+                : cls_00_DrawEntities.AskMTextJustificationFromUser(AttachmentPoint.TopLeft);
 
             List<(string propiedad, string valorDefecto)> props = new List<(string, string)>
             {
                 (solarSet.ContGenProp, "P"),
-                (solarSet.ContInvProp, "INV"),
-                (solarSet.TrackProp, "TR"),
-                (solarSet.StringProp, "S"),
             };
-            // DEFINIMOS PREFIJOS PARA ETIQUETA
-            labelFieldsDict = InstanciarFormularios.TextBoxFormOut_NextToLabel(
-                "Enter a prefix for each entity included in the label.\n\n" +
-                "All fields are required and must be filled in.\n\n" +
-                "If 'Label without Tracker info' option was selected previously, this field will be automatically removed during processing.",
-            props
-        );
-            // Validamos
-            if (labelFieldsDict == null) return false;
-
-            // DEFINIMOS TEXT STYLE
-            string chosenStyle = cls_00_DrawEntities.AskTextStyleFromUser(
-                availableTextStyles, solarSet.LabelStyle
-            );
-            // Validamos
-            if (chosenStyle == null) return false;
-
-            // DEFINIMOS TEXT JUSTIFICATION
-            // Form para definir text justification
-            if (isHorizontal)
+            // Inversor fuera CT
+            if (inverterOutsideCt)
             {
-                // BottomLeft
-                selectedTextJust = cls_00_DrawEntities
-                    .AskMTextJustificationFromUser(AttachmentPoint.BottomLeft);
+                props.Add((solarSet.ContInvProp, "INV"));
             }
+            // Inversor dentro CT
             else
             {
-                // TopLeft
-                selectedTextJust = cls_00_DrawEntities
-                    .AskMTextJustificationFromUser(AttachmentPoint.TopLeft);
+                props.Add((solarSet.ContInvInCtProp, "INV"));
+                props.Add((solarSet.ComBoxProp, "SCB"));
             }
+            // Genericas
+            props.Add((solarSet.TrackProp, "TR"));
+            props.Add((solarSet.StringProp, "S"));
 
-            // DEFINIMOS TRUE/FALSE TODO EL DOCUMENTO
-            string boolDocMess =
-                $"True: Analyze all {contGenTag} in the document.\n" +
-                $"False: Manually select {contGenTag} to analyze.";
-            // Form
-            object boolDoc = InstanciarFormularios.DropDownFormOut(
-                boolDocMess, true
+            // Prefijos
+            labelFieldsDict = cls_00_InstaForm_TextBox.TextBoxFormOut_NextToLabel(
+                "Enter a prefix for each entity included in the label. " + "All fields are required.\n\n" +
+                "Tracker field will be ignored depending on previous selection.", props
             );
             // Validamos
-            if (boolDoc == null) return false;
-            // Convertimos a boolean
-            analyzeAllDoc = Convert.ToBoolean(boolDoc);
+            if (labelFieldsDict == null) return false;
 
             // return
             return true;
         }
+
+     
 
     }
 }
