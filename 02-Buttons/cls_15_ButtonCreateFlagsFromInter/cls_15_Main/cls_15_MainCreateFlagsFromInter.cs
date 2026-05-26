@@ -34,8 +34,9 @@ namespace SOLAR.EL.RibbonButton.Autocad.Main
                         BlockTableRecord btr = cls_00_DocumentInfo.GetBlockTableRecordForWrite(tr, bt);
 
                         // Llamamos al Main
-                        int? totalLabelsCreated = 
-                            cls_15_ProcessCreateFlagsFromInter.ProcessCreateFlagsFromInter(db, tr, btr);
+                        int? totalLabelsCreated = cls_15_ProcessCreateFlagsFromInter.ProcessCreateFlagsFromInter(
+                            db, tr, btr
+                        );
                         // Validamos
                         if (totalLabelsCreated == null)
                         {

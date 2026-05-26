@@ -101,19 +101,14 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
             string projectUnits,
             double cableLengthCorrectionFactor,
             double cableLengthFixedAllowance,
-            int cableNumberOfConductors
+            int cableNumberOfConductors,
+            SolarSettings solarSet,
+            AutocadSettings autoSettings
         )
         {
             // try
             try
             {
-                // -----------------------------
-                // Obtener settings
-                // -----------------------------
-
-                SolarSettings solarSet = SolarSettings.GetDefaultSolarSettings();
-                AutocadSettings autoSettings = AutocadSettings.GetDefaultSettings();
-
                 // -----------------------------
                 // Obtener listado de capas del documento
                 // -----------------------------

@@ -58,10 +58,10 @@ namespace SOLAR.EL.RibbonButton.Autocad.Main
                         // Cerramos transaccion
                         tr.Commit();
 
-                        //// Enviar Metricas App
-                        //SendMetrics(1, totalLabelsCreated.Value, projectCode);
-                        //// Enviar Metricas Serapis
-                        //SerapisMetrics.InitializeMetricsAsync("69771c60c4aac3725f301e1e");
+                        // Enviar Metricas App
+                        SendMetrics(1, totalLabelsCreated.Value, projectCode);
+                        // Enviar Metricas Serapis
+                        SerapisMetrics.InitializeMetricsAsync(solarSet.GuidSerapisMetricsCreateEntLabels);
 
                         // return
                         return new ProcessResult

@@ -15,18 +15,15 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
             Dictionary<string, List<(double X, double Y)>> dictFromExcel,
             Transaction tr,
             BlockTableRecord btr,
-            Database db
+            Database db,
+            SolarSettings solarSet
         )
         {
-            // Obtenemos settings
-            SolarSettings solarSet = SolarSettings.GetDefaultSolarSettings();
-
             // Creamos las capa si no existe
             cls_00_CreateLayerIfNotExists.CreateLayerIfNotExists(solarSet.LabelStringLayer, db);
 
             // Obtenemos Text Styles
-            List<string> availableTextStyles =
-                cls_00_DocumentInfo.GetAllTextStylesFromDrawing(db);
+            List<string> availableTextStyles = cls_00_DocumentInfo.GetAllTextStylesFromDrawing(db);
 
             // Validamos Config
             if (!cls_14_CreateLabelsFromExcelConfig.CreateLabelsFromExcelConfig(
@@ -48,9 +45,8 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
                     Point3d basePoint = new Point3d(X, Y, 0);
                     // Creamos etiqueta
                     cls_00_DrawMtext.DrawMTextOnPoint(
-                        basePoint, tagValue, tr, btr,
-                        isHorizontal, 1, 7, solarSet.LabelStringLayer,
-                        selectedTextStyle, selectedTextJust
+                        basePoint, tagValue, tr, btr, isHorizontal, 1, 7, 
+                        solarSet.LabelStringLayer, selectedTextStyle, selectedTextJust
                     );
                     // Actualizamos contador
                     totalLabelsCreated++;

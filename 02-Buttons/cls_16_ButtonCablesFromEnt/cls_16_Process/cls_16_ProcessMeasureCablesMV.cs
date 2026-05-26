@@ -22,18 +22,15 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
             string projectUnits,
             double cableLengthCorrectionFactor,
             double cableLengthFixedAllowance,
-            int cableNumberOfConductors
+            int cableNumberOfConductors,
+            SolarSettings solarSet
         )
         {
             // try
             try
             {
-                // Obtenemos settings
-                SolarSettings solarSet = SolarSettings.GetDefaultSolarSettings();
-
                 // Obtenemos el listado de capas del documento
-                List<string> docLayers = 
-                    cls_00_GetLayerNamesFromDoc.GetLayerNamesFromDoc(db);
+                List<string> docLayers = cls_00_GetLayerNamesFromDoc.GetLayerNamesFromDoc(db);
 
                 // Seleccionamos Entidades
                 if (!cls_16_GetEntMeasureCablesMV.GetEntMeasureCablesMV(

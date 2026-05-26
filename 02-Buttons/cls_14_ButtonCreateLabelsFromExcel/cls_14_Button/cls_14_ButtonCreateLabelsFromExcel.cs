@@ -2,6 +2,7 @@
 using System.Windows.Forms;
 using Autodesk.AutoCAD.Runtime;
 using SOLAR.EL.RibbonButton.Autocad.Main;
+using SOLAR.EL.RibbonButton.Autocad.Settings;
 using TYPSA.SharedLib.Autocad.Buttons;
 using TYPSA.SharedLib.Autocad.Main;
 
@@ -14,20 +15,36 @@ namespace SOLAR.EL.RibbonButton.Autocad.Buttons
         {
             DateTime startTime = DateTime.Now;
 
-            // Obtener codigo de proyecto
+            // -----------------------------
+            // Obtener Datos Usuario
+            // -----------------------------
+
             string projectCode = cls_00_GetUserData.GetProjectCodeFromDialog();
             // Validamos
             if (projectCode == null) return;
 
-            // Procesar el Main
+            // -----------------------------
+            // Obtener settings
+            // -----------------------------
+
+            SolarSettings solarSet = SolarSettings.GetDefaultSolarSettings();
+
+            // -----------------------------
+            // Llamada al main
+            // -----------------------------
+
             cls_14_MainCreateLabelsFromExcel mainProcess = new cls_14_MainCreateLabelsFromExcel();
             // Obtener el resultado del proceso
-            ProcessResult processResult = mainProcess.MainCreateLabelsFromExcel(projectCode);
+            ProcessResult processResult = mainProcess.MainCreateLabelsFromExcel(
+                projectCode, solarSet
+            );
 
-            // Mostrar el resumen de los resultados al finalizar
+            // -----------------------------
+            // Mostrar resumen
+            // -----------------------------
+
             DateTime endTime = DateTime.Now;
             TimeSpan duration = endTime - startTime;
-
             // Mensaje
             MessageBox.Show(
                 "CreateLabelsFromExcel process has completed successfully." +
@@ -37,8 +54,7 @@ namespace SOLAR.EL.RibbonButton.Autocad.Buttons
                 $"\n\n{processResult.ParametersAnalyzed} labels have been created in total." +
                 $"\n{processResult.TotalFilesProcessed} files were processed successfully.",
                 "Extraction Complete",
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Information
+                MessageBoxButtons.OK, MessageBoxIcon.Information
             );
         }
 

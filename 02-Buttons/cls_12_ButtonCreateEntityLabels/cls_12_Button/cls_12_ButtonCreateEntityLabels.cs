@@ -16,26 +16,37 @@ namespace SOLAR.EL.RibbonButton.Autocad.Buttons
         {
             DateTime startTime = DateTime.Now;
 
-            // Obtener codigo de proyecto
+            // -----------------------------
+            // Obtener Datos Usuario
+            // -----------------------------
+
             string projectCode = cls_00_GetUserData.GetProjectCodeFromDialog();
             // Validamos
             if (projectCode == null) return;
 
-            // Obtenemos settings
+            // -----------------------------
+            // Obtener settings
+            // -----------------------------
+
             SolarSettings solarSet = SolarSettings.GetDefaultSolarSettings();
             AutocadSettings autoSettings = AutocadSettings.GetDefaultSettings();
 
-            // Procesar los archivos seleccionados
+            // -----------------------------
+            // Llamada al main
+            // -----------------------------
+
             cls_12_MainCreateEntityLabels mainProcess = new cls_12_MainCreateEntityLabels();
             // Obtener el resultado del proceso
             ProcessResult processResult = mainProcess.MainCreateEntityLabels(
                 projectCode, solarSet, autoSettings
             );
 
-            // Mostrar el resumen de los resultados al finalizar
+            // -----------------------------
+            // Mostrar resumen
+            // -----------------------------
+
             DateTime endTime = DateTime.Now;
             TimeSpan duration = endTime - startTime;
-
             // Mensaje
             MessageBox.Show(
                 "CreateEntityLabels process has completed successfully." +
@@ -45,8 +56,7 @@ namespace SOLAR.EL.RibbonButton.Autocad.Buttons
                 $"\n\n{processResult.ParametersAnalyzed} labels have been created in total." +
                 $"\n{processResult.TotalFilesProcessed} files were processed successfully.",
                 "Extraction Complete",
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Information
+                MessageBoxButtons.OK, MessageBoxIcon.Information
             );
         }
 

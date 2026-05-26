@@ -2,8 +2,10 @@
 using System.Windows.Forms;
 using Autodesk.AutoCAD.Runtime;
 using SOLAR.EL.RibbonButton.Autocad.Main;
+using SOLAR.EL.RibbonButton.Autocad.Settings;
 using TYPSA.SharedLib.Autocad.Buttons;
 using TYPSA.SharedLib.Autocad.Main;
+using TYPSA.SharedLib.Autocad.ObjectsByTypeByLayer;
 
 namespace SOLAR.EL.RibbonButton.Autocad.Buttons
 {
@@ -14,20 +16,37 @@ namespace SOLAR.EL.RibbonButton.Autocad.Buttons
         {
             DateTime startTime = DateTime.Now;
 
-            // Obtener codigo de proyecto
+            // -----------------------------
+            // Obtener Datos Usuario
+            // -----------------------------
+
             string projectCode = cls_00_GetUserData.GetProjectCodeFromDialog();
             // Validamos
             if (projectCode == null) return;
 
-            // Procesar el Main
+            // -----------------------------
+            // Obtener settings
+            // -----------------------------
+
+            SolarSettings solarSet = SolarSettings.GetDefaultSolarSettings();
+            AutocadSettings autoSettings = AutocadSettings.GetDefaultSettings();
+
+            // -----------------------------
+            // Llamada al main
+            // -----------------------------
+
             cls_13_MainExportLabelsToExcel mainProcess = new cls_13_MainExportLabelsToExcel();
             // Obtener el resultado del proceso
-            ProcessResult processResult = mainProcess.MainExportLabelsToExcel(projectCode);
+            ProcessResult processResult = mainProcess.MainExportLabelsToExcel(
+                projectCode, solarSet, autoSettings
+            );
 
-            // Mostrar el resumen de los resultados al finalizar
+            // -----------------------------
+            // Mostrar resumen
+            // -----------------------------
+
             DateTime endTime = DateTime.Now;
             TimeSpan duration = endTime - startTime;
-
             // Mensaje
             MessageBox.Show(
                 "ExportLabelsToExcel process has completed successfully." +
@@ -37,8 +56,7 @@ namespace SOLAR.EL.RibbonButton.Autocad.Buttons
                 $"\n\n{processResult.ParametersAnalyzed} labels have been exported in total." +
                 $"\n{processResult.TotalFilesProcessed} files were processed successfully.",
                 "Extraction Complete",
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Information
+                MessageBoxButtons.OK, MessageBoxIcon.Information
             );
         }
 

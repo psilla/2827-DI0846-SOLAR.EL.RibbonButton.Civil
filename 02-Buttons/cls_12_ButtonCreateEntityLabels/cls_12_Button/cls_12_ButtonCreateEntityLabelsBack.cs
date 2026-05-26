@@ -15,7 +15,10 @@ namespace SOLAR.EL.RibbonButton.Autocad.Buttons
         [CommandMethod("CreateEntityLabelsBack")]
         public static void ButtonCreateEntityLabelsBack()
         {
-            // Obtener datos de usuario
+            // -----------------------------
+            // Obtener Datos Usuario
+            // -----------------------------
+
             bool userData = cls_00_GetUserData.GetUserData(
                 out string projectCode,
                 out List<string> selectedFiles,
@@ -25,22 +28,29 @@ namespace SOLAR.EL.RibbonButton.Autocad.Buttons
             // Validamos
             if (!userData) return;
 
-            // Obtenemos settings
+            // -----------------------------
+            // Obtener settings
+            // -----------------------------
+
             SolarSettings solarSet = SolarSettings.GetDefaultSolarSettings();
             AutocadSettings autoSettings = AutocadSettings.GetDefaultSettings();
 
-            // Procesar los archivos seleccionados
-            cls_12_MainCreateEntityLabelsBack mainProcess = new cls_12_MainCreateEntityLabelsBack();
+            // -----------------------------
+            // Llamada al main
+            // -----------------------------
 
+            cls_12_MainCreateEntityLabelsBack mainProcess = new cls_12_MainCreateEntityLabelsBack();
             // Obtener el resultado del proceso
             ProcessResult processResult = mainProcess.MainCreateEntityLabelsBack(
                 selectedFiles.ToArray(), projectCode, solarSet, autoSettings
             );
 
-            // Mostrar el resumen de los resultados al finalizar
+            // -----------------------------
+            // Mostrar resumen
+            // -----------------------------
+
             DateTime endTime = DateTime.Now;
             TimeSpan duration = endTime - startTime;
-
             // Mensaje
             MessageBox.Show(
                 "CreateEntityLabelsBack process has completed successfully." +
@@ -50,8 +60,7 @@ namespace SOLAR.EL.RibbonButton.Autocad.Buttons
                 $"\n\n{processResult.ParametersAnalyzed} labels have been created in total." +
                 $"\n{processResult.TotalFilesProcessed} files were processed successfully.",
                 "Extraction Complete",
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Information
+                MessageBoxButtons.OK, MessageBoxIcon.Information
             );
         }
     }

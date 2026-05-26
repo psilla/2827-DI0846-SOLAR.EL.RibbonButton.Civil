@@ -13,13 +13,11 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
         public static List<List<string>> ProcessExportLabelsToExcel(
             Editor ed,
             Database db,
-            Transaction tr
+            Transaction tr,
+            SolarSettings solarSet,
+            AutocadSettings autoSettings
         )
         {
-            // Obtenemos settings
-            SolarSettings solarSet = SolarSettings.GetDefaultSolarSettings();
-            AutocadSettings autoSettings = AutocadSettings.GetDefaultSettings();
-
             // Obtenemos el listado de capas del documento
             List<string> docLayers = cls_00_GetLayerNamesFromDoc.GetLayerNamesFromDoc(db);
 

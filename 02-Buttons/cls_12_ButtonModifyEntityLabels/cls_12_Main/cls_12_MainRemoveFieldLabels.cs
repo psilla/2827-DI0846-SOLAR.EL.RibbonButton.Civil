@@ -4,6 +4,7 @@ using Autodesk.AutoCAD.ApplicationServices;
 using Autodesk.AutoCAD.DatabaseServices;
 using Autodesk.AutoCAD.EditorInput;
 using SOLAR.EL.RibbonButton.Autocad.Process;
+using SOLAR.EL.RibbonButton.Autocad.Settings;
 using TYPSA.SharedLib.Autocad.GetDocument;
 using TYPSA.SharedLib.Autocad.Main;
 using TYPSA.SharedLib.Autocad.Metrics;
@@ -13,7 +14,8 @@ namespace SOLAR.EL.RibbonButton.Autocad.Main
     internal class cls_12_MainRemoveFieldLabels
     {
         public ProcessResult MainRemoveFieldLabels(
-            string projectCode
+            string projectCode,
+            SolarSettings solarSet
         )
         {
             // Obtenemos variables
@@ -32,7 +34,7 @@ namespace SOLAR.EL.RibbonButton.Autocad.Main
                     {
                         // Llamamos al Main
                         int? totalLabelsCreated =
-                            cls_12_ProcessRemoveFieldLabels.ProcessRemoveFieldLabels(ed, db, tr);
+                            cls_12_ProcessRemoveFieldLabels.ProcessRemoveFieldLabels(ed, db, tr, solarSet);
                         // Validamos
                         if (totalLabelsCreated == null)
                         {
@@ -52,7 +54,7 @@ namespace SOLAR.EL.RibbonButton.Autocad.Main
                         // Enviar Metricas App
                         SendMetrics(1, totalLabelsCreated.Value, projectCode);
                         // Enviar Metricas Serapis
-                        SerapisMetrics.InitializeMetricsAsync("69771c60c4aac3725f301e1e");
+                        SerapisMetrics.InitializeMetricsAsync(solarSet.GuidSerapisMetricsCreateEntLabels);
 
                         // return
                         return new ProcessResult

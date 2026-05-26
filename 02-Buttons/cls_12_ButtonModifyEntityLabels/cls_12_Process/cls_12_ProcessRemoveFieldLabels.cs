@@ -14,15 +14,13 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
         public static int? ProcessRemoveFieldLabels(
             Editor ed,
             Database db,
-            Transaction tr
+            Transaction tr,
+            SolarSettings solarSet
         )
         {
             // try
             try
             {
-                // Obtenemos settings
-                SolarSettings solarSet = SolarSettings.GetDefaultSolarSettings();
-
                 // Obtenemos el listado de capas del documento
                 List<string> docLayers = cls_00_GetLayerNamesFromDoc.GetLayerNamesFromDoc(db);
 

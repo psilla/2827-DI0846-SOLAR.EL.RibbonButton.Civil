@@ -1,10 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
-using System;
 using Autodesk.AutoCAD.ApplicationServices;
 using Autodesk.AutoCAD.DatabaseServices;
 using Autodesk.AutoCAD.EditorInput;
 using SOLAR.EL.RibbonButton.Autocad.Process;
+using SOLAR.EL.RibbonButton.Autocad.Settings;
 using TYPSA.SharedLib.Autocad.GetDocument;
 using TYPSA.SharedLib.Autocad.Main;
 using TYPSA.SharedLib.ExcelAutocad;
@@ -58,7 +59,8 @@ namespace SOLAR.EL.RibbonButton.Autocad.Main
         }
 
         public ProcessResult MainCreateLabelsFromExcel(
-            string projectCode
+            string projectCode,
+            SolarSettings solarSet
         )
         {
             // Obtenemos el dict de informacion
@@ -94,8 +96,9 @@ namespace SOLAR.EL.RibbonButton.Autocad.Main
                         BlockTableRecord btr = cls_00_DocumentInfo.GetBlockTableRecordForWrite(tr, bt);
 
                         // Creamos etiquetas
-                        int totalLabelsCreated = cls_14_ProcessCreateLabelsFromExcel.
-                            ProcessCreateLabelsFromExcel(dictFromExcel, tr, btr, db);
+                        int totalLabelsCreated = cls_14_ProcessCreateLabelsFromExcel.ProcessCreateLabelsFromExcel(
+                            dictFromExcel, tr, btr, db, solarSet
+                        );
 
                         // Cerramos transaccion
                         tr.Commit();

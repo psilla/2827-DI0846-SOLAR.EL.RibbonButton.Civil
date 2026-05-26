@@ -14,20 +14,28 @@ namespace SOLAR.EL.RibbonButton.Autocad.Buttons
         {
             DateTime startTime = DateTime.Now;
 
-            // Obtener codigo de proyecto
+            // -----------------------------
+            // Obtener Datos Usuario
+            // -----------------------------
+
             string projectCode = cls_00_GetUserData.GetProjectCodeFromDialog();
             // Validamos
             if (projectCode == null) return;
 
-            // Procesar los archivos seleccionados
+            // -----------------------------
+            // Llamada al main
+            // -----------------------------
+
             cls_15_MainCreateFlagsFromInter mainProcess = new cls_15_MainCreateFlagsFromInter();
             // Obtener el resultado del proceso
             ProcessResult processResult = mainProcess.MainCreateFlagsFromInter(projectCode);
 
-            // Mostrar el resumen de los resultados al finalizar
+            // -----------------------------
+            // Mostrar resumen
+            // -----------------------------
+
             DateTime endTime = DateTime.Now;
             TimeSpan duration = endTime - startTime;
-
             // Mensaje
             MessageBox.Show(
                 "CreateFlagsFromInter process has completed successfully." +
@@ -37,8 +45,7 @@ namespace SOLAR.EL.RibbonButton.Autocad.Buttons
                 $"\n\n{processResult.ParametersAnalyzed} labels have been created in total." +
                 $"\n{processResult.TotalFilesProcessed} files were processed successfully.",
                 "Extraction Complete",
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Information
+                MessageBoxButtons.OK, MessageBoxIcon.Information
             );
         }
 

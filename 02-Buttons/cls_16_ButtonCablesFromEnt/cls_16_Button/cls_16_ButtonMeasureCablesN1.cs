@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Windows.Forms;
-using TYPSA.SharedLib.Autocad.Main;
 using SOLAR.EL.RibbonButton.Autocad.Main;
+using SOLAR.EL.RibbonButton.Autocad.Settings;
+using TYPSA.SharedLib.Autocad.Main;
+using TYPSA.SharedLib.Autocad.ObjectsByTypeByLayer;
 
 namespace SOLAR.EL.RibbonButton.Autocad.Buttons
 {
@@ -13,7 +15,9 @@ namespace SOLAR.EL.RibbonButton.Autocad.Buttons
             string projectUnits,
             double cableLengthCorrectionFactor,
             double cableLengthFixedAllowance,
-            int cableNumberOfConductors
+            int cableNumberOfConductors,
+            SolarSettings solarSet,
+            AutocadSettings autoSettings
         )
         {
             DateTime startTime = DateTime.Now;
@@ -23,7 +27,7 @@ namespace SOLAR.EL.RibbonButton.Autocad.Buttons
             // Obtener el resultado del proceso
             ProcessResult processResult = mainProcess.MainMeasureCablesN1(
                 projectCode, excelPath, projectUnits, cableLengthCorrectionFactor, 
-                cableLengthFixedAllowance, cableNumberOfConductors
+                cableLengthFixedAllowance, cableNumberOfConductors, solarSet, autoSettings
             );
 
             // Mostrar el resumen de los resultados al finalizar

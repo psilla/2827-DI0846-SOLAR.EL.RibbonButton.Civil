@@ -5,9 +5,11 @@ using Autodesk.AutoCAD.ApplicationServices;
 using Autodesk.AutoCAD.DatabaseServices;
 using Autodesk.AutoCAD.EditorInput;
 using SOLAR.EL.RibbonButton.Autocad.Process;
+using SOLAR.EL.RibbonButton.Autocad.Settings;
 using TYPSA.SharedLib.Autocad.GetDocument;
 using TYPSA.SharedLib.Autocad.Main;
 using TYPSA.SharedLib.Autocad.Metrics;
+using TYPSA.SharedLib.Autocad.ObjectsByTypeByLayer;
 using TYPSA.SharedLib.ExcelAutocad;
 using TYPSA.SharedLib.UserForms;
 using Application = Autodesk.AutoCAD.ApplicationServices.Application;
@@ -18,7 +20,9 @@ namespace SOLAR.EL.RibbonButton.Autocad.Main
     {
         public ProcessResult MainExportLabelsToExcelBack(
             string[] selectedFiles, 
-            string projectCode
+            string projectCode,
+            SolarSettings solarSet,
+            AutocadSettings autoSettings
         )
         {
             // Variables para recopilar métricas
@@ -82,8 +86,9 @@ namespace SOLAR.EL.RibbonButton.Autocad.Main
                                         BlockTableRecord btr = cls_00_DocumentInfo.GetBlockTableRecordForWrite(tr, bt);
 
                                         // Llamamos al Main
-                                        List<List<string>> dataToExcelByFile = 
-                                            cls_13_ProcessExportLabelsToExcel.ProcessExportLabelsToExcel(ed, db, tr);
+                                        List<List<string>> dataToExcelByFile = cls_13_ProcessExportLabelsToExcel.ProcessExportLabelsToExcel(
+                                            ed, db, tr, solarSet, autoSettings
+                                        );
                                         // Validamos
                                         if (dataToExcelByFile == null)
                                         {
@@ -169,7 +174,7 @@ namespace SOLAR.EL.RibbonButton.Autocad.Main
                     // Enviar Metricas App
                     SendMetrics(filesSelectedProcessed, totalLabelsCreatedGlobal, projectCode);
                     // Enviar Metricas Serapis
-                    SerapisMetrics.InitializeMetricsAsync("69771c60c4aac3725f301e1e");
+                    SerapisMetrics.InitializeMetricsAsync(solarSet.GuidSerapisMetricsCreateEntLabels);
 
                     // return
                     return new ProcessResult

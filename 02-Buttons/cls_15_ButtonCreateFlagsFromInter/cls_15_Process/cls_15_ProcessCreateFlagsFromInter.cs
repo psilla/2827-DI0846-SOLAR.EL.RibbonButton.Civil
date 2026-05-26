@@ -80,8 +80,7 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
                         string layerText = "Layers:\n" + string.Join("\n", intersectingLayers.Distinct());
                         // Crear leader
                         cls_00_DrawMleader.DrawMLeaderOnPoint(
-                            pt, layerText, tr, btr,
-                            textHeight: 5, colorIndex: 2, layer: "0",
+                            pt, layerText, tr, btr, textHeight: 5, colorIndex: 2, layer: "0",
                             textStyle: "Standard", offsetX: 8.0, offsetY: -25.0
                         );
                         // Actualizamos contador

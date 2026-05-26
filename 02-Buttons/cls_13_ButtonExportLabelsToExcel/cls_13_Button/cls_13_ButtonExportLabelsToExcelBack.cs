@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using Autodesk.AutoCAD.Runtime;
 using SOLAR.EL.RibbonButton.Autocad.Main;
+using SOLAR.EL.RibbonButton.Autocad.Settings;
 using TYPSA.SharedLib.Autocad.Buttons;
 using TYPSA.SharedLib.Autocad.Main;
+using TYPSA.SharedLib.Autocad.ObjectsByTypeByLayer;
 
 namespace SOLAR.EL.RibbonButton.Autocad.Buttons
 {
@@ -13,7 +15,10 @@ namespace SOLAR.EL.RibbonButton.Autocad.Buttons
         [CommandMethod("ExportLabelsToExcelBack")]
         public static void ButtonExportLabelsToExcelBack()
         {
-            // Obtener datos de usuario
+            // -----------------------------
+            // Obtener Datos Usuario
+            // -----------------------------
+
             bool userData = cls_00_GetUserData.GetUserData(
                 out string projectCode,
                 out List<string> selectedFiles,
@@ -23,18 +28,29 @@ namespace SOLAR.EL.RibbonButton.Autocad.Buttons
             // Validamos
             if (!userData) return;
 
-            // Procesar los archivos seleccionados
-            cls_13_MainExportLabelsToExcelBack mainProcess = new cls_13_MainExportLabelsToExcelBack();
+            // -----------------------------
+            // Obtener settings
+            // -----------------------------
 
+            SolarSettings solarSet = SolarSettings.GetDefaultSolarSettings();
+            AutocadSettings autoSettings = AutocadSettings.GetDefaultSettings();
+
+            // -----------------------------
+            // Llamada al main
+            // -----------------------------
+
+            cls_13_MainExportLabelsToExcelBack mainProcess = new cls_13_MainExportLabelsToExcelBack();
             // Obtener el resultado del proceso
             ProcessResult processResult = mainProcess.MainExportLabelsToExcelBack(
-                selectedFiles.ToArray(), projectCode
+                selectedFiles.ToArray(), projectCode, solarSet, autoSettings
             );
 
-            // Mostrar el resumen de los resultados al finalizar
+            // -----------------------------
+            // Mostrar resumen
+            // -----------------------------
+
             DateTime endTime = DateTime.Now;
             TimeSpan duration = endTime - startTime;
-
             // Mensaje
             MessageBox.Show(
                 "ExportLabelsToExcelBack process has completed successfully." +
@@ -44,8 +60,7 @@ namespace SOLAR.EL.RibbonButton.Autocad.Buttons
                 $"\n\n{processResult.ParametersAnalyzed} labels have been exported in total." +
                 $"\n{processResult.TotalFilesProcessed} files were processed successfully.",
                 "Extraction Complete",
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Information
+                MessageBoxButtons.OK, MessageBoxIcon.Information
             );
         }
     }

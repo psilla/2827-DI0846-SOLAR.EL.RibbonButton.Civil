@@ -158,7 +158,7 @@ namespace SOLAR.EL.RibbonButton.Autocad.Main
                     // Enviar Metricas App
                     SendMetrics(filesSelectedProcessed, totalLabelsCreatedGlobal, projectCode);
                     // Enviar Metricas Serapis
-                    SerapisMetrics.InitializeMetricsAsync("69771c60c4aac3725f301e1e");
+                    SerapisMetrics.InitializeMetricsAsync(solarSet.GuidSerapisMetricsCreateEntLabels);
 
                     // return
                     return new ProcessResult

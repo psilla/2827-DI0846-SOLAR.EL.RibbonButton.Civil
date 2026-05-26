@@ -103,6 +103,10 @@ namespace SOLAR.EL.RibbonButton.Autocad.Settings
         public string EntNoCableValue { get; set; } = "Entidad sin cable conectado";
         public string EntMultiCableValue { get; set; } = "Entidad con más de 1 cable conectado";
 
+        // Guid Ser Apis
+        public string GuidSerapisMetricsCreateEntLabels { get; set; } = "6a15743ebce9014c30e9a668";
+        public string GuidSerapisMetricsCablesFromEnt { get; set; } = "69771e37c4aac3725f301f98";
+        
         public static SolarSettings GetDefaultSolarSettings()
         {
             return new SolarSettings();

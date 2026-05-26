@@ -1,9 +1,11 @@
-﻿using Autodesk.AutoCAD.Runtime;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using Autodesk.AutoCAD.Runtime;
+using SOLAR.EL.RibbonButton.Autocad.Settings;
 using TYPSA.SharedLib.Autocad.Buttons;
+using TYPSA.SharedLib.Autocad.ObjectsByTypeByLayer;
 using TYPSA.SharedLib.Autocad.ProjectUnits;
 using TYPSA.SharedLib.ExcelAutocad;
 using TYPSA.SharedLib.UserForms;
@@ -177,6 +179,13 @@ namespace SOLAR.EL.RibbonButton.Autocad.Buttons
                 }
             }
 
+            // -----------------------------
+            // Obtener settings
+            // -----------------------------
+
+            SolarSettings solarSet = SolarSettings.GetDefaultSolarSettings();
+            AutocadSettings autoSettings = AutocadSettings.GetDefaultSettings();
+
             // -------------------------------
             // Ejecutar
             // -------------------------------
@@ -187,7 +196,8 @@ namespace SOLAR.EL.RibbonButton.Autocad.Buttons
             if (selectedOptions.Contains(CablesFromEntityOptions.ProcesarStrings))
             {
                 cls_16_ButtonMeasureCablesN1.ButtonMeasureCablesN1(
-                    projectCode, excelPath, projectUnits, dictFactor["N1"], dictAllowance["N1"], dictConductors["N1"]
+                    projectCode, excelPath, projectUnits, 
+                    dictFactor["N1"], dictAllowance["N1"], dictConductors["N1"], solarSet, autoSettings
                 );
             }
 
@@ -195,7 +205,8 @@ namespace SOLAR.EL.RibbonButton.Autocad.Buttons
             if (selectedOptions.Contains(CablesFromEntityOptions.ProcesarInversores))
             {
                 cls_16_ButtonMeasureCablesN2.ButtonMeasureCablesN2(
-                    projectCode, excelPath, projectUnits, dictFactor["N2"], dictAllowance["N2"], dictConductors["N2"]
+                    projectCode, excelPath, projectUnits, 
+                    dictFactor["N2"], dictAllowance["N2"], dictConductors["N2"], solarSet, autoSettings
                 );
             }
 
@@ -203,7 +214,8 @@ namespace SOLAR.EL.RibbonButton.Autocad.Buttons
             if (selectedOptions.Contains(CablesFromEntityOptions.ProcesarCT))
             {
                 cls_16_ButtonMeasureCablesMV.ButtonMeasureCablesMV(
-                    projectCode, excelPath, projectUnits, dictFactor["MV"], dictAllowance["MV"], dictConductors["MV"]
+                    projectCode, excelPath, projectUnits, 
+                    dictFactor["MV"], dictAllowance["MV"], dictConductors["MV"], solarSet
                 );
             }
 

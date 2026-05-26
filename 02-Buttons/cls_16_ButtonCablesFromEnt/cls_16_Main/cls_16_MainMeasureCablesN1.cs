@@ -1,12 +1,14 @@
-﻿using Autodesk.AutoCAD.ApplicationServices;
+﻿using System;
+using System.Windows.Forms;
+using Autodesk.AutoCAD.ApplicationServices;
 using Autodesk.AutoCAD.DatabaseServices;
 using Autodesk.AutoCAD.EditorInput;
-using System;
-using System.Windows.Forms;
+using SOLAR.EL.RibbonButton.Autocad.Process;
+using SOLAR.EL.RibbonButton.Autocad.Settings;
 using TYPSA.SharedLib.Autocad.GetDocument;
 using TYPSA.SharedLib.Autocad.Main;
 using TYPSA.SharedLib.Autocad.Metrics;
-using SOLAR.EL.RibbonButton.Autocad.Process;
+using TYPSA.SharedLib.Autocad.ObjectsByTypeByLayer;
 
 namespace SOLAR.EL.RibbonButton.Autocad.Main
 {
@@ -18,7 +20,9 @@ namespace SOLAR.EL.RibbonButton.Autocad.Main
             string projectUnits,
             double cableLengthCorrectionFactor,
             double cableLengthFixedAllowance,
-            int cableNumberOfConductors
+            int cableNumberOfConductors,
+            SolarSettings solarSet,
+            AutocadSettings autoSettings
         )
         {
             // Obtenemos variables
@@ -42,7 +46,7 @@ namespace SOLAR.EL.RibbonButton.Autocad.Main
                         // Obtenemos info
                         int? totalLabelsCreated = cls_16_ProcessMeasureCablesN1.ProcessMeasureCablesN1(
                             ed, db, tr, btr, excelPath, projectUnits, cableLengthCorrectionFactor, 
-                            cableLengthFixedAllowance, cableNumberOfConductors
+                            cableLengthFixedAllowance, cableNumberOfConductors, solarSet, autoSettings
                         );
                         // Validamos
                         if (totalLabelsCreated != null)
@@ -53,7 +57,7 @@ namespace SOLAR.EL.RibbonButton.Autocad.Main
                             // Enviar Metricas App
                             SendMetrics(1, totalLabelsCreated.Value, projectCode);
                             // Enviar Metricas Serapis
-                            SerapisMetrics.InitializeMetricsAsync("69771e37c4aac3725f301f98");
+                            SerapisMetrics.InitializeMetricsAsync(solarSet.GuidSerapisMetricsCablesFromEnt);
 
                             // return
                             return new ProcessResult
