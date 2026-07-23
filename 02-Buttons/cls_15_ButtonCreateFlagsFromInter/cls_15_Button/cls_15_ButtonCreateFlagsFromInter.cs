@@ -9,7 +9,7 @@ namespace SOLAR.EL.RibbonButton.Autocad.Buttons
 {
     internal class cls_15_ButtonCreateFlagsFromInter
     {
-        [CommandMethod("CreateFlagsFromInter")]
+        [CommandMethod(RibbonCommands.CreateFlagsFromInter)]
         public static void ButtonCreateFlagsFromInter()
         {
             DateTime startTime = DateTime.Now;

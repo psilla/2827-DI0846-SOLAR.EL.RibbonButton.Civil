@@ -21,6 +21,55 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
 {
     internal class cls_12_ProcessCreateEntityLabels
     {
+        private static void ShowFieldMapResult(
+            Dictionary<string, string> fieldMapResult
+        )
+        {
+            StringBuilder sb = new StringBuilder();
+
+            sb.AppendLine("═══════════════════════════════════════");
+            sb.AppendLine("Field Mapping Summary");
+            sb.AppendLine("═══════════════════════════════════════");
+
+            foreach (var kvp in fieldMapResult)
+            {
+                sb.AppendLine(
+                    $"Field: {kvp.Key}  →  Assigned Type: {kvp.Value}"
+                );
+            }
+
+            ShowStringBuilder.ShowInfo(
+                "📌 Field Map Result",
+                sb.ToString()
+            );
+        }
+
+        private static void ShowValidRegionOrderList(
+            List<(int ctNumber, int invNumber, Region ctRegion, Region invRegion)> validRegionOrderList
+        )
+        {
+            StringBuilder sb = new StringBuilder();
+
+            sb.AppendLine("═══════════════════════════════════════");
+            sb.AppendLine("CT / INV Region Order Summary");
+            sb.AppendLine("═══════════════════════════════════════");
+
+            foreach (var item in validRegionOrderList)
+            {
+                sb.AppendLine(
+                    $"CT: {item.ctNumber} | " +
+                    $"INV: {item.invNumber} | " +
+                    $"CT Region: {item.ctRegion.Handle} | " +
+                    $"INV Region: {item.invRegion.Handle}"
+                );
+            }
+
+            ShowStringBuilder.ShowInfo(
+                "📌 Valid Region Order List",
+                sb.ToString()
+            );
+        }
+
         private static void ShowInvInCtLayerByInvRegionDebug(
             Dictionary<Region, string> invInCtLayerByInvRegion
         )
@@ -395,7 +444,7 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
                     // Diccionario Region con Inversor
                     // -----------------------------
 
-                    HashSet<ObjectId> psrInvBlockIdsInRegion = new HashSet<ObjectId>();
+                    HashSet<ObjectId> psrComBoxBlockIdsInRegion = new HashSet<ObjectId>();
                     // Creamos el diccionario Region-Inversores
                     Dictionary<Region, List<DBObject>> regionData = new Dictionary<Region, List<DBObject>>();
 
@@ -404,9 +453,16 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
                     // -----------------------------
 
                     int blockRefInvAddedByInter = cls_16_ElemByRegionByInter.AssignEntitiesByInterIter(
-                        tr, psrBlockRefComBoxIds, psrInvBlockIdsInRegion, validRegionInv, regionData,
+                        tr, psrBlockRefComBoxIds, psrComBoxBlockIdsInRegion, validRegionInv, regionData,
                         radTolerance: 2, boolByGeometryExt: false, toleranceStep: 1
                     );
+
+                    bool showInfoByInter = false;
+                    // Debug
+                    if (showInfoByInter)
+                        cls_16_ElemByRegionByInter.ShowAssignEntitiesByInterSummary(
+                            regionData, psrComBoxBlockIdsInRegion, blockRefInvAddedByInter
+                        );
 
                     // -----------------------------
                     // Obtener Layer Inversor en CT por Region Inversor
@@ -443,9 +499,9 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
                         }
                     }
 
-                    bool showInfo = false;
+                    bool showInfoByCt = false;
                     // Debug
-                    if (showInfo)
+                    if (showInfoByCt)
                     {
                         ShowInvInCtLayerByInvRegionDebug(invInCtLayerByInvRegion);
                     }
@@ -616,6 +672,13 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
                             validRegionOrderList.Add((ctNum, invNum, regionCt, regionInv));
                         }
                     }
+                }
+
+                bool showInfo = false;
+                // Debug
+                if (showInfo)
+                {
+                    ShowValidRegionOrderList(validRegionOrderList);
                 }
 
                 // -----------------------------

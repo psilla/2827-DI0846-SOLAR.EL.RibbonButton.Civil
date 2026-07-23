@@ -11,7 +11,7 @@ namespace SOLAR.EL.RibbonButton.Autocad.Buttons
 {
     internal class cls_12_ButtonOrderEntityLabels
     {
-        [CommandMethod("OrderStringLabels")]
+        [CommandMethod(RibbonCommands.OrderFieldsInLabels)]
         public static void ButtonOrderEntityLabels()
         {
             DateTime startTime = DateTime.Now;

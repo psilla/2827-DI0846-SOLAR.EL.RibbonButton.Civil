@@ -11,7 +11,7 @@ namespace SOLAR.EL.RibbonButton.Autocad.Buttons
 {
     internal class cls_12_ButtonCreateEntityLabels
     {
-        [CommandMethod("CreateEntityLabels")]
+        [CommandMethod(RibbonCommands.CreateStringLabelsDoc)]
         public static void ButtonCreateEntityLabels()
         {
             DateTime startTime = DateTime.Now;

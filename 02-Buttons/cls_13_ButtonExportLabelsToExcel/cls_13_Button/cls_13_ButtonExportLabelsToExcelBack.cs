@@ -12,7 +12,7 @@ namespace SOLAR.EL.RibbonButton.Autocad.Buttons
 {
     internal class cls_13_ButtonExportLabelsToExcelBack
     {
-        [CommandMethod("ExportLabelsToExcelBack")]
+        [CommandMethod(RibbonCommands.ExportLabelsToExcelBack)]
         public static void ButtonExportLabelsToExcelBack()
         {
             // -----------------------------

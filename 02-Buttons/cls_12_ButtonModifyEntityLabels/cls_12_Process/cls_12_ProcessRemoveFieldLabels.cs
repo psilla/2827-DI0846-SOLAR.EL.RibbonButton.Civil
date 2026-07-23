@@ -1,11 +1,12 @@
-﻿using Autodesk.AutoCAD.DatabaseServices;
-using Autodesk.AutoCAD.EditorInput;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Windows.Forms;
+using Autodesk.AutoCAD.DatabaseServices;
+using Autodesk.AutoCAD.EditorInput;
+using SOLAR.EL.RibbonButton.Autocad.Settings;
 using TYPSA.SharedLib.Autocad.GetEntities;
 using TYPSA.SharedLib.Autocad.GetLayersInfo;
+using TYPSA.SharedLib.Autocad.Main;
 using TYPSA.SharedLib.UserForms;
-using SOLAR.EL.RibbonButton.Autocad.Settings;
 
 namespace SOLAR.EL.RibbonButton.Autocad.Process
 {
@@ -21,23 +22,37 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
             // try
             try
             {
-                // Obtenemos el listado de capas del documento
+                // -----------------------------
+                // Obtener capas del documento
+                // -----------------------------
+
                 List<string> docLayers = cls_00_GetLayerNamesFromDoc.GetLayerNamesFromDoc(db);
 
+                // -----------------------------
+                // Obtener etiquetas
+                // -----------------------------
+
+                EntityTypes entityTypes = EntityTypes.GetDefaultEntityTypes();
                 List<string> psrStringLabLayers = null;
                 List<string> defaultLayersStringLab =
                 new List<string> { solarSet.LabelStringLayer };
                 // Obtenemos las etiquetas
                 PromptSelectionResult psrStringLab = cls_00_GetEntityByLayer.GetEntityByLayers(
-                    docLayers, ed, solarSet.LabelStringTag, "MTEXT", out psrStringLabLayers, defaultLayersStringLab
+                    docLayers, ed, solarSet.LabelStringTag, entityTypes.MText, out psrStringLabLayers, defaultLayersStringLab
                 );
                 // Validamos
                 if (psrStringLab == null) return null;
 
-                // Obtenemos los Ids
+                // -----------------------------
+                // Obtener Ids
+                // -----------------------------
+
                 HashSet<ObjectId> psrStringLabIds = new HashSet<ObjectId>(psrStringLab.Value.GetObjectIds());
 
-                // Texto a eliminar
+                // -----------------------------
+                // Form Texto a eliminar
+                // -----------------------------
+
                 string textToRemove = cls_00_InstaForm_TextBox.TextBoxFormOutAsStr(
                     "Enter the text to remove from all labels:", defaultValue: "+/-"
                 );
@@ -58,7 +73,8 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
                 foreach (ObjectId id in psrStringLabIds)
                 {
                     // Modificamos la etiqueta
-                    if (!RemoveTextFromLabel(tr, id, textToRemove, out bool wasModified)) return null;
+                    //if (!RemoveTextFromLabel(tr, id, textToRemove, out bool wasModified)) return null;
+                    if (!RemoveTextFromLabelWithPattern(tr, id, textToRemove, out bool wasModified)) return null;
                     // Contamos
                     if (wasModified) modifiedCount++;
                 }
@@ -133,7 +149,86 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
             return true;
         }
 
-        
+        private static bool RemoveTextFromLabelWithPattern(
+            Transaction tr,
+            ObjectId labelId,
+            string textToRemove,
+            out bool wasModified
+        )
+        {
+            wasModified = false;
+
+            // Obtener objeto
+            DBObject dbObj = tr.GetObject(labelId, OpenMode.ForWrite);
+
+            string originalValue = null;
+            bool isMText = false;
+            bool isDBText = false;
+
+            // Validar tipo
+            if (dbObj is MText mText)
+            {
+                originalValue = mText.Contents;
+                isMText = true;
+            }
+            else if (dbObj is DBText dbText)
+            {
+                originalValue = dbText.TextString;
+                isDBText = true;
+            }
+            else
+            {
+                return false;
+            }
+
+            // Validamos
+            if (string.IsNullOrWhiteSpace(originalValue))
+                return true;
+
+            // -----------------------------
+            // Construir patrón flexible
+            // -----------------------------
+
+            string pattern = System.Text.RegularExpressions.Regex
+                .Escape(textToRemove).Replace("X", @"\d+");
+
+            // eliminar separador opcional posterior + espacios
+            pattern += @"\s*[.\-_,;]?\s*";
+
+            // Validamos
+            if (!System.Text.RegularExpressions.Regex.IsMatch(
+                originalValue, pattern, System.Text.RegularExpressions.RegexOptions.IgnoreCase
+            ))
+            {
+                return true;
+            }
+
+            // -----------------------------
+            // Eliminar coincidencias
+            // -----------------------------
+
+            string newValue = System.Text.RegularExpressions.Regex.Replace(
+                originalValue, pattern, string.Empty,
+                System.Text.RegularExpressions.RegexOptions.IgnoreCase
+            );
+
+            // Limpieza
+            newValue = System.Text.RegularExpressions.Regex
+                .Replace(newValue, @"\s{2,}", " ")
+                .Trim();
+
+            // Aplicar
+            if (isMText)
+                ((MText)dbObj).Contents = newValue;
+            else if (isDBText)
+                ((DBText)dbObj).TextString = newValue;
+
+            wasModified = true;
+
+            return true;
+        }
+
+
 
 
 

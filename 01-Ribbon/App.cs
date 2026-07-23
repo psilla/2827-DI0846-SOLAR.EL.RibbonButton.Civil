@@ -12,6 +12,19 @@ using _0000_XX0000_SOLAR.EL.RibbonButton.Civil.Properties;
 
 namespace SOLAR.EL.RibbonButton.Autocad
 {
+    public static class RibbonCommands
+    {
+        public const string CreateStringLabelsDoc = "CreateStringLabelsDoc";
+        public const string CreateStringLabelsBack = "CreateStringLabelsBack";
+        public const string ExportLabelsToExcelDoc = "ExportLabelsToExcelDoc";
+        public const string ExportLabelsToExcelBack = "ExportLabelsToExcelBack";
+        public const string RemoveFieldFromLabels = "RemoveFieldFromLabels";
+        public const string OrderFieldsInLabels = "OrderFieldsInLabels";
+        public const string CablesFromEntity = "CablesFromEntity";
+        public const string CreateLabelsFromExcel = "CreateLabelsFromExcel";
+        public const string CreateFlagsFromInter = "CreateFlagsFromInter";
+    }
+
     public class App : IExtensionApplication
     {
         public void Initialize()
@@ -51,7 +64,7 @@ namespace SOLAR.EL.RibbonButton.Autocad
                     name: "Create String Labels Doc",
                     text: "Create String Labels",
                     image: Resources.trackLabels,
-                    commandParameter: "CreateStringLabelsDoc",
+                    commandParameter: RibbonCommands.CreateStringLabelsDoc,
                     tooltipTitle: "Create String Labels Doc",
                     tooltipContent: "Creates String labels in active document."
                 );
@@ -60,7 +73,7 @@ namespace SOLAR.EL.RibbonButton.Autocad
                     name: "Create String Labels Back",
                     text: "Create String Labels",
                     image: Resources.trackLabels,
-                    commandParameter: "CreateStringLabelsBack",
+                    commandParameter: RibbonCommands.CreateStringLabelsBack,
                     tooltipTitle: "Create String Labels Back",
                     tooltipContent: "Creates String labels in selected files."
                 );
@@ -85,7 +98,7 @@ namespace SOLAR.EL.RibbonButton.Autocad
                     name: "Export Labels To Excel Doc",
                     text: "Export Labels To Excel",
                     image: Resources.labExport,
-                    commandParameter: "ExportLabelsToExcelDoc",
+                    commandParameter: RibbonCommands.ExportLabelsToExcelDoc,
                     tooltipTitle: "Export Labels To Excel Doc",
                     tooltipContent: "Export to Excel labels in active document."
                 );
@@ -94,7 +107,7 @@ namespace SOLAR.EL.RibbonButton.Autocad
                     name: "Export Labels To Excel Back",
                     text: "Export Labels To Excel",
                     image: Resources.labExport,
-                    commandParameter: "ExportLabelsToExcelBack",
+                    commandParameter: RibbonCommands.ExportLabelsToExcelBack,
                     tooltipTitle: "Export Labels To Excel Back",
                     tooltipContent: "Export to Excel labels in selected files."
                 );
@@ -118,7 +131,7 @@ namespace SOLAR.EL.RibbonButton.Autocad
                     name: "Remove Field From Labels",
                     text: "Modify String Labels",
                     image: Resources.orderTags,
-                    commandParameter: "RemoveFieldFromLabels",
+                    commandParameter: RibbonCommands.RemoveFieldFromLabels,
                     tooltipTitle: "Remove Field From Labels",
                     tooltipContent: "Remove Field From Labels."
                 );
@@ -127,7 +140,7 @@ namespace SOLAR.EL.RibbonButton.Autocad
                     name: "Order Fields In Labels",
                     text: "Modify String Labels",
                     image: Resources.orderTags,
-                    commandParameter: "OrderFieldsInLabels",
+                    commandParameter: RibbonCommands.OrderFieldsInLabels,
                     tooltipTitle: "Order Fields In Labels",
                     tooltipContent: "Order Fields In Labels."
                 );
@@ -151,7 +164,7 @@ namespace SOLAR.EL.RibbonButton.Autocad
                     name: "Cables From Entity",
                     text: "Cables From Entity",
                     image: Resources.cableLength,
-                    commandParameter: "CablesFromEntity",
+                    commandParameter: RibbonCommands.CablesFromEntity,
                     tooltipTitle: "Cables From Entity",
                     tooltipContent: "Cables From Entity."
                 );
@@ -168,7 +181,7 @@ namespace SOLAR.EL.RibbonButton.Autocad
                     name: "Create String Labels from Excel Doc",
                     text: "Create String Labels from Excel",
                     image: Resources.labImport,
-                    commandParameter: "CreateLabelsFromExcel",
+                    commandParameter: RibbonCommands.CreateLabelsFromExcel,
                     tooltipTitle: "Create String Labels from Excel Doc",
                     tooltipContent: "Creates from Excel String labels in active document."
                 );
@@ -185,7 +198,7 @@ namespace SOLAR.EL.RibbonButton.Autocad
                     name: "Create Flags From Inter",
                     text: "Create Flags From Inter",
                     image: Resources.flagInter,
-                    commandParameter: "CreateFlagsFromInter",
+                    commandParameter: RibbonCommands.CreateFlagsFromInter,
                     tooltipTitle: "Create Flags From Inter",
                     tooltipContent: "Create Flags From Intersections between Cable Trenches."
                 );
@@ -224,47 +237,47 @@ namespace SOLAR.EL.RibbonButton.Autocad
                     string command = ribbonButton.CommandParameter as string;
                     switch (command)
                     {
-                        case "CreateStringLabelsDoc":
+                        case RibbonCommands.CreateStringLabelsDoc:
                             // Instanciamos la clase
                             cls_12_ButtonCreateEntityLabels.ButtonCreateEntityLabels();
                             break;
 
-                        case "CreateStringLabelsBack":
+                        case RibbonCommands.CreateStringLabelsBack:
                             // Instanciamos la clase
                             cls_12_ButtonCreateEntityLabelsBack.ButtonCreateEntityLabelsBack();
                             break;
 
-                        case "RemoveFieldFromLabels":
+                        case RibbonCommands.RemoveFieldFromLabels:
                             // Instanciamos la clase
                             cls_12_ButtonRemoveFieldLabels.ButtonRemoveFieldLabels();
                             break;
 
-                        case "OrderFieldsInLabels":
+                        case RibbonCommands.OrderFieldsInLabels:
                             // Instanciamos la clase
                             cls_12_ButtonOrderEntityLabels.ButtonOrderEntityLabels();
                             break;
 
-                        case "ExportLabelsToExcelDoc":
+                        case RibbonCommands.ExportLabelsToExcelDoc:
                             // Instanciamos la clase
                             cls_13_ButtonExportLabelsToExcel.ButtonExportLabelsToExcel();
                             break;
 
-                        case "ExportLabelsToExcelBack":
+                        case RibbonCommands.ExportLabelsToExcelBack:
                             // Instanciamos la clase
                             cls_13_ButtonExportLabelsToExcelBack.ButtonExportLabelsToExcelBack();
                             break;
 
-                        case "CreateLabelsFromExcel":
+                        case RibbonCommands.CreateLabelsFromExcel:
                             // Instanciamos la clase
                             cls_14_ButtonCreateLabelsFromExcel.ButtonCreateLabelsFromExcel();
                             break;
 
-                        case "CreateFlagsFromInter":
+                        case RibbonCommands.CreateFlagsFromInter:
                             // Instanciamos la clase
                             cls_15_ButtonCreateFlagsFromInter.ButtonCreateFlagsFromInter();
                             break;
 
-                        case "CablesFromEntity":
+                        case RibbonCommands.CablesFromEntity:
                             // Instanciamos la clase
                             cls_16_ButtonMeasureCables.ButtonMeasureCables();
                             break;

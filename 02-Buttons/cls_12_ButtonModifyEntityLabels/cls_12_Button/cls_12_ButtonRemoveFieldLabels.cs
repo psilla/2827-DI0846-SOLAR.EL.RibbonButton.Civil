@@ -10,7 +10,7 @@ namespace SOLAR.EL.RibbonButton.Autocad.Buttons
 {
     internal class cls_12_ButtonRemoveFieldLabels
     {
-        [CommandMethod("RemoveFieldLabels")]
+        [CommandMethod(RibbonCommands.RemoveFieldFromLabels)]
         public static void ButtonRemoveFieldLabels()
         {
             DateTime startTime = DateTime.Now;

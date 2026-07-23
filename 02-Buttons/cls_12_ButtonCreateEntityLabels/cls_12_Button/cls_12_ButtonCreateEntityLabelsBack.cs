@@ -12,7 +12,7 @@ namespace SOLAR.EL.RibbonButton.Autocad.Buttons
 {
     internal class cls_12_ButtonCreateEntityLabelsBack
     {
-        [CommandMethod("CreateEntityLabelsBack")]
+        [CommandMethod(RibbonCommands.CreateStringLabelsBack)]
         public static void ButtonCreateEntityLabelsBack()
         {
             // -----------------------------

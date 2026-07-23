@@ -10,7 +10,7 @@ namespace SOLAR.EL.RibbonButton.Autocad.Buttons
 {
     public class cls_14_ButtonCreateLabelsFromExcel
     {
-        [CommandMethod("CreateLabelsFromExcel")]
+        [CommandMethod(RibbonCommands.CreateLabelsFromExcel)]
         public static void ButtonCreateLabelsFromExcel()
         {
             DateTime startTime = DateTime.Now;

@@ -11,7 +11,7 @@ namespace SOLAR.EL.RibbonButton.Autocad.Buttons
 {
     internal class cls_13_ButtonExportLabelsToExcel
     {
-        [CommandMethod("ExportLabelsToExcel")]
+        [CommandMethod(RibbonCommands.ExportLabelsToExcelDoc)]
         public static void ButtonExportLabelsToExcel()
         {
             DateTime startTime = DateTime.Now;

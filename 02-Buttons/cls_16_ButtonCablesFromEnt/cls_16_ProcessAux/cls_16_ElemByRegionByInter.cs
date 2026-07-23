@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows.Forms;
 using Autodesk.AutoCAD.DatabaseServices;
 using Autodesk.AutoCAD.Geometry;
 using TYPSA.SharedLib.Autocad.EntitiesInsertionPoint;
-using TYPSA.SharedLib.UserForms;
 using TYPSA.SharedLib.Autocad.GetEntities;
+using TYPSA.SharedLib.UserForms;
 
 namespace SOLAR.EL.RibbonButton.Autocad.Process
 {
@@ -530,6 +531,7 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
 
             if (intersectedRegions.Count > 0)
             {
+                // return
                 return intersectedRegions;
             }
 

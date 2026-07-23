@@ -60,7 +60,7 @@ namespace SOLAR.EL.RibbonButton.Autocad.Buttons
             };
         }
 
-        [CommandMethod("CablesFromEntity")]
+        [CommandMethod(RibbonCommands.CablesFromEntity)]
         public static void ButtonMeasureCables()
         {
             DateTime startTime = DateTime.Now;

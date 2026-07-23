@@ -95,7 +95,7 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
                     Propiedad = LabelConfigKeys.InverterOutsideCt,
                     Type = FieldType.ComboBox,
                     Opciones = new List<string> { "True", "False" },
-                    ValorDefecto = "False"
+                    ValorDefecto = "True"
                 },
 
                 new ComboTextBoxForm_NextToLabel.FieldDefinition
