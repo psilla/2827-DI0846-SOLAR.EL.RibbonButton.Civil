@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace _0000_XX0000_SOLAR.EL.RibbonButton.Civil.Properties {
+namespace _0000_XX0000_SOLAR.EL.RibbonButton.Autocad.Properties {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace _0000_XX0000_SOLAR.EL.RibbonButton.Civil.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("_0000_XX0000_SOLAR.EL.RibbonButton.Civil.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("_0000_XX0000_SOLAR.EL.RibbonButton.Autocad.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

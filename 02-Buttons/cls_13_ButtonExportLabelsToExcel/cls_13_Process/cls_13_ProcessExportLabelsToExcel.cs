@@ -4,7 +4,6 @@ using Autodesk.AutoCAD.EditorInput;
 using TYPSA.SharedLib.Autocad.GetEntities;
 using TYPSA.SharedLib.Autocad.GetLayersInfo;
 using TYPSA.SharedLib.Autocad.ObjectsByTypeByLayer;
-using SOLAR.EL.RibbonButton.Autocad.Settings;
 
 namespace SOLAR.EL.RibbonButton.Autocad.Process
 {
@@ -14,18 +13,25 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
             Editor ed,
             Database db,
             Transaction tr,
-            SolarSettings solarSet,
-            AutocadSettings autoSettings
+            AutocadSettings autoSettings,
+            string labelStringTag,
+            List<string> defaultLayersStringLab
         )
         {
-            // Obtenemos el listado de capas del documento
+            // -------------------------------
+            // Obtener capas del documento
+            // -------------------------------
+
             List<string> docLayers = cls_00_GetLayerNamesFromDoc.GetLayerNamesFromDoc(db);
 
+            // -------------------------------
+            // Obtener etiquetas
+            // -------------------------------
+
             List<string> psrStringLabLayers = null;
-            List<string> defaultLayersStringLab = new List<string> { solarSet.LabelStringLayer };
             // Obtenemos las etiquetas
             PromptSelectionResult psrStringLab = cls_00_GetEntityByLayer.GetTextAndMTextByLayers(
-                docLayers, ed, solarSet.LabelStringTag, out psrStringLabLayers, defaultLayersStringLab
+                docLayers, ed, labelStringTag, out psrStringLabLayers, defaultLayersStringLab
             );
             // Validamos
             if (psrStringLab == null) return null;
@@ -33,11 +39,17 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
             // Obtenemos los Ids
             HashSet<ObjectId> psrStringLabIds = new HashSet<ObjectId>(psrStringLab.Value.GetObjectIds());
 
-            // Validamos estructura de las etiquetas
+            // -------------------------------
+            // Validar estructura etiquetas
+            // -------------------------------
+
             if (!cls_00_MTextObjectsByLayer.AllLabelsHaveSameFieldCount(
-                tr, psrStringLabIds, autoSettings,
-                out int fieldCount, out List<string> referenceFields
+                tr, psrStringLabIds, autoSettings, out int fieldCount, out List<string> referenceFields
             )) return null;
+
+            // -------------------------------
+            // Obtener datos
+            // -------------------------------
 
             List<List<string>> dataToExcel = new List<List<string>>();
             // Iteramos

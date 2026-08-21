@@ -9,6 +9,7 @@ using SOLAR.EL.RibbonButton.Autocad.Settings;
 using TYPSA.SharedLib.Autocad.GetDocument;
 using TYPSA.SharedLib.Autocad.Main;
 using TYPSA.SharedLib.Autocad.Metrics;
+using TYPSA.SharedLib.Metrics;
 using TYPSA.SharedLib.Autocad.ObjectsByTypeByLayer;
 using TYPSA.SharedLib.ExcelAutocad;
 
@@ -35,7 +36,7 @@ namespace SOLAR.EL.RibbonButton.Autocad.Main
             {
                 // Obtenemos info
                 dataToExcel = cls_13_ProcessExportLabelsToExcel.ProcessExportLabelsToExcel(
-                    ed, db, tr, solarSet, autoSettings
+                    ed, db, tr, autoSettings, solarSet.LabelStringTag, new List<string> { solarSet.LabelStringLayer }
                 );
                 // Cerramos transaccion
                 tr.Abort();
@@ -57,14 +58,12 @@ namespace SOLAR.EL.RibbonButton.Autocad.Main
             }
 
             // Exportamos a Excel
-            cls_00_ExportLabelsToExcel_OpenXml.ExportLabelsToExcel_OpenXml(
-                dataToExcel
-            );
+            cls_00_ExportLabelsToExcel_OpenXml.ExportLabelsToExcel_OpenXml(dataToExcel);
 
             // Enviar Metricas App
             SendMetrics(1, dataToExcel.Count, projectCode);
             // Enviar Metricas Serapis
-            SerapisMetrics.InitializeMetricsAsync(solarSet.GuidSerapisMetricsCreateEntLabels);
+            cls_00_SerapisMetrics.InitializeMetricsAsync(solarSet.GuidSerapisMetricsCreateEntLabels);
 
             // Por defecto
             return new ProcessResult

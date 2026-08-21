@@ -27,7 +27,7 @@ namespace SOLAR.EL.RibbonButton.Autocad.Process
 
             // Validamos Config
             if (!cls_14_CreateLabelsFromExcelConfig.CreateLabelsFromExcelConfig(
-                solarSet, availableTextStyles,
+                solarSet.TipTrack, solarSet.TipEstFija, solarSet.LabelStyle, availableTextStyles, 
                 out bool isHorizontal, out string selectedTextStyle, out AttachmentPoint selectedTextJust
             )) return 0;
 

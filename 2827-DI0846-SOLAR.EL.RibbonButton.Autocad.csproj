@@ -1,0 +1,182 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{41E8CCF2-06F8-4A3D-8BC5-B834B45FBCB0}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>_0000_XX0000_SOLAR.EL.RibbonButton.Autocad</RootNamespace>
+    <AssemblyName>2827-DI0846-SOLAR.EL.RibbonButton.Autocad</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="accoremgd">
+      <HintPath>..\Program Files\Autodesk\AutoCAD 2023\accoremgd.dll</HintPath>
+    </Reference>
+    <Reference Include="acdbmgd">
+      <HintPath>..\Program Files\Autodesk\AutoCAD 2023\acdbmgd.dll</HintPath>
+    </Reference>
+    <Reference Include="acdbmgdbrep">
+      <HintPath>..\Program Files\Autodesk\AutoCAD 2023\acdbmgdbrep.dll</HintPath>
+    </Reference>
+    <Reference Include="acmgd">
+      <HintPath>..\Program Files\Autodesk\AutoCAD 2023\acmgd.dll</HintPath>
+    </Reference>
+    <Reference Include="AdWindows">
+      <HintPath>..\Program Files\Autodesk\AutoCAD 2023\AdWindows.dll</HintPath>
+    </Reference>
+    <Reference Include="AeccDbMgd">
+      <HintPath>..\Program Files\Autodesk\AutoCAD 2023\C3D\AeccDbMgd.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="01-Ribbon\App.cs" />
+    <Compile Include="02-Buttons\cls_12_ButtonModifyEntityLabels\cls_12_Button\cls_12_ButtonRemoveFieldLabels.cs" />
+    <Compile Include="02-Buttons\cls_12_ButtonModifyEntityLabels\cls_12_Main\cls_12_MainRemoveFieldLabels.cs" />
+    <Compile Include="02-Buttons\cls_12_ButtonModifyEntityLabels\cls_12_Process\cls_12_ProcessRemoveFieldLabels.cs" />
+    <Compile Include="02-Buttons\cls_12_ButtonOrderEntityLabels\cls_12_Button\cls_12_ButtonOrderEntityLabels.cs" />
+    <Compile Include="02-Buttons\cls_12_ButtonOrderEntityLabels\cls_12_Main\cls_12_MainOrderEntityLabels.cs" />
+    <Compile Include="02-Buttons\cls_12_ButtonOrderEntityLabels\cls_12_Process\cls_12_ProcessOrderEntityLabels.cs" />
+    <Compile Include="02-Buttons\cls_13_ButtonExportLabelsToExcel\cls_13_Button\cls_13_ButtonExportLabelsToExcelBack.cs" />
+    <Compile Include="02-Buttons\cls_13_ButtonExportLabelsToExcel\cls_13_Main\cls_13_MainExportLabelsToExcelBack.cs" />
+    <Compile Include="02-Buttons\cls_13_ButtonExportLabelsToExcel\cls_13_Main\cls_13_MainExportLabelsToExcel.cs" />
+    <Compile Include="02-Buttons\cls_13_ButtonExportLabelsToExcel\cls_13_Process\cls_13_ProcessExportLabelsToExcel.cs" />
+    <Compile Include="02-Buttons\cls_14_ButtonCreateLabelsFromExcel\cls_14_Main\cls_14_TryGetCoordFromExcel.cs" />
+    <Compile Include="02-Buttons\cls_14_ButtonCreateLabelsFromExcel\cls_14_ProcessAux\cls_14_CreateLabelsFromExcelConfig.cs" />
+    <Compile Include="02-Buttons\cls_14_ButtonCreateLabelsFromExcel\cls_14_Process\cls_14_ProcessCreateLabelsFromExcel.cs" />
+    <Compile Include="02-Buttons\cls_15_ButtonCreateFlagsFromInter\cls_15_Main\cls_15_MainCreateFlagsFromInter.cs" />
+    <Compile Include="02-Buttons\cls_14_ButtonCreateLabelsFromExcel\cls_14_Main\cls_14_MainCreateLabelsFromExcel.cs" />
+    <Compile Include="02-Buttons\cls_12_ButtonCreateEntityLabels\cls_12_ProcessAux\cls_12_GetRequiredElev.cs" />
+    <Compile Include="02-Buttons\cls_12_ButtonCreateEntityLabels\cls_12_ProcessAux\cls_12_GetRequiredEntities.cs" />
+    <Compile Include="02-Buttons\cls_12_ButtonCreateEntityLabels\cls_12_ProcessAux\cls_12_IsolateInvalidTrack.cs" />
+    <Compile Include="02-Buttons\cls_12_ButtonCreateEntityLabels\cls_12_ProcessAux\cls_12_CreateEntityLabelsConfig.cs" />
+    <Compile Include="02-Buttons\cls_12_ButtonCreateEntityLabels\cls_12_ProcessAux\cls_12_RemoveFieldFromLabel.cs" />
+    <Compile Include="02-Buttons\cls_12_ButtonCreateEntityLabels\cls_12_Main\cls_12_MainCreateEntityLabels.cs" />
+    <Compile Include="02-Buttons\cls_12_ButtonCreateEntityLabels\cls_12_Button\cls_12_ButtonCreateEntityLabelsBack.cs" />
+    <Compile Include="02-Buttons\cls_12_ButtonCreateEntityLabels\cls_12_Main\cls_12_MainCreateEntityLabelsBack.cs" />
+    <Compile Include="02-Buttons\cls_12_ButtonCreateEntityLabels\cls_12_Process\cls_12_ProcessCreateEntityLabels.cs" />
+    <Compile Include="02-Buttons\cls_12_ButtonCreateEntityLabels\cls_12_ProcessAux\cls_12_ProcessCT.cs" />
+    <Compile Include="02-Buttons\cls_12_ButtonCreateEntityLabels\cls_12_ProcessAux\cls_12_GetRegionsByInvOrder.cs" />
+    <Compile Include="02-Buttons\cls_12_ButtonCreateEntityLabels\cls_12_ProcessAux\cls_12_ProcessTrack.cs" />
+    <Compile Include="02-Buttons\cls_12_ButtonCreateEntityLabels\cls_12_Button\cls_12_ButtonCreateEntityLabels.cs" />
+    <Compile Include="02-Buttons\cls_12_ButtonCreateEntityLabels\cls_12_ProcessAux\cls_12_ProcessString.cs" />
+    <Compile Include="02-Buttons\cls_16_ButtonCablesFromEnt\cls_16_Button\cls_16_ButtonMeasureCablesMV.cs" />
+    <Compile Include="02-Buttons\cls_16_ButtonCablesFromEnt\cls_16_Main\cls_16_MainMeasureCablesMV.cs" />
+    <Compile Include="02-Buttons\cls_16_ButtonCablesFromEnt\cls_16_ProcessAux\cls_16_BuildEntData\cls_16_BuildDataMV.cs" />
+    <Compile Include="02-Buttons\cls_16_ButtonCablesFromEnt\cls_16_ProcessAux\cls_16_GetDictCableByEnt\cls_16_GetDictMeasureCablesMV.cs" />
+    <Compile Include="02-Buttons\cls_16_ButtonCablesFromEnt\cls_16_ProcessAux\cls_16_GetDictLabelByCt.cs" />
+    <Compile Include="02-Buttons\cls_16_ButtonCablesFromEnt\cls_16_ProcessAux\cls_16_GetElevations\cls_16_GetElevMeasureCablesMV.cs" />
+    <Compile Include="02-Buttons\cls_16_ButtonCablesFromEnt\cls_16_ProcessAux\cls_16_GetEntities\cls_16_GetEntMeasureCablesMV.cs" />
+    <Compile Include="02-Buttons\cls_16_ButtonCablesFromEnt\cls_16_ProcessAux\cls_16_ValidateData\cls_16_ValidateDataEnt.cs" />
+    <Compile Include="02-Buttons\cls_16_ButtonCablesFromEnt\cls_16_Process\cls_16_ProcessMeasureCablesMV.cs" />
+    <Compile Include="02-Buttons\cls_SolarSettings.cs" />
+    <Compile Include="02-Buttons\cls_12_ButtonCreateEntityLabels\cls_12_ProcessAux\cls_12_AnalyzeTrackPolys.cs" />
+    <Compile Include="02-Buttons\cls_13_ButtonExportLabelsToExcel\cls_13_Button\cls_13_ButtonExportLabelsToExcel.cs" />
+    <Compile Include="02-Buttons\cls_14_ButtonCreateLabelsFromExcel\cls_14_Button\cls_14_ButtonCreateLabelsFromExcel.cs" />
+    <Compile Include="02-Buttons\cls_15_ButtonCreateFlagsFromInter\cls_15_Button\cls_15_ButtonCreateFlagsFromInter.cs" />
+    <Compile Include="02-Buttons\cls_15_ButtonCreateFlagsFromInter\cls_15_Process\cls_15_ProcessCreateFlagsFromInter.cs" />
+    <Compile Include="02-Buttons\cls_16_ButtonCablesFromEnt\cls_16_Button\cls_16_ButtonMeasureCablesN1.cs" />
+    <Compile Include="02-Buttons\cls_16_ButtonCablesFromEnt\cls_16_Main\cls_16_MainMeasureCablesN1.cs" />
+    <Compile Include="02-Buttons\cls_16_ButtonCablesFromEnt\cls_16_ProcessAux\cls_16_BuildEntData\cls_16_BuildDataN1.cs" />
+    <Compile Include="02-Buttons\cls_16_ButtonCablesFromEnt\cls_16_ProcessAux\cls_16_GetDictCableByEnt\cls_16_GetDictMeasureCablesN1.cs" />
+    <Compile Include="02-Buttons\cls_16_ButtonCablesFromEnt\cls_16_Process\cls_16_ProcessMeasureCablesN1.cs" />
+    <Compile Include="02-Buttons\cls_16_ButtonCablesFromEnt\cls_16_ProcessAux\cls_16_GetEntities\cls_16_GetEntMeasureCablesN1.cs" />
+    <Compile Include="02-Buttons\cls_16_ButtonCablesFromEnt\cls_16_ProcessAux\cls_16_GetElevations\cls_16_GetElevMeasureCablesN1.cs" />
+    <Compile Include="02-Buttons\cls_16_ButtonCablesFromEnt\cls_16_Button\cls_16_ButtonMeasureCablesN2.cs" />
+    <Compile Include="02-Buttons\cls_16_ButtonCablesFromEnt\cls_16_ProcessAux\cls_16_GetCabLengthSummary.cs" />
+    <Compile Include="02-Buttons\cls_16_ButtonCablesFromEnt\cls_16_ProcessAux\cls_16_BuildEntData\cls_16_BuildDataN2.cs" />
+    <Compile Include="02-Buttons\cls_16_ButtonCablesFromEnt\cls_16_ProcessAux\cls_16_GetDictByInvCable.cs" />
+    <Compile Include="02-Buttons\cls_16_ButtonCablesFromEnt\cls_16_ProcessAux\cls_16_ElemByRegionByInter.cs" />
+    <Compile Include="02-Buttons\cls_16_ButtonCablesFromEnt\cls_16_ProcessAux\cls_16_GetDictLabelByEnt.cs" />
+    <Compile Include="02-Buttons\cls_16_ButtonCablesFromEnt\cls_16_ProcessAux\cls_16_GetDictCableByEnt\cls_16_GetDictMeasureCablesN2.cs" />
+    <Compile Include="02-Buttons\cls_16_ButtonCablesFromEnt\cls_16_ProcessAux\cls_16_GetElevations\cls_16_GetElevMeasureCablesN2.cs" />
+    <Compile Include="02-Buttons\cls_16_ButtonCablesFromEnt\cls_16_ProcessAux\cls_16_GetEntities\cls_16_GetEntMeasureCablesN2.cs" />
+    <Compile Include="02-Buttons\cls_16_ButtonCablesFromEnt\cls_16_Process\cls_16_ProcessMeasureCablesN2.cs" />
+    <Compile Include="02-Buttons\cls_16_ButtonCablesFromEnt\cls_16_Main\cls_16_MainMeasureCablesN2.cs" />
+    <Compile Include="02-Buttons\cls_16_ButtonCablesFromEnt\cls_16_Button\cls_16_ButtonMeasureCables.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="00-Resources\trackLabels.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="00-Resources\excelFile.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="03-UserForms\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\0000-TYPSA.SharedLib\0000-TYPSA.SharedLibAutocad\TYPSA.SharedLibAutocad\TYPSA.SharedLibAutocad.csproj">
+      <Project>{631b9318-a021-4b24-87f0-3fec637eae77}</Project>
+      <Name>TYPSA.SharedLibAutocad</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\0000-TYPSA.SharedLib\0000-TYPSA.SharedLibExcelAutocad\TYPSA.SharedLibExcelAutocad\TYPSA.SharedLibExcelAutocad.csproj">
+      <Project>{2871f6ca-5b41-46fd-acb5-421486273b5d}</Project>
+      <Name>TYPSA.SharedLibExcelAutocad</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\0000-TYPSA.SharedLib\0000-TYPSA.SharedLibForms\TYPSA.SharedLibForms\TYPSA.SharedLibForms.csproj">
+      <Project>{8f836313-b339-4db6-8a55-af61386871b4}</Project>
+      <Name>TYPSA.SharedLibForms</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\0000-TYPSA.SharedLib\0000-TYPSA.SharedLibMetrics\TYPSA.SharedLibMetrics\TYPSA.SharedLibMetrics.csproj">
+      <Project>{bcf44feb-fc98-4906-ad0d-41552211b828}</Project>
+      <Name>TYPSA.SharedLibMetrics</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

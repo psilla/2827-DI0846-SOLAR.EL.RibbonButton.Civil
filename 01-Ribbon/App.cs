@@ -8,7 +8,7 @@ using System.Windows.Media.Imaging;
 using Autodesk.AutoCAD.Runtime;
 using Autodesk.Windows;
 using SOLAR.EL.RibbonButton.Autocad.Buttons;
-using _0000_XX0000_SOLAR.EL.RibbonButton.Civil.Properties;
+using _0000_XX0000_SOLAR.EL.RibbonButton.Autocad.Properties;
 
 namespace SOLAR.EL.RibbonButton.Autocad
 {

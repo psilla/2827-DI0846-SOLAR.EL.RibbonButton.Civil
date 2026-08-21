@@ -9,6 +9,7 @@ using TYPSA.SharedLib.Autocad.GetDocument;
 using TYPSA.SharedLib.Autocad.Main;
 using TYPSA.SharedLib.Autocad.Metrics;
 using TYPSA.SharedLib.Autocad.ObjectsByTypeByLayer;
+using TYPSA.SharedLib.Metrics;
 
 namespace SOLAR.EL.RibbonButton.Autocad.Main
 {
@@ -61,7 +62,7 @@ namespace SOLAR.EL.RibbonButton.Autocad.Main
                         // Enviar Metricas App
                         SendMetrics(1, totalLabelsCreated.Value, projectCode);
                         // Enviar Metricas Serapis
-                        SerapisMetrics.InitializeMetricsAsync(solarSet.GuidSerapisMetricsCreateEntLabels);
+                        cls_00_SerapisMetrics.InitializeMetricsAsync(solarSet.GuidSerapisMetricsCreateEntLabels);
 
                         // return
                         return new ProcessResult
