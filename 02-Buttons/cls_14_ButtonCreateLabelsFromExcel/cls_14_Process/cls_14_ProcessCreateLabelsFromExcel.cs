@@ -2,12 +2,10 @@
 using Autodesk.AutoCAD.DatabaseServices;
 using Autodesk.AutoCAD.Geometry;
 using System.Collections.Generic;
-using TYPSA.SharedLib.Autocad.DrawEntities;
-using TYPSA.SharedLib.Autocad.GetDocument;
-using TYPSA.SharedLib.Autocad.GetLayersInfo;
+using TYPSA.SharedLib.Autocad;
 using SOLAR.EL.RibbonButton.Autocad.Settings;
 
-namespace SOLAR.EL.RibbonButton.Autocad.Process
+namespace SOLAR.EL.RibbonButton.Autocad
 {
     internal class cls_14_ProcessCreateLabelsFromExcel
     {

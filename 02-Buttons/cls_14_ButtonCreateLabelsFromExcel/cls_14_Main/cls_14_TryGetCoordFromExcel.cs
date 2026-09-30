@@ -3,7 +3,7 @@ using System.Windows.Forms;
 //using TYPSA.SharedLib.Excel;
 using TYPSA.SharedLib.ExcelAutocad;
 
-namespace SOLAR.EL.RibbonButton.Autocad.Main
+namespace SOLAR.EL.RibbonButton.Autocad
 {
     internal class cls_14_TryGetCoordFromExcel
     {

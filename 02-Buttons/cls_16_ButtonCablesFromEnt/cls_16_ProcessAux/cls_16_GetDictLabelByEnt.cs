@@ -2,10 +2,10 @@
 using System.Linq;
 using System.Text;
 using Autodesk.AutoCAD.DatabaseServices;
-using TYPSA.SharedLib.Autocad.GetEntities;
+using TYPSA.SharedLib.Autocad;
 using TYPSA.SharedLib.UserForms;
 
-namespace SOLAR.EL.RibbonButton.Autocad.Process
+namespace SOLAR.EL.RibbonButton.Autocad
 {
     internal class cls_16_GetDictLabelByEnt
     {

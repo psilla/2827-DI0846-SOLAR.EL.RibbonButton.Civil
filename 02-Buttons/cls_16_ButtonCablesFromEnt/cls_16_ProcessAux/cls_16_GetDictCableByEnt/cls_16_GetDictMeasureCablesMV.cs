@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using SOLAR.EL.RibbonButton.Autocad.Settings;
 
-namespace SOLAR.EL.RibbonButton.Autocad.Process
+namespace SOLAR.EL.RibbonButton.Autocad
 {
     internal class cls_16_GetDictMeasureCablesMV
     {

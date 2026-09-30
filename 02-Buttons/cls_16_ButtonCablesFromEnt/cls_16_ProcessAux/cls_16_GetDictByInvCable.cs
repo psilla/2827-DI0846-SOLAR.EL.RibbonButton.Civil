@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Autodesk.AutoCAD.DatabaseServices;
 
-namespace SOLAR.EL.RibbonButton.Autocad.Process
+namespace SOLAR.EL.RibbonButton.Autocad
 {
     internal class cls_16_GetDictByInvCable
     {

@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 using Autodesk.AutoCAD.DatabaseServices;
-using TYPSA.SharedLib.Autocad.DrawEntities;
+using TYPSA.SharedLib.Autocad;
 using TYPSA.SharedLib.UserForms;
 using SOLAR.EL.RibbonButton.Autocad.Settings;
 
-namespace SOLAR.EL.RibbonButton.Autocad.Process
+namespace SOLAR.EL.RibbonButton.Autocad
 {
     internal class cls_12_CreateEntityLabelsConfig
     {

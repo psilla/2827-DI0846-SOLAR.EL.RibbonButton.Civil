@@ -1,11 +1,9 @@
 ﻿using System.Collections.Generic;
 using Autodesk.AutoCAD.DatabaseServices;
 using Autodesk.AutoCAD.EditorInput;
-using TYPSA.SharedLib.Autocad.GetEntities;
-using TYPSA.SharedLib.Autocad.GetLayersInfo;
-using TYPSA.SharedLib.Autocad.ObjectsByTypeByLayer;
+using TYPSA.SharedLib.Autocad;
 
-namespace SOLAR.EL.RibbonButton.Autocad.Process
+namespace SOLAR.EL.RibbonButton.Autocad
 {
     internal class cls_13_ProcessExportLabelsToExcel
     {

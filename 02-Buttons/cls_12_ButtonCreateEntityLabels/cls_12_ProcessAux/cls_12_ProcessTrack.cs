@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Text;
 using Autodesk.AutoCAD.DatabaseServices;
-using TYPSA.SharedLib.Autocad.GetEntities;
+using TYPSA.SharedLib.Autocad;
 using SOLAR.EL.RibbonButton.Autocad.Settings;
 
-namespace SOLAR.EL.RibbonButton.Autocad.Process
+namespace SOLAR.EL.RibbonButton.Autocad
 {
     internal class cls_12_ProcessTrack
     {

@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Windows.Forms;
 using Autodesk.AutoCAD.Runtime;
-using SOLAR.EL.RibbonButton.Autocad.Main;
-using TYPSA.SharedLib.Autocad.Buttons;
-using TYPSA.SharedLib.Autocad.Main;
 
-namespace SOLAR.EL.RibbonButton.Autocad.Buttons
+using TYPSA.SharedLib.Autocad;
+
+namespace SOLAR.EL.RibbonButton.Autocad
 {
     internal class cls_15_ButtonCreateFlagsFromInter
     {

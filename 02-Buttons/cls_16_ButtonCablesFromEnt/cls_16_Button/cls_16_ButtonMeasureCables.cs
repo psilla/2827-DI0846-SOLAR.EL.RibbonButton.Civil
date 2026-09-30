@@ -4,13 +4,11 @@ using System.Linq;
 using System.Windows.Forms;
 using Autodesk.AutoCAD.Runtime;
 using SOLAR.EL.RibbonButton.Autocad.Settings;
-using TYPSA.SharedLib.Autocad.Buttons;
-using TYPSA.SharedLib.Autocad.ObjectsByTypeByLayer;
-using TYPSA.SharedLib.Autocad.ProjectUnits;
+using TYPSA.SharedLib.Autocad;
 using TYPSA.SharedLib.ExcelAutocad;
 using TYPSA.SharedLib.UserForms;
 
-namespace SOLAR.EL.RibbonButton.Autocad.Buttons
+namespace SOLAR.EL.RibbonButton.Autocad
 {
     internal class cls_16_ButtonMeasureCables
     {

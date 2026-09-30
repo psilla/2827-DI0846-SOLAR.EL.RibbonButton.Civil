@@ -2,10 +2,10 @@
 using System.Windows.Forms;
 using Autodesk.AutoCAD.DatabaseServices;
 using Autodesk.AutoCAD.EditorInput;
-using TYPSA.SharedLib.Autocad.IsolateEntities;
+using TYPSA.SharedLib.Autocad;
 using SOLAR.EL.RibbonButton.Autocad.Settings;
 
-namespace SOLAR.EL.RibbonButton.Autocad.Process
+namespace SOLAR.EL.RibbonButton.Autocad
 {
     internal class cls_12_IsolateInvalidTrack
     {

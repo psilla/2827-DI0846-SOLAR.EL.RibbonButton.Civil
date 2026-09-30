@@ -5,10 +5,9 @@ using System.Text;
 using Autodesk.AutoCAD.DatabaseServices;
 using Autodesk.AutoCAD.Geometry;
 using SOLAR.EL.RibbonButton.Autocad.Settings;
-using TYPSA.SharedLib.Autocad.DrawEntities;
-using TYPSA.SharedLib.Autocad.GetEntityCoordinates;
+using TYPSA.SharedLib.Autocad;
 
-namespace SOLAR.EL.RibbonButton.Autocad.Process
+namespace SOLAR.EL.RibbonButton.Autocad
 {
     internal class cls_12_ProcessString
     {

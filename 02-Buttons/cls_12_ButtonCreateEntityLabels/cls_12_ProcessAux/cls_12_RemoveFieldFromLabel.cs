@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using Autodesk.AutoCAD.DatabaseServices;
-using TYPSA.SharedLib.Autocad.ObjectsByTypeByLayer;
+using TYPSA.SharedLib.Autocad;
 
-namespace SOLAR.EL.RibbonButton.Autocad.Process
+namespace SOLAR.EL.RibbonButton.Autocad
 {
     internal class cls_12_RemoveFieldFromLabel
     {

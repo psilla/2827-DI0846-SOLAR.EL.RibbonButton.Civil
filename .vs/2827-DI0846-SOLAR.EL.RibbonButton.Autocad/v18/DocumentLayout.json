@@ -1,0 +1,319 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\2827-DI0846-SOLAR.EL.Autocad\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{41E8CCF2-06F8-4A3D-8BC5-B834B45FBCB0}|2827-DI0846-SOLAR.EL.RibbonButton.Autocad.csproj|c:\\2827-di0846-solar.el.autocad\\02-buttons\\cls_12_buttonorderentitylabels\\cls_12_button\\cls_12_buttonorderentitylabels.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{41E8CCF2-06F8-4A3D-8BC5-B834B45FBCB0}|2827-DI0846-SOLAR.EL.RibbonButton.Autocad.csproj|solutionrelative:02-buttons\\cls_12_buttonorderentitylabels\\cls_12_button\\cls_12_buttonorderentitylabels.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{41E8CCF2-06F8-4A3D-8BC5-B834B45FBCB0}|2827-DI0846-SOLAR.EL.RibbonButton.Autocad.csproj|c:\\2827-di0846-solar.el.autocad\\01-ribbon\\app.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{41E8CCF2-06F8-4A3D-8BC5-B834B45FBCB0}|2827-DI0846-SOLAR.EL.RibbonButton.Autocad.csproj|solutionrelative:01-ribbon\\app.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{41E8CCF2-06F8-4A3D-8BC5-B834B45FBCB0}|2827-DI0846-SOLAR.EL.RibbonButton.Autocad.csproj|c:\\2827-di0846-solar.el.autocad\\02-buttons\\cls_13_buttonexportlabelstoexcel\\cls_13_button\\cls_13_buttonexportlabelstoexcelback.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{41E8CCF2-06F8-4A3D-8BC5-B834B45FBCB0}|2827-DI0846-SOLAR.EL.RibbonButton.Autocad.csproj|solutionrelative:02-buttons\\cls_13_buttonexportlabelstoexcel\\cls_13_button\\cls_13_buttonexportlabelstoexcelback.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{41E8CCF2-06F8-4A3D-8BC5-B834B45FBCB0}|2827-DI0846-SOLAR.EL.RibbonButton.Autocad.csproj|c:\\2827-di0846-solar.el.autocad\\02-buttons\\cls_16_buttoncablesfroment\\cls_16_button\\cls_16_buttonmeasurecablesmv.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{41E8CCF2-06F8-4A3D-8BC5-B834B45FBCB0}|2827-DI0846-SOLAR.EL.RibbonButton.Autocad.csproj|solutionrelative:02-buttons\\cls_16_buttoncablesfroment\\cls_16_button\\cls_16_buttonmeasurecablesmv.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{41E8CCF2-06F8-4A3D-8BC5-B834B45FBCB0}|2827-DI0846-SOLAR.EL.RibbonButton.Autocad.csproj|c:\\2827-di0846-solar.el.autocad\\02-buttons\\cls_13_buttonexportlabelstoexcel\\cls_13_main\\cls_13_mainexportlabelstoexcel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{41E8CCF2-06F8-4A3D-8BC5-B834B45FBCB0}|2827-DI0846-SOLAR.EL.RibbonButton.Autocad.csproj|solutionrelative:02-buttons\\cls_13_buttonexportlabelstoexcel\\cls_13_main\\cls_13_mainexportlabelstoexcel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{41E8CCF2-06F8-4A3D-8BC5-B834B45FBCB0}|2827-DI0846-SOLAR.EL.RibbonButton.Autocad.csproj|c:\\2827-di0846-solar.el.autocad\\02-buttons\\cls_16_buttoncablesfroment\\cls_16_main\\cls_16_mainmeasurecablesmv.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{41E8CCF2-06F8-4A3D-8BC5-B834B45FBCB0}|2827-DI0846-SOLAR.EL.RibbonButton.Autocad.csproj|solutionrelative:02-buttons\\cls_16_buttoncablesfroment\\cls_16_main\\cls_16_mainmeasurecablesmv.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{41E8CCF2-06F8-4A3D-8BC5-B834B45FBCB0}|2827-DI0846-SOLAR.EL.RibbonButton.Autocad.csproj|c:\\2827-di0846-solar.el.autocad\\02-buttons\\cls_13_buttonexportlabelstoexcel\\cls_13_main\\cls_13_mainexportlabelstoexcelback.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{41E8CCF2-06F8-4A3D-8BC5-B834B45FBCB0}|2827-DI0846-SOLAR.EL.RibbonButton.Autocad.csproj|solutionrelative:02-buttons\\cls_13_buttonexportlabelstoexcel\\cls_13_main\\cls_13_mainexportlabelstoexcelback.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{41E8CCF2-06F8-4A3D-8BC5-B834B45FBCB0}|2827-DI0846-SOLAR.EL.RibbonButton.Autocad.csproj|c:\\2827-di0846-solar.el.autocad\\02-buttons\\cls_14_buttoncreatelabelsfromexcel\\cls_14_main\\cls_14_maincreatelabelsfromexcel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{41E8CCF2-06F8-4A3D-8BC5-B834B45FBCB0}|2827-DI0846-SOLAR.EL.RibbonButton.Autocad.csproj|solutionrelative:02-buttons\\cls_14_buttoncreatelabelsfromexcel\\cls_14_main\\cls_14_maincreatelabelsfromexcel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{41E8CCF2-06F8-4A3D-8BC5-B834B45FBCB0}|2827-DI0846-SOLAR.EL.RibbonButton.Autocad.csproj|c:\\2827-di0846-solar.el.autocad\\02-buttons\\cls_12_buttonorderentitylabels\\cls_12_main\\cls_12_mainorderentitylabels.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{41E8CCF2-06F8-4A3D-8BC5-B834B45FBCB0}|2827-DI0846-SOLAR.EL.RibbonButton.Autocad.csproj|solutionrelative:02-buttons\\cls_12_buttonorderentitylabels\\cls_12_main\\cls_12_mainorderentitylabels.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{41E8CCF2-06F8-4A3D-8BC5-B834B45FBCB0}|2827-DI0846-SOLAR.EL.RibbonButton.Autocad.csproj|c:\\2827-di0846-solar.el.autocad\\02-buttons\\cls_12_buttoncreateentitylabels\\cls_12_main\\cls_12_maincreateentitylabelsback.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{41E8CCF2-06F8-4A3D-8BC5-B834B45FBCB0}|2827-DI0846-SOLAR.EL.RibbonButton.Autocad.csproj|solutionrelative:02-buttons\\cls_12_buttoncreateentitylabels\\cls_12_main\\cls_12_maincreateentitylabelsback.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{41E8CCF2-06F8-4A3D-8BC5-B834B45FBCB0}|2827-DI0846-SOLAR.EL.RibbonButton.Autocad.csproj|c:\\2827-di0846-solar.el.autocad\\02-buttons\\cls_12_buttoncreateentitylabels\\cls_12_process\\cls_12_processcreateentitylabels.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{41E8CCF2-06F8-4A3D-8BC5-B834B45FBCB0}|2827-DI0846-SOLAR.EL.RibbonButton.Autocad.csproj|solutionrelative:02-buttons\\cls_12_buttoncreateentitylabels\\cls_12_process\\cls_12_processcreateentitylabels.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{41E8CCF2-06F8-4A3D-8BC5-B834B45FBCB0}|2827-DI0846-SOLAR.EL.RibbonButton.Autocad.csproj|c:\\2827-di0846-solar.el.autocad\\02-buttons\\cls_16_buttoncablesfroment\\cls_16_process\\cls_16_processmeasurecablesn2.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{41E8CCF2-06F8-4A3D-8BC5-B834B45FBCB0}|2827-DI0846-SOLAR.EL.RibbonButton.Autocad.csproj|solutionrelative:02-buttons\\cls_16_buttoncablesfroment\\cls_16_process\\cls_16_processmeasurecablesn2.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{41E8CCF2-06F8-4A3D-8BC5-B834B45FBCB0}|2827-DI0846-SOLAR.EL.RibbonButton.Autocad.csproj|c:\\2827-di0846-solar.el.autocad\\02-buttons\\cls_16_buttoncablesfroment\\cls_16_processaux\\cls_16_buildentdata\\cls_16_builddatan2.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{41E8CCF2-06F8-4A3D-8BC5-B834B45FBCB0}|2827-DI0846-SOLAR.EL.RibbonButton.Autocad.csproj|solutionrelative:02-buttons\\cls_16_buttoncablesfroment\\cls_16_processaux\\cls_16_buildentdata\\cls_16_builddatan2.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 8,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{004be353-6879-467c-9d1e-9ac23cdf6d49}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{13b12e3e-c1b4-4539-9371-4fe9a0d523fc}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:129:0:{13b12e3e-c1b4-4539-9371-4fe9a0d523fc}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{75188d03-9892-4ae2-abf1-207126247ce5}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "cls_12_ButtonOrderEntityLabels.cs",
+              "DocumentMoniker": "C:\\2827-DI0846-SOLAR.EL.Autocad\\02-Buttons\\cls_12_ButtonOrderEntityLabels\\cls_12_Button\\cls_12_ButtonOrderEntityLabels.cs",
+              "RelativeDocumentMoniker": "02-Buttons\\cls_12_ButtonOrderEntityLabels\\cls_12_Button\\cls_12_ButtonOrderEntityLabels.cs",
+              "ToolTip": "C:\\2827-DI0846-SOLAR.EL.Autocad\\02-Buttons\\cls_12_ButtonOrderEntityLabels\\cls_12_Button\\cls_12_ButtonOrderEntityLabels.cs",
+              "RelativeToolTip": "02-Buttons\\cls_12_ButtonOrderEntityLabels\\cls_12_Button\\cls_12_ButtonOrderEntityLabels.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-16T11:10:13.529Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "App.cs",
+              "DocumentMoniker": "C:\\2827-DI0846-SOLAR.EL.Autocad\\01-Ribbon\\App.cs",
+              "RelativeDocumentMoniker": "01-Ribbon\\App.cs",
+              "ToolTip": "C:\\2827-DI0846-SOLAR.EL.Autocad\\01-Ribbon\\App.cs",
+              "RelativeToolTip": "01-Ribbon\\App.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-16T11:09:59.153Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "cls_13_ButtonExportLabelsToExcelBack.cs",
+              "DocumentMoniker": "C:\\2827-DI0846-SOLAR.EL.Autocad\\02-Buttons\\cls_13_ButtonExportLabelsToExcel\\cls_13_Button\\cls_13_ButtonExportLabelsToExcelBack.cs",
+              "RelativeDocumentMoniker": "02-Buttons\\cls_13_ButtonExportLabelsToExcel\\cls_13_Button\\cls_13_ButtonExportLabelsToExcelBack.cs",
+              "ToolTip": "C:\\2827-DI0846-SOLAR.EL.Autocad\\02-Buttons\\cls_13_ButtonExportLabelsToExcel\\cls_13_Button\\cls_13_ButtonExportLabelsToExcelBack.cs",
+              "RelativeToolTip": "02-Buttons\\cls_13_ButtonExportLabelsToExcel\\cls_13_Button\\cls_13_ButtonExportLabelsToExcelBack.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-16T11:09:56.336Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "cls_16_ButtonMeasureCablesMV.cs",
+              "DocumentMoniker": "C:\\2827-DI0846-SOLAR.EL.Autocad\\02-Buttons\\cls_16_ButtonCablesFromEnt\\cls_16_Button\\cls_16_ButtonMeasureCablesMV.cs",
+              "RelativeDocumentMoniker": "02-Buttons\\cls_16_ButtonCablesFromEnt\\cls_16_Button\\cls_16_ButtonMeasureCablesMV.cs",
+              "ToolTip": "C:\\2827-DI0846-SOLAR.EL.Autocad\\02-Buttons\\cls_16_ButtonCablesFromEnt\\cls_16_Button\\cls_16_ButtonMeasureCablesMV.cs",
+              "RelativeToolTip": "02-Buttons\\cls_16_ButtonCablesFromEnt\\cls_16_Button\\cls_16_ButtonMeasureCablesMV.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-16T11:09:38.708Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "cls_13_MainExportLabelsToExcel.cs",
+              "DocumentMoniker": "C:\\2827-DI0846-SOLAR.EL.Autocad\\02-Buttons\\cls_13_ButtonExportLabelsToExcel\\cls_13_Main\\cls_13_MainExportLabelsToExcel.cs",
+              "RelativeDocumentMoniker": "02-Buttons\\cls_13_ButtonExportLabelsToExcel\\cls_13_Main\\cls_13_MainExportLabelsToExcel.cs",
+              "ToolTip": "C:\\2827-DI0846-SOLAR.EL.Autocad\\02-Buttons\\cls_13_ButtonExportLabelsToExcel\\cls_13_Main\\cls_13_MainExportLabelsToExcel.cs",
+              "RelativeToolTip": "02-Buttons\\cls_13_ButtonExportLabelsToExcel\\cls_13_Main\\cls_13_MainExportLabelsToExcel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-16T11:09:36.76Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "cls_16_MainMeasureCablesMV.cs",
+              "DocumentMoniker": "C:\\2827-DI0846-SOLAR.EL.Autocad\\02-Buttons\\cls_16_ButtonCablesFromEnt\\cls_16_Main\\cls_16_MainMeasureCablesMV.cs",
+              "RelativeDocumentMoniker": "02-Buttons\\cls_16_ButtonCablesFromEnt\\cls_16_Main\\cls_16_MainMeasureCablesMV.cs",
+              "ToolTip": "C:\\2827-DI0846-SOLAR.EL.Autocad\\02-Buttons\\cls_16_ButtonCablesFromEnt\\cls_16_Main\\cls_16_MainMeasureCablesMV.cs",
+              "RelativeToolTip": "02-Buttons\\cls_16_ButtonCablesFromEnt\\cls_16_Main\\cls_16_MainMeasureCablesMV.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-16T11:09:34.535Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "cls_13_MainExportLabelsToExcelBack.cs",
+              "DocumentMoniker": "C:\\2827-DI0846-SOLAR.EL.Autocad\\02-Buttons\\cls_13_ButtonExportLabelsToExcel\\cls_13_Main\\cls_13_MainExportLabelsToExcelBack.cs",
+              "RelativeDocumentMoniker": "02-Buttons\\cls_13_ButtonExportLabelsToExcel\\cls_13_Main\\cls_13_MainExportLabelsToExcelBack.cs",
+              "ToolTip": "C:\\2827-DI0846-SOLAR.EL.Autocad\\02-Buttons\\cls_13_ButtonExportLabelsToExcel\\cls_13_Main\\cls_13_MainExportLabelsToExcelBack.cs",
+              "RelativeToolTip": "02-Buttons\\cls_13_ButtonExportLabelsToExcel\\cls_13_Main\\cls_13_MainExportLabelsToExcelBack.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-16T11:09:32.445Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "cls_14_MainCreateLabelsFromExcel.cs",
+              "DocumentMoniker": "C:\\2827-DI0846-SOLAR.EL.Autocad\\02-Buttons\\cls_14_ButtonCreateLabelsFromExcel\\cls_14_Main\\cls_14_MainCreateLabelsFromExcel.cs",
+              "RelativeDocumentMoniker": "02-Buttons\\cls_14_ButtonCreateLabelsFromExcel\\cls_14_Main\\cls_14_MainCreateLabelsFromExcel.cs",
+              "ToolTip": "C:\\2827-DI0846-SOLAR.EL.Autocad\\02-Buttons\\cls_14_ButtonCreateLabelsFromExcel\\cls_14_Main\\cls_14_MainCreateLabelsFromExcel.cs",
+              "RelativeToolTip": "02-Buttons\\cls_14_ButtonCreateLabelsFromExcel\\cls_14_Main\\cls_14_MainCreateLabelsFromExcel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-16T11:09:05.583Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "cls_12_MainOrderEntityLabels.cs",
+              "DocumentMoniker": "C:\\2827-DI0846-SOLAR.EL.Autocad\\02-Buttons\\cls_12_ButtonOrderEntityLabels\\cls_12_Main\\cls_12_MainOrderEntityLabels.cs",
+              "RelativeDocumentMoniker": "02-Buttons\\cls_12_ButtonOrderEntityLabels\\cls_12_Main\\cls_12_MainOrderEntityLabels.cs",
+              "ToolTip": "C:\\2827-DI0846-SOLAR.EL.Autocad\\02-Buttons\\cls_12_ButtonOrderEntityLabels\\cls_12_Main\\cls_12_MainOrderEntityLabels.cs",
+              "RelativeToolTip": "02-Buttons\\cls_12_ButtonOrderEntityLabels\\cls_12_Main\\cls_12_MainOrderEntityLabels.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAjAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-16T11:09:01.642Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "cls_12_MainCreateEntityLabelsBack.cs",
+              "DocumentMoniker": "C:\\2827-DI0846-SOLAR.EL.Autocad\\02-Buttons\\cls_12_ButtonCreateEntityLabels\\cls_12_Main\\cls_12_MainCreateEntityLabelsBack.cs",
+              "RelativeDocumentMoniker": "02-Buttons\\cls_12_ButtonCreateEntityLabels\\cls_12_Main\\cls_12_MainCreateEntityLabelsBack.cs",
+              "ToolTip": "C:\\2827-DI0846-SOLAR.EL.Autocad\\02-Buttons\\cls_12_ButtonCreateEntityLabels\\cls_12_Main\\cls_12_MainCreateEntityLabelsBack.cs",
+              "RelativeToolTip": "02-Buttons\\cls_12_ButtonCreateEntityLabels\\cls_12_Main\\cls_12_MainCreateEntityLabelsBack.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAjAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-16T11:08:57.035Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "cls_12_ProcessCreateEntityLabels.cs",
+              "DocumentMoniker": "C:\\2827-DI0846-SOLAR.EL.Autocad\\02-Buttons\\cls_12_ButtonCreateEntityLabels\\cls_12_Process\\cls_12_ProcessCreateEntityLabels.cs",
+              "RelativeDocumentMoniker": "02-Buttons\\cls_12_ButtonCreateEntityLabels\\cls_12_Process\\cls_12_ProcessCreateEntityLabels.cs",
+              "ToolTip": "C:\\2827-DI0846-SOLAR.EL.Autocad\\02-Buttons\\cls_12_ButtonCreateEntityLabels\\cls_12_Process\\cls_12_ProcessCreateEntityLabels.cs",
+              "RelativeToolTip": "02-Buttons\\cls_12_ButtonCreateEntityLabels\\cls_12_Process\\cls_12_ProcessCreateEntityLabels.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAMcBAAAYAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-16T11:08:48.975Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "cls_16_ProcessMeasureCablesN2.cs",
+              "DocumentMoniker": "C:\\2827-DI0846-SOLAR.EL.Autocad\\02-Buttons\\cls_16_ButtonCablesFromEnt\\cls_16_Process\\cls_16_ProcessMeasureCablesN2.cs",
+              "RelativeDocumentMoniker": "02-Buttons\\cls_16_ButtonCablesFromEnt\\cls_16_Process\\cls_16_ProcessMeasureCablesN2.cs",
+              "ToolTip": "C:\\2827-DI0846-SOLAR.EL.Autocad\\02-Buttons\\cls_16_ButtonCablesFromEnt\\cls_16_Process\\cls_16_ProcessMeasureCablesN2.cs",
+              "RelativeToolTip": "02-Buttons\\cls_16_ButtonCablesFromEnt\\cls_16_Process\\cls_16_ProcessMeasureCablesN2.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-16T11:08:47.541Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "cls_16_BuildDataN2.cs",
+              "DocumentMoniker": "C:\\2827-DI0846-SOLAR.EL.Autocad\\02-Buttons\\cls_16_ButtonCablesFromEnt\\cls_16_ProcessAux\\cls_16_BuildEntData\\cls_16_BuildDataN2.cs",
+              "RelativeDocumentMoniker": "02-Buttons\\cls_16_ButtonCablesFromEnt\\cls_16_ProcessAux\\cls_16_BuildEntData\\cls_16_BuildDataN2.cs",
+              "ToolTip": "C:\\2827-DI0846-SOLAR.EL.Autocad\\02-Buttons\\cls_16_ButtonCablesFromEnt\\cls_16_ProcessAux\\cls_16_BuildEntData\\cls_16_BuildDataN2.cs",
+              "RelativeToolTip": "02-Buttons\\cls_16_ButtonCablesFromEnt\\cls_16_ProcessAux\\cls_16_BuildEntData\\cls_16_BuildDataN2.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAnAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-16T11:08:38.864Z",
+              "EditorCaption": ""
+            }
+          ]
+        },
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": -1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
+            }
+          ]
+        },
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": -1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{eefa5220-e298-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:1:0:{d212f56b-c48a-434c-a121-1c5d80b59b9f}"
+            }
+          ]
+        },
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": -1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{a80febb4-e7e0-4147-b476-21aaf2453969}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:1:0:{e8034f19-ab72-4f06-83fd-f6832b41aa63}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:2:0:{e8034f19-ab72-4f06-83fd-f6832b41aa63}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

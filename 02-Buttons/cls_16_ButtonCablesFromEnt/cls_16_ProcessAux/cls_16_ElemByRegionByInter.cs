@@ -5,11 +5,10 @@ using System.Text;
 using System.Windows.Forms;
 using Autodesk.AutoCAD.DatabaseServices;
 using Autodesk.AutoCAD.Geometry;
-using TYPSA.SharedLib.Autocad.EntitiesInsertionPoint;
-using TYPSA.SharedLib.Autocad.GetEntities;
+using TYPSA.SharedLib.Autocad;
 using TYPSA.SharedLib.UserForms;
 
-namespace SOLAR.EL.RibbonButton.Autocad.Process
+namespace SOLAR.EL.RibbonButton.Autocad
 {
     internal class cls_16_ElemByRegionByInter
     {

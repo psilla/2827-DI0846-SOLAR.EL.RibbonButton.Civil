@@ -2,11 +2,10 @@
 using Autodesk.AutoCAD.DatabaseServices;
 using Autodesk.AutoCAD.EditorInput;
 using System.Windows.Forms;
-using TYPSA.SharedLib.Autocad.GetDocument;
-using TYPSA.SharedLib.Autocad.Main;
-using SOLAR.EL.RibbonButton.Autocad.Process;
+using TYPSA.SharedLib.Autocad;
 
-namespace SOLAR.EL.RibbonButton.Autocad.Main
+
+namespace SOLAR.EL.RibbonButton.Autocad
 {
     internal class cls_15_MainCreateFlagsFromInter
     {

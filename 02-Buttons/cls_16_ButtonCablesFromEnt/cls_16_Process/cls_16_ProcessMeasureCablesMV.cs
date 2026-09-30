@@ -4,12 +4,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
-using TYPSA.SharedLib.Autocad.GetLayersInfo;
-using TYPSA.SharedLib.Autocad.IsolateEntities;
+using TYPSA.SharedLib.Autocad;
 using SOLAR.EL.RibbonButton.Autocad.Settings;
 using TYPSA.SharedLib.ExcelAutocad;
 
-namespace SOLAR.EL.RibbonButton.Autocad.Process
+namespace SOLAR.EL.RibbonButton.Autocad
 {
     internal class cls_16_ProcessMeasureCablesMV
     {

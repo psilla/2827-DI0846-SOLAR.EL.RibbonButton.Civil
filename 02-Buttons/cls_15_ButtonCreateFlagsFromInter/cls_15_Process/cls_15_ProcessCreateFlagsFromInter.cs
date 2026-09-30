@@ -2,10 +2,9 @@
 using Autodesk.AutoCAD.Geometry;
 using System.Collections.Generic;
 using System.Linq;
-using TYPSA.SharedLib.Autocad.DrawEntities;
-using TYPSA.SharedLib.Autocad.GetEntities;
+using TYPSA.SharedLib.Autocad;
 
-namespace SOLAR.EL.RibbonButton.Autocad.Process
+namespace SOLAR.EL.RibbonButton.Autocad
 {
     internal class cls_15_ProcessCreateFlagsFromInter
     {

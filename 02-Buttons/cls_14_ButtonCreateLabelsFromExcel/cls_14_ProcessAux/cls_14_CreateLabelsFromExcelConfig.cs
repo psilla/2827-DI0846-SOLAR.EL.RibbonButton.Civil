@@ -1,9 +1,9 @@
 ﻿using Autodesk.AutoCAD.DatabaseServices;
 using System.Collections.Generic;
-using TYPSA.SharedLib.Autocad.DrawEntities;
+using TYPSA.SharedLib.Autocad;
 using TYPSA.SharedLib.UserForms;
 
-namespace SOLAR.EL.RibbonButton.Autocad.Process
+namespace SOLAR.EL.RibbonButton.Autocad
 {
     internal class cls_14_CreateLabelsFromExcelConfig
     {
